@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Nerfums.iml" filepath="$PROJECT_DIR$/Nerfums.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nerfums-app/nerfums-app.iml" filepath="$PROJECT_DIR$/nerfums-app/nerfums-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/nerfums-service/nerfums-service.iml" filepath="$PROJECT_DIR$/nerfums-service/nerfums-service.iml" />
     </modules>
   </component>
