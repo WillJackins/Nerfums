@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nerfums.nerfumsservice.delegate.mappers.ContractDelegateMapper;
+import com.nerfums.nerfumsservice.model.Contract;
 import com.nerfums.nerfumsservice.resource.api.ContractRO;
 import com.nerfums.nerfumsservice.service.ContractService;
 
@@ -29,5 +30,13 @@ public class ContractDelegate
 		return contractService.getAllContracts().stream()
 				.map(contractDelegateMapper::mapContractToContractRO)
 				.collect(Collectors.toList());
+	}
+
+	public ContractRO createNewContract(ContractRO contractRO)
+	{
+		Contract preCreate = contractDelegateMapper.mapContractROToContract(contractRO);
+		Contract postCreate = contractService.createNewContract(preCreate);
+
+		return contractDelegateMapper.mapContractToContractRO(postCreate);
 	}
 }

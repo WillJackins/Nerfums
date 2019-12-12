@@ -27,6 +27,9 @@ public class ContractDelegateMapper
 	{
 		//Contract -> ContractRO
 		addMappingContractToContractRO(modelMapper);
+
+		//ContractRO -> Contract
+		addMappingContractROToContract(modelMapper);
 	}
 
 
@@ -35,9 +38,19 @@ public class ContractDelegateMapper
 		return modelMapper.map(contract, ContractRO.class);
 	}
 
+	public Contract mapContractROToContract(ContractRO contractRO)
+	{
+		return modelMapper.map(contractRO, Contract.class);
+	}
+
 
 	private void addMappingContractToContractRO(ModelMapper modelMapper)
 	{
 		modelMapper.typeMap(Contract.class, ContractRO.class);
+	}
+
+	private void addMappingContractROToContract(ModelMapper modelMapper)
+	{
+		modelMapper.typeMap(ContractRO.class, Contract.class);
 	}
 }

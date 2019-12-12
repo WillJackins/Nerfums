@@ -31,4 +31,12 @@ public class ContractService
 				.map(contractServiceMapper::mapContractDOToContract)
 				.collect(Collectors.toList());
 	}
+
+	public Contract createNewContract(Contract contract)
+	{
+		ContractDO preCreate = contractServiceMapper.mapContractToContractDO(contract);
+		ContractDO postCreate = contractRepository.save(preCreate);
+
+		return contractServiceMapper.mapContractDOToContract(postCreate);
+	}
 }

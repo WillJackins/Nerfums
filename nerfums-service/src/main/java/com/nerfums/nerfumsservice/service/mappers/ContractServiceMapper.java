@@ -26,6 +26,9 @@ public class ContractServiceMapper
 	{
 		//ContractDO -> Contract
 		addMappingContractDOToContract(modelMapper);
+
+		//Contract -> ContractDO
+		addMappingContractToContractDO(modelMapper);
 	}
 
 
@@ -34,9 +37,19 @@ public class ContractServiceMapper
 		return modelMapper.map(contractDO, Contract.class);
 	}
 
+	public ContractDO mapContractToContractDO(Contract contract)
+	{
+		return modelMapper.map(contract, ContractDO.class);
+	}
+
 
 	private void addMappingContractDOToContract(ModelMapper modelMapper)
 	{
 		modelMapper.typeMap(ContractDO.class, Contract.class);
+	}
+
+	private void addMappingContractToContractDO(ModelMapper modelMapper)
+	{
+		modelMapper.typeMap(Contract.class, ContractDO.class);
 	}
 }
