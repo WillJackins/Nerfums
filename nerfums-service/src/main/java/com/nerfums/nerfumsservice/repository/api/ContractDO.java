@@ -13,19 +13,27 @@ public class ContractDO
 	@Column(name = "contractId")
 	private Long contractId;
 
+	@Column(name = "contractOwner")
+	private String contractOwner;
+
 	@Column(name = "targetName")
 	private String targetName;
 
 	@Column(name = "contractPayment")
 	private Integer paymentAmount;
 
-	@Column(name = "contractRequirements")
-	private String requirements;
+	//@Column(name = "contractRequirements")
+	//private String requirements;
 
 
 	public Long getContractId()
 	{
 		return contractId;
+	}
+
+	public String getContractOwner()
+	{
+		return contractOwner;
 	}
 
 	public String getTargetName()
@@ -38,15 +46,20 @@ public class ContractDO
 		return paymentAmount;
 	}
 
-	public String getRequirements()
-	{
-		return requirements;
-	}
+//	public String getRequirements()
+//	{
+//		return requirements;
+//	}
 
 
 	public void setContractId(Long contractId)
 	{
 		this.contractId = contractId;
+	}
+
+	public void setContractOwner(String contractOwner)
+	{
+		this.contractOwner = contractOwner;
 	}
 
 	public void setTargetName(String targetName)
@@ -59,8 +72,8 @@ public class ContractDO
 		this.paymentAmount = paymentAmount;
 	}
 
-	public void setRequirements(String requirements)
-	{
-		this.requirements = requirements;
-	}
+//	public void setRequirements(String requirements)
+//	{
+//		this.requirements = requirements;
+//	}
 }

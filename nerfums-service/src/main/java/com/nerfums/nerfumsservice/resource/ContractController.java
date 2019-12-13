@@ -23,6 +23,13 @@ public class ContractController
 		this.contractDelegate = contractDelegate;
 	}
 
+	@GetMapping("/contracts/{contractId}")
+	public ResponseEntity<ContractRO> getContractById(@PathVariable Long contractId)
+	{
+		ContractRO contractRO = contractDelegate.getContractById(contractId);
+		return ResponseEntity.ok(contractRO);
+	}
+
 	@GetMapping("/contracts")
 	public ResponseEntity<List<ContractRO>> getAllContracts()
 	{
@@ -35,7 +42,6 @@ public class ContractController
 	public ResponseEntity<ContractRO> createNewContract(@RequestBody ContractRO contractRO)
 	{
 		ContractRO createdContract = contractDelegate.createNewContract(contractRO);
-
 		return ResponseEntity.ok(createdContract);
 	}
 }

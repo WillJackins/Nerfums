@@ -25,6 +25,11 @@ public class ContractDelegate
 		this.contractService = contractService;
 	}
 
+	public ContractRO getContractById(Long contractId)
+	{
+		return contractDelegateMapper.mapContractToContractRO(contractService.getContractById(contractId));
+	}
+
 	public List<ContractRO> getAllContracts()
 	{
 		return contractService.getAllContracts().stream()
