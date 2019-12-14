@@ -10,16 +10,16 @@ import javax.persistence.Table;
 public class ContractDO
 {
 	@Id
-	@Column(name = "contractId")
+	@Column(name = "contract_id")
 	private Long contractId;
 
-	@Column(name = "contractOwner")
+	@Column(name = "contract_owner")
 	private String contractOwner;
 
-	@Column(name = "targetName")
+	@Column(name = "target_name")
 	private String targetName;
 
-	@Column(name = "contractPayment")
+	@Column(name = "contract_payment")
 	private Integer paymentAmount;
 
 	//@Column(name = "contractRequirements")
