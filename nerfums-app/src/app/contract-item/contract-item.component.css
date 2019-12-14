@@ -1,6 +1,10 @@
 .contract-card {
-  max-width: 600px;
-  max-height: 500px;
+  position: center;
+  width: 90%;
+  height: 90px;
+
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .test-avatar {
