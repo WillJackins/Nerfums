@@ -11,7 +11,7 @@ import com.nerfums.nerfumsservice.delegate.ContractDelegate;
 import com.nerfums.nerfumsservice.resource.api.ContractRO;
 
 @RestController
-@RequestMapping("Nerfums/api")
+@RequestMapping("/contracts")
 public class ContractController
 {
 	private final ContractDelegate contractDelegate;
@@ -23,21 +23,21 @@ public class ContractController
 		this.contractDelegate = contractDelegate;
 	}
 
-	@GetMapping("/contracts/{contractId}")
+	@GetMapping("/{contractId}")
 	public ResponseEntity<ContractRO> getContractById(@PathVariable Long contractId)
 	{
 		ContractRO contractRO = contractDelegate.getContractById(contractId);
 		return ResponseEntity.ok(contractRO);
 	}
 
-	@GetMapping("/contracts")
+	@GetMapping
 	public ResponseEntity<List<ContractRO>> getAllContracts()
 	{
 		List<ContractRO> contracts = contractDelegate.getAllContracts();
 		return ResponseEntity.ok(contracts);
 	}
 
-	@PostMapping("/contracts")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<ContractRO> createNewContract(@RequestBody ContractRO contractRO)
 	{
