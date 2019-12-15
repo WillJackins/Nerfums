@@ -4,7 +4,8 @@ import common.exception.ErrorCode;
 
 public enum NerfumsErrorCode implements ErrorCode
 {
-	NO_CONTRACT;
+	NO_CONTRACT,
+	NO_MODIFIER;
 
 	@Override
 	public String getErrorCode()
