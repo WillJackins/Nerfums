@@ -1,0 +1,96 @@
+package com.nerfums.nerfumsservice.service;
+
+import com.nerfums.nerfumsservice.dataFactory.ContractDataFactory;
+import com.nerfums.nerfumsservice.dataFactory.UserDataFactory;
+import com.nerfums.nerfumsservice.model.Contract;
+import com.nerfums.nerfumsservice.model.User;
+import com.nerfums.nerfumsservice.repository.ContractRepository;
+import com.nerfums.nerfumsservice.repository.UserRepository;
+import com.nerfums.nerfumsservice.repository.api.ContractDO;
+import com.nerfums.nerfumsservice.repository.api.UserDO;
+import com.nerfums.nerfumsservice.service.mappers.ContractServiceMapper;
+import com.nerfums.nerfumsservice.service.mappers.UserServiceMapper;
+import common.exception.BusinessServiceException;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+
+public class UserServiceTests
+{
+	private static UserRepository mockRepository;
+	private static UserServiceMapper mockMapper;
+	private static UserService spyService;
+
+	@BeforeAll
+	static void beforeAll()
+	{
+		mockRepository = mock(UserRepository.class);
+		mockMapper = mock(UserServiceMapper.class);
+		spyService = spy(new UserService(mockMapper, mockRepository));
+	}
+
+	@Test
+	void getUserByIdTest()
+	{
+		User expectedUser = UserDataFactory.generateRandomUser();
+
+		when(mockRepository.findById(anyLong())).thenReturn(Optional.of(UserDataFactory.generateRandomUserDO()));
+		when(mockMapper.mapUserDOToUser(any(UserDO.class))).thenReturn(expectedUser);
+
+		// When
+		User actualUser = spyService.getUserById(1L);
+
+		// Then
+		assertNotNull(actualUser);
+	}
+
+	@Test
+	void getUserByIdTest_NotFoundFail()
+	{
+		when(mockRepository.findById(anyLong())).thenReturn(Optional.of(UserDataFactory.generateRandomUserDO()));
+		when(mockMapper.mapUserDOToUser(any(UserDO.class))).thenReturn(null);
+
+		assertThrows(BusinessServiceException.class, () -> spyService.getUserById(0L));
+	}
+
+	@Test
+	void getAllUsersTest()
+	{
+		// Given
+		User expectedUser = UserDataFactory.generateRandomUser();
+
+		when(mockRepository.findAll()).thenReturn(Arrays.asList(UserDataFactory.generateRandomUserDO()));
+		when(mockMapper.mapUserDOToUser(any(UserDO.class))).thenReturn(expectedUser);
+
+		// When
+		List<User> actualUsers = spyService.getAllUsers();
+
+		// Then
+		assertNotNull(actualUsers);
+	}
+
+	@Test
+	void createNewUserTest()
+	{
+		// Given
+		User user = UserDataFactory.generateRandomUser();
+		UserDO userDO = UserDataFactory.generateRandomUserDO();
+
+		when(mockRepository.save(any(UserDO.class))).thenReturn(UserDataFactory.generateRandomUserDO());
+		when(mockMapper.mapUserToUserDO(any(User.class))).thenReturn(userDO);
+		when(mockMapper.mapUserDOToUser(any(UserDO.class))).thenReturn(user);
+
+		// When
+		User actualUser = spyService.createNewUser(user);
+
+		// Then
+		assertNotNull(actualUser);
+	}
+}
