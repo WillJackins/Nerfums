@@ -68,6 +68,7 @@ public class ContractDelegateTests
 		ContractRO expectedContract = ContractDataFactory.generateRandomContractRO();
 
 		when(mockService.createNewContract(any(Contract.class))).thenReturn(ContractDataFactory.generateRandomContract());
+		when(mockMapper.mapContractROToContract(any(ContractRO.class))).thenReturn(ContractDataFactory.generateRandomContract());
 		when(mockMapper.mapContractToContractRO(any(Contract.class))).thenReturn(expectedContract);
 
 		// When

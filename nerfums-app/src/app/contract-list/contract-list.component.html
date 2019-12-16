@@ -1,0 +1,18 @@
+<mat-card class = contract-list-card>
+  <mat-card-header>
+    <mat-card-title>Contract List</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-grid-list cols="1" rowHeight="fit" gutterSize="1px" [style.height]="'400px'">
+      <mat-grid-tile *ngFor="let contract of currentContracts">
+        <app-contract-item [contract]="contract"></app-contract-item>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button (click)="prevPage()" [disabled]="!hasPrevPage()">Prev</button>
+    <button mat-button (click)="nextPage()" [disabled]="!hasNextPage()">Next</button>
+  </mat-card-actions>
+</mat-card>

@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,31 +22,31 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nerfums.nerfumsservice.dataFactory.ContractDataFactory;
-import com.nerfums.nerfumsservice.delegate.ContractDelegate;
+import com.nerfums.nerfumsservice.dataFactory.ModifierDataFactory;
+import com.nerfums.nerfumsservice.delegate.ModifierDelegate;
 import com.nerfums.nerfumsservice.exception.NerfumsErrorCode;
-import com.nerfums.nerfumsservice.resource.api.ContractRO;
+import com.nerfums.nerfumsservice.resource.api.ModifierRO;
 
 import common.exception.BusinessServiceException;
 
-@WebMvcTest(ContractController.class)
-public class ContractControllerTests
+@WebMvcTest(ModifierController.class)
+public class ModifierControllerTests
 {
 	@Autowired
 	private MockMvc mockMvc;
 
 	@MockBean
-	private ContractDelegate mockDelegate;
+	private ModifierDelegate mockDelegate;
 
 
 	@Test
-	void getContractByIdTest() throws Exception
+	void getModifierByIdTest() throws Exception
 	{
 		// Given
-		ContractRO contractRO = ContractDataFactory.generateRandomContractRO();
-		when(mockDelegate.getContractById(anyLong())).thenReturn(contractRO);
+		ModifierRO modifierRO = ModifierDataFactory.generateRandomModifierRO();
+		when(mockDelegate.getModifierById(anyLong())).thenReturn(modifierRO);
 
-		RequestBuilder request = MockMvcRequestBuilders.get("/Nerfums/api/contracts/1").contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder request = MockMvcRequestBuilders.get("/modifiers/1").contentType(MediaType.APPLICATION_JSON);
 
 		// When
 		ResultActions result = mockMvc.perform(request);
@@ -55,16 +54,16 @@ public class ContractControllerTests
 		// Then
 		result.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.contractId").value(contractRO.getContractId()));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.modifierId").value(modifierRO.getModifierId()));
 	}
 
 	@Test
-	void getContractByIdTest_NotFoundFail() throws Exception
+	void getModifierByIdTest_NotFoundFail() throws Exception
 	{
 		// Given
-		when(mockDelegate.getContractById(anyLong())).thenThrow(new BusinessServiceException("Contract not found.", NerfumsErrorCode.NO_CONTRACT));
+		when(mockDelegate.getModifierById(anyLong())).thenThrow(new BusinessServiceException("Modifier not found.", NerfumsErrorCode.NO_MODIFIER));
 
-		RequestBuilder request = MockMvcRequestBuilders.get("/Nerfums/api/contracts/0").contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder request = MockMvcRequestBuilders.get("/modifiers/0").contentType(MediaType.APPLICATION_JSON);
 
 		// When
 		ResultActions result = mockMvc.perform(request);
@@ -74,13 +73,13 @@ public class ContractControllerTests
 	}
 
 	@Test
-	void getAllContractsTest() throws Exception
+	void getAllModifiersTest() throws Exception
 	{
 		// Given
-		ContractRO contractRO = ContractDataFactory.generateRandomContractRO();
-		when(mockDelegate.getAllContracts()).thenReturn(Arrays.asList(contractRO));
+		ModifierRO modifierRO = ModifierDataFactory.generateRandomModifierRO();
+		when(mockDelegate.getAllModifiers()).thenReturn(Arrays.asList(modifierRO));
 
-		RequestBuilder request = MockMvcRequestBuilders.get("/Nerfums/api/contracts").contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder request = MockMvcRequestBuilders.get("/modifiers").contentType(MediaType.APPLICATION_JSON);
 
 		// When
 		ResultActions result = mockMvc.perform(request);
@@ -91,15 +90,16 @@ public class ContractControllerTests
 	}
 
 	@Test
-	void postContractTest() throws Exception
+	void postModifierTest() throws Exception
 	{
 		// Given
-		ContractRO contractRO = ContractDataFactory.generateRandomContractRO();
-		when(mockDelegate.createNewContract(any(ContractRO.class))).thenReturn(contractRO);
+		ModifierRO modifierRO = ModifierDataFactory.generateRandomModifierRO();
+		when(mockDelegate.createNewModifier(any(ModifierRO.class))).thenReturn(modifierRO);
 
-		RequestBuilder request = MockMvcRequestBuilders.post("/Nerfums/api/contracts")
+		RequestBuilder request = MockMvcRequestBuilders.post("/modifiers")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(convertObjectToJsonBytes(contractRO));
+				.content(convertObjectToJsonBytes(modifierRO));
+
 
 		// When
 		ResultActions result = mockMvc.perform(request);
@@ -107,7 +107,7 @@ public class ContractControllerTests
 		// Then
 		result.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.contractId").value(contractRO.getContractId()));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.modifierId").value(modifierRO.getModifierId()));
 	}
 
 	public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
