@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nerfums.nerfumsservice.dataFactory.ContractDataFactory;
 import com.nerfums.nerfumsservice.delegate.ContractDelegate;
 import com.nerfums.nerfumsservice.exception.NerfumsErrorCode;
@@ -42,7 +45,7 @@ public class ContractControllerTests
 	{
 		// Given
 		ContractRO contractRO = ContractDataFactory.generateRandomContractRO();
-		when(mockDelegate.getAllContracts()).thenReturn(Arrays.asList(contractRO)); //TODO change for single contract endpoint
+		when(mockDelegate.getContractById(anyLong())).thenReturn(contractRO);
 
 		RequestBuilder request = MockMvcRequestBuilders.get("/Nerfums/api/contracts/1").contentType(MediaType.APPLICATION_JSON);
 
@@ -94,7 +97,9 @@ public class ContractControllerTests
 		ContractRO contractRO = ContractDataFactory.generateRandomContractRO();
 		when(mockDelegate.createNewContract(any(ContractRO.class))).thenReturn(contractRO);
 
-		RequestBuilder request = MockMvcRequestBuilders.post("/Nerfums/api/contracts").contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder request = MockMvcRequestBuilders.post("/Nerfums/api/contracts")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(convertObjectToJsonBytes(contractRO));
 
 		// When
 		ResultActions result = mockMvc.perform(request);
@@ -103,5 +108,11 @@ public class ContractControllerTests
 		result.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.contractId").value(contractRO.getContractId()));
+	}
+
+	public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		return mapper.writeValueAsBytes(object);
 	}
 }
