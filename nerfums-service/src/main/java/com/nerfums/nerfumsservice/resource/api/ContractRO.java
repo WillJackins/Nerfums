@@ -8,8 +8,8 @@ public class ContractRO
 	private String contractOwner;
 	private String targetName;
 	private Integer paymentAmount;
-	//private List<Modifier> requirements;
-	//private List<Modifier> optionals;
+	private List<ModifierRO> requirements;
+	private List<ModifierRO> optionals;
 
 
 	public Long getContractId() {
@@ -29,14 +29,14 @@ public class ContractRO
 		return paymentAmount;
 	}
 
-//	public List<String> getRequirements() {
-//		return requirements;
-//	}
-//
-//	public List<String> getOptionals()
-//	{
-//		return optionals;
-//	}
+	public List<ModifierRO> getRequirements() {
+		return requirements;
+	}
+
+	public List<ModifierRO> getOptionals()
+	{
+		return optionals;
+	}
 
 
 	public void setContractId(Long contractId)
@@ -59,13 +59,13 @@ public class ContractRO
 		this.paymentAmount = paymentAmount;
 	}
 
-//	public void setRequirements(List<String> requirements)
-//	{
-//		this.requirements = requirements;
-//	}
-//
-//	public void setOptionals(List<String> optionals)
-//	{
-//		this.optionals = optionals;
-//	}
+	public void setRequirements(List<ModifierRO> requirements)
+	{
+		this.requirements = requirements;
+	}
+
+	public void setOptionals(List<ModifierRO> optionals)
+	{
+		this.optionals = optionals;
+	}
 }

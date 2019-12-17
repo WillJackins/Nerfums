@@ -1,9 +1,10 @@
 package com.nerfums.nerfumsservice.repository.api;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
+
+import javax.persistence.*;
+
+import com.nerfums.nerfumsservice.model.Contract;
 
 @Entity
 @Table(name = "modifiers")
@@ -21,6 +22,12 @@ public class ModifierDO
 
 	@Column(name = "modifier_value")
 	private Integer modifierValue;
+
+	@ManyToMany(mappedBy = "requirements")
+	private List<ContractDO> contractRequirements;
+
+	@ManyToMany(mappedBy = "optionals")
+	private List<ContractDO> contractOptionals;
 
 
 	public Long getModifierId()
@@ -43,6 +50,16 @@ public class ModifierDO
 		return modifierValue;
 	}
 
+	public List<ContractDO> getContractRequirements()
+	{
+		return contractRequirements;
+	}
+
+	public List<ContractDO> getContractOptionals()
+	{
+		return contractOptionals;
+	}
+
 
 	public void setModifierId(Long modifierId)
 	{
@@ -62,5 +79,15 @@ public class ModifierDO
 	public void setModifierValue(Integer modifierValue)
 	{
 		this.modifierValue = modifierValue;
+	}
+
+	public void setContractRequirements(List<ContractDO> contractRequirements)
+	{
+		this.contractRequirements = contractRequirements;
+	}
+
+	public void setContractOptionals(List<ContractDO> contractOptionals)
+	{
+		this.contractOptionals = contractOptionals;
 	}
 }

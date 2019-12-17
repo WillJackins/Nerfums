@@ -1,6 +1,7 @@
 package com.nerfums.nerfumsservice.mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,9 @@ public class ContractMappersTests
 		assertEquals(expectedContract.getContractOwner(), actualContract.getContractOwner());
 		assertEquals(expectedContract.getTargetName(), actualContract.getTargetName());
 		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+
+		assertNotNull(actualContract.getRequirements());
+		assertNotNull(actualContract.getOptionals());
 	}
 
 	@Test
@@ -69,6 +73,9 @@ public class ContractMappersTests
 		assertEquals(expectedContract.getContractOwner(), actualContract.getContractOwner());
 		assertEquals(expectedContract.getTargetName(), actualContract.getTargetName());
 		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+
+		assertNotNull(actualContract.getRequirements());
+		assertNotNull(actualContract.getOptionals());
 	}
 
 	//================================================================================================================================================
@@ -90,6 +97,9 @@ public class ContractMappersTests
 		assertEquals(expectedContract.getContractOwner(), actualContract.getContractOwner());
 		assertEquals(expectedContract.getTargetName(), actualContract.getTargetName());
 		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+
+		assertNotNull(actualContract.getRequirements());
+		assertNotNull(actualContract.getOptionals());
 	}
 
 	@Test
@@ -107,5 +117,8 @@ public class ContractMappersTests
 		assertEquals(expectedContract.getContractOwner(), actualContract.getContractOwner());
 		assertEquals(expectedContract.getTargetName(), actualContract.getTargetName());
 		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+
+		assertNotNull(actualContract.getRequirements());
+		assertNotNull(actualContract.getOptionals());
 	}
 }

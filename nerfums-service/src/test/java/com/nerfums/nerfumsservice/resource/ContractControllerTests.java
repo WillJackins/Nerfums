@@ -47,7 +47,7 @@ public class ContractControllerTests
 		ContractRO contractRO = ContractDataFactory.generateRandomContractRO();
 		when(mockDelegate.getContractById(anyLong())).thenReturn(contractRO);
 
-		RequestBuilder request = MockMvcRequestBuilders.get("/Nerfums/api/contracts/1").contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder request = MockMvcRequestBuilders.get("/contracts/1").contentType(MediaType.APPLICATION_JSON);
 
 		// When
 		ResultActions result = mockMvc.perform(request);
@@ -64,7 +64,7 @@ public class ContractControllerTests
 		// Given
 		when(mockDelegate.getContractById(anyLong())).thenThrow(new BusinessServiceException("Contract not found.", NerfumsErrorCode.NO_CONTRACT));
 
-		RequestBuilder request = MockMvcRequestBuilders.get("/Nerfums/api/contracts/0").contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder request = MockMvcRequestBuilders.get("/contracts/0").contentType(MediaType.APPLICATION_JSON);
 
 		// When
 		ResultActions result = mockMvc.perform(request);
@@ -80,7 +80,7 @@ public class ContractControllerTests
 		ContractRO contractRO = ContractDataFactory.generateRandomContractRO();
 		when(mockDelegate.getAllContracts()).thenReturn(Arrays.asList(contractRO));
 
-		RequestBuilder request = MockMvcRequestBuilders.get("/Nerfums/api/contracts").contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder request = MockMvcRequestBuilders.get("/contracts").contentType(MediaType.APPLICATION_JSON);
 
 		// When
 		ResultActions result = mockMvc.perform(request);
@@ -97,7 +97,7 @@ public class ContractControllerTests
 		ContractRO contractRO = ContractDataFactory.generateRandomContractRO();
 		when(mockDelegate.createNewContract(any(ContractRO.class))).thenReturn(contractRO);
 
-		RequestBuilder request = MockMvcRequestBuilders.post("/Nerfums/api/contracts")
+		RequestBuilder request = MockMvcRequestBuilders.post("/contracts")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(convertObjectToJsonBytes(contractRO));
 

@@ -1,9 +1,8 @@
 package com.nerfums.nerfumsservice.repository.api;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "contracts")
@@ -22,8 +21,23 @@ public class ContractDO
 	@Column(name = "contract_payment")
 	private Integer paymentAmount;
 
-	//@Column(name = "contractRequirements")
-	//private String requirements;
+	@ManyToMany
+	@JoinTable
+	(
+		name = "contract_modifier_requirements",
+		joinColumns = @JoinColumn(name = "contract_id"),
+		inverseJoinColumns = @JoinColumn(name = "modifier_id")
+	)
+	private List<ModifierDO> requirements;
+
+	@ManyToMany
+	@JoinTable
+	(
+		name = "contract_modifier_optionals",
+		joinColumns = @JoinColumn(name = "contract_id"),
+		inverseJoinColumns = @JoinColumn(name = "modifier_id")
+	)
+	private List<ModifierDO> optionals;
 
 
 	public Long getContractId()
@@ -46,10 +60,15 @@ public class ContractDO
 		return paymentAmount;
 	}
 
-//	public String getRequirements()
-//	{
-//		return requirements;
-//	}
+	public List<ModifierDO> getRequirements()
+	{
+		return requirements;
+	}
+
+	public List<ModifierDO> getOptionals()
+	{
+		return optionals;
+	}
 
 
 	public void setContractId(Long contractId)
@@ -72,8 +91,13 @@ public class ContractDO
 		this.paymentAmount = paymentAmount;
 	}
 
-//	public void setRequirements(String requirements)
-//	{
-//		this.requirements = requirements;
-//	}
+	public void setRequirements(List<ModifierDO> requirements)
+	{
+		this.requirements = requirements;
+	}
+
+	public void setOptionals(List<ModifierDO> optionals)
+	{
+		this.optionals = optionals;
+	}
 }
