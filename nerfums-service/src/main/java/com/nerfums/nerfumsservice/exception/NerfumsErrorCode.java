@@ -5,6 +5,7 @@ import common.exception.ErrorCode;
 public enum NerfumsErrorCode implements ErrorCode
 {
 	NO_CONTRACT,
+	NO_USER,
 	NO_MODIFIER;
 
 	@Override
