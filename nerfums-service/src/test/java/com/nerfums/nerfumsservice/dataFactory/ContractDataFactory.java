@@ -42,7 +42,7 @@ public class ContractDataFactory
 
 		contract.setContractId(Long.parseLong(randomNumeric(3)));
 		contract.setPaymentAmount(Integer.parseInt(randomNumeric(5)));
-
+    
 		contract.setContractOwner(UserDataFactory.generateRandomUser());
 		contract.setContractTarget(UserDataFactory.generateRandomUser());
 
