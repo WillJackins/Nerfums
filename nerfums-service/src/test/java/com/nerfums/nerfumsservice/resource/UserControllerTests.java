@@ -1,5 +1,7 @@
 package com.nerfums.nerfumsservice.resource;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nerfums.nerfumsservice.dataFactory.UserDataFactory;
 import com.nerfums.nerfumsservice.delegate.UserDelegate;
 import com.nerfums.nerfumsservice.exception.NerfumsErrorCode;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -39,7 +42,7 @@ public class UserControllerTests
 	{
 		// Given
 		UserRO userRO = UserDataFactory.generateRandomUserRO();
-		when(mockDelegate.getAllUsers()).thenReturn(Arrays.asList(userRO));
+		when(mockDelegate.getUserById(anyLong())).thenReturn(userRO);
 
 		RequestBuilder request = MockMvcRequestBuilders.get("/users/1").contentType(MediaType.APPLICATION_JSON);
 
@@ -49,7 +52,7 @@ public class UserControllerTests
 		// Then
 		result.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.userID").value(userRO.getUserId()));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.userId").value(userRO.getUserId()));
 	}
 
 	@Test
@@ -91,7 +94,9 @@ public class UserControllerTests
 		UserRO userRO = UserDataFactory.generateRandomUserRO();
 		when(mockDelegate.createNewUser(any(UserRO.class))).thenReturn(userRO);
 
-		RequestBuilder request = MockMvcRequestBuilders.post("/users").contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder request = MockMvcRequestBuilders.post("/users")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(convertObjectToJsonBytes(userRO));
 
 		// When
 		ResultActions result = mockMvc.perform(request);
@@ -99,6 +104,12 @@ public class UserControllerTests
 		// Then
 		result.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.userID").value(userRO.getUserId()));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.userId").value(userRO.getUserId()));
+	}
+
+	public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		return mapper.writeValueAsBytes(object);
 	}
 }

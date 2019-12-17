@@ -29,7 +29,7 @@ public class FaultBarrier
 	@ExceptionHandler(BusinessServiceException.class)
 	public ResponseEntity<ErrorDetails> handleBusinessServiceException(BusinessServiceException ex, WebRequest request) {
 		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-		if (ex.getErrorCode() == NerfumsErrorCode.NO_CONTRACT || ex.getErrorCode() == NerfumsErrorCode.NO_MODIFIER)
+		if (ex.getErrorCode() == NerfumsErrorCode.NO_CONTRACT || ex.getErrorCode() == NerfumsErrorCode.NO_MODIFIER || ex.getErrorCode() == NerfumsErrorCode.NO_USER)
 		{
 			httpStatus = HttpStatus.NOT_FOUND;
 		}
