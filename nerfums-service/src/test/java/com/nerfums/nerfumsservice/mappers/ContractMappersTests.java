@@ -50,8 +50,6 @@ public class ContractMappersTests
 
 		// Then
 		assertEquals(expectedContract.getContractId(), actualContract.getContractId());
-		assertEquals(expectedContract.getContractOwner(), actualContract.getContractOwner());
-		assertEquals(expectedContract.getTargetName(), actualContract.getTargetName());
 		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
 
 		assertNotNull(actualContract.getRequirements());
@@ -70,9 +68,10 @@ public class ContractMappersTests
 
 		// Then
 		assertEquals(expectedContract.getContractId(), actualContract.getContractId());
-		assertEquals(expectedContract.getContractOwner(), actualContract.getContractOwner());
-		assertEquals(expectedContract.getTargetName(), actualContract.getTargetName());
 		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+
+		assertNotNull(actualContract.getContractOwner());
+		assertNotNull(actualContract.getContractTarget());
 
 		assertNotNull(actualContract.getRequirements());
 		assertNotNull(actualContract.getOptionals());
@@ -94,9 +93,10 @@ public class ContractMappersTests
 
 		// Then
 		assertEquals(expectedContract.getContractId(), actualContract.getContractId());
-		assertEquals(expectedContract.getContractOwner(), actualContract.getContractOwner());
-		assertEquals(expectedContract.getTargetName(), actualContract.getTargetName());
 		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+
+		assertNotNull(actualContract.getContractOwner());
+		assertNotNull(actualContract.getContractTarget());
 
 		assertNotNull(actualContract.getRequirements());
 		assertNotNull(actualContract.getOptionals());
@@ -114,9 +114,10 @@ public class ContractMappersTests
 
 		// Then
 		assertEquals(expectedContract.getContractId(), actualContract.getContractId());
-		assertEquals(expectedContract.getContractOwner(), actualContract.getContractOwner());
-		assertEquals(expectedContract.getTargetName(), actualContract.getTargetName());
 		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+
+		assertNotNull(actualContract.getContractOwner());
+		assertNotNull(actualContract.getContractTarget());
 
 		assertNotNull(actualContract.getRequirements());
 		assertNotNull(actualContract.getOptionals());

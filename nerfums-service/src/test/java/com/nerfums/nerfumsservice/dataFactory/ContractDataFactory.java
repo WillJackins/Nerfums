@@ -21,9 +21,10 @@ public class ContractDataFactory
 		ContractRO contract = new ContractRO();
 
 		contract.setContractId(Long.parseLong(randomNumeric(3)));
-		contract.setContractOwner(randomAlphabetic(10));
-		contract.setTargetName(randomAlphabetic(10));
 		contract.setPaymentAmount(Integer.parseInt(randomNumeric(5)));
+
+		contract.setContractOwner(UserDataFactory.generateRandomUserRO());
+		contract.setContractTarget(UserDataFactory.generateRandomUserRO());
 
 		contract.setRequirements(Arrays.asList(ModifierDataFactory.generateRandomModifierRO()));
 		contract.setOptionals(Arrays.asList(ModifierDataFactory.generateRandomModifierRO()));
@@ -40,9 +41,10 @@ public class ContractDataFactory
 		Contract contract = new Contract();
 
 		contract.setContractId(Long.parseLong(randomNumeric(3)));
-		contract.setContractOwner(randomAlphabetic(10));
-		contract.setTargetName(randomAlphabetic(10));
 		contract.setPaymentAmount(Integer.parseInt(randomNumeric(5)));
+
+		contract.setContractOwner(UserDataFactory.generateRandomUser());
+		contract.setContractTarget(UserDataFactory.generateRandomUser());
 
 		contract.setRequirements(Arrays.asList(ModifierDataFactory.generateRandomModifier()));
 		contract.setOptionals(Arrays.asList(ModifierDataFactory.generateRandomModifier()));
@@ -59,9 +61,10 @@ public class ContractDataFactory
 		ContractDO contract = new ContractDO();
 
 		contract.setContractId(Long.parseLong(randomNumeric(3)));
-		contract.setContractOwner(randomAlphabetic(10));
-		contract.setTargetName(randomAlphabetic(10));
 		contract.setPaymentAmount(Integer.parseInt(randomNumeric(5)));
+
+		contract.setContractOwner(UserDataFactory.generateRandomUserDO());
+		contract.setContractTarget(UserDataFactory.generateRandomUserDO());
 
 		contract.setRequirements(Arrays.asList(ModifierDataFactory.generateRandomModifierDO()));
 		contract.setOptionals(Arrays.asList(ModifierDataFactory.generateRandomModifierDO()));

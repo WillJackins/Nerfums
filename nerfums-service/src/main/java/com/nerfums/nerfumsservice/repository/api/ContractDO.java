@@ -12,11 +12,13 @@ public class ContractDO
 	@Column(name = "contract_id")
 	private Long contractId;
 
-	@Column(name = "contract_owner")
-	private String contractOwner;
+	@ManyToOne
+	@JoinColumn(name = "contract_owner_id")
+	private UserDO contractOwner;
 
-	@Column(name = "target_name")
-	private String targetName;
+	@ManyToOne
+	@JoinColumn(name = "contract_target_id")
+	private UserDO contractTarget;
 
 	@Column(name = "contract_payment")
 	private Integer paymentAmount;
@@ -45,14 +47,14 @@ public class ContractDO
 		return contractId;
 	}
 
-	public String getContractOwner()
+	public UserDO getContractOwner()
 	{
 		return contractOwner;
 	}
 
-	public String getTargetName()
+	public UserDO getContractTarget()
 	{
-		return targetName;
+		return contractTarget;
 	}
 
 	public Integer getPaymentAmount()
@@ -76,14 +78,14 @@ public class ContractDO
 		this.contractId = contractId;
 	}
 
-	public void setContractOwner(String contractOwner)
+	public void setContractOwner(UserDO contractOwner)
 	{
 		this.contractOwner = contractOwner;
 	}
 
-	public void setTargetName(String targetName)
+	public void setContractTarget(UserDO targetName)
 	{
-		this.targetName = targetName;
+		this.contractTarget = targetName;
 	}
 
 	public void setPaymentAmount(Integer paymentAmount)
