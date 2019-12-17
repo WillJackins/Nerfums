@@ -2,14 +2,11 @@ package com.nerfums.nerfumsservice.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-
 public class Contract
 {
 	private Long contractId;
-	private String contractOwner;
-	private String targetName;
+	private User contractOwner;
+	private User contractTarget;
 	private Integer paymentAmount;
 	private List<Modifier> requirements;
 	private List<Modifier> optionals;
@@ -19,13 +16,13 @@ public class Contract
 		return contractId;
 	}
 
-	public String getContractOwner()
+	public User getContractOwner()
 	{
 		return contractOwner;
 	}
 
-	public String getTargetName() {
-		return targetName;
+	public User getContractTarget() {
+		return contractTarget;
 	}
 
 	public Integer getPaymentAmount() {
@@ -47,14 +44,14 @@ public class Contract
 		this.contractId = contractId;
 	}
 
-	public void setContractOwner(String contractOwner)
+	public void setContractOwner(User contractOwner)
 	{
 		this.contractOwner = contractOwner;
 	}
 
-	public void setTargetName(String targetName)
+	public void setContractTarget(User contractTarget)
 	{
-		this.targetName = targetName;
+		this.contractTarget = contractTarget;
 	}
 
 	public void setPaymentAmount(Integer paymentAmount)

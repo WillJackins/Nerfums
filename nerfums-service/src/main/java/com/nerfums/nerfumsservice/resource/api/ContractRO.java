@@ -5,8 +5,8 @@ import java.util.List;
 public class ContractRO
 {
 	private Long contractId;
-	private String contractOwner;
-	private String targetName;
+	private UserRO contractOwner;
+	private UserRO contractTarget;
 	private Integer paymentAmount;
 	private List<ModifierRO> requirements;
 	private List<ModifierRO> optionals;
@@ -16,13 +16,13 @@ public class ContractRO
 		return contractId;
 	}
 
-	public String getContractOwner()
+	public UserRO getContractOwner()
 	{
 		return contractOwner;
 	}
 
-	public String getTargetName() {
-		return targetName;
+	public UserRO getContractTarget() {
+		return contractTarget;
 	}
 
 	public Integer getPaymentAmount() {
@@ -44,14 +44,14 @@ public class ContractRO
 		this.contractId = contractId;
 	}
 
-	public void setContractOwner(String contractOwner)
+	public void setContractOwner(UserRO contractOwner)
 	{
 		this.contractOwner = contractOwner;
 	}
 
-	public void setTargetName(String targetName)
+	public void setContractTarget(UserRO contractTarget)
 	{
-		this.targetName = targetName;
+		this.contractTarget = contractTarget;
 	}
 
 	public void setPaymentAmount(Integer paymentAmount)

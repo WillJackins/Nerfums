@@ -1,5 +1,7 @@
 package com.nerfums.nerfumsservice.repository.api;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,14 +11,21 @@ public class UserDO
     //region MEMBER VARIABLES
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "fullName")
+    @Column(name = "fullname")
     private String fullName;
 
-    @Column(name = "availableCash")
+    @Column(name = "available_cash")
     private Integer availableCash;
+
+    @OneToMany(mappedBy = "contractOwner")
+    private List<ContractDO> usersContracts;
+
+    @OneToMany(mappedBy = "contractTarget")
+    private List<ContractDO> userAsTargetContracts;
+
     //endregion
 
     //region GETTERS
@@ -34,6 +43,16 @@ public class UserDO
     {
         return availableCash;
     }
+
+    public List<ContractDO> getUsersContracts()
+    {
+        return usersContracts;
+    }
+
+    public List<ContractDO> getUserAsTargetContracts()
+    {
+        return userAsTargetContracts;
+    }
     //endregion
 
     //region SETTERS
@@ -50,6 +69,16 @@ public class UserDO
     public void setAvailableCash(Integer availableCash)
     {
         this.availableCash = availableCash;
+    }
+
+    public void setUsersContracts(List<ContractDO> usersContracts)
+    {
+        this.usersContracts = usersContracts;
+    }
+
+    public void setUserAsTargetContracts(List<ContractDO> userAsTargetContracts)
+    {
+        this.userAsTargetContracts = userAsTargetContracts;
     }
     //endregion
 }
