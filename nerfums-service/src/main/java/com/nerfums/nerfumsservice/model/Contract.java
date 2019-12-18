@@ -7,7 +7,7 @@ public class Contract
 	private Long contractId;
 	private User contractOwner;
 	private User contractTarget;
-	private Integer paymentAmount;
+	private Integer contractReward;
 	private List<Modifier> requirements;
 	private List<Modifier> optionals;
 
@@ -25,8 +25,8 @@ public class Contract
 		return contractTarget;
 	}
 
-	public Integer getPaymentAmount() {
-		return paymentAmount;
+	public Integer getContractReward() {
+		return contractReward;
 	}
 
 	public List<Modifier> getRequirements() {
@@ -54,9 +54,9 @@ public class Contract
 		this.contractTarget = contractTarget;
 	}
 
-	public void setPaymentAmount(Integer paymentAmount)
+	public void setContractReward(Integer contractReward)
 	{
-		this.paymentAmount = paymentAmount;
+		this.contractReward = contractReward;
 	}
 
 	public void setRequirements(List<Modifier> requirements)

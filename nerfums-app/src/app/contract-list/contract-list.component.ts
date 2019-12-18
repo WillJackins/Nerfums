@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NerfumsService } from '../nerfums.service';
+import {Contract} from '../../model/Contract';
 
 @Component({
   selector: 'app-contract-list',
@@ -7,7 +8,7 @@ import { NerfumsService } from '../nerfums.service';
   styleUrls: ['./contract-list.component.css']
 })
 export class ContractListComponent implements OnInit {
-  allContracts: Array<any>;
+  allContracts: Array<Contract>;
   pageCount: number;
   pageSize: number;
 

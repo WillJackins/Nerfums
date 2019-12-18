@@ -42,6 +42,8 @@ public class ContractController
 	public ResponseEntity<ContractRO> createNewContract(@RequestBody ContractRO contractRO)
 	{
 		ContractRO createdContract = contractDelegate.createNewContract(contractRO);
+		System.out.println("POST");
+		System.out.println(createdContract.getContractReward());
 		return ResponseEntity.ok(createdContract);
 	}
 }
