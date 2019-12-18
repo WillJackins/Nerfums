@@ -7,7 +7,7 @@ public class ContractRO
 	private Long contractId;
 	private UserRO contractOwner;
 	private UserRO contractTarget;
-	private Integer paymentAmount;
+	private Integer contractReward;
 	private List<ModifierRO> requirements;
 	private List<ModifierRO> optionals;
 
@@ -25,8 +25,8 @@ public class ContractRO
 		return contractTarget;
 	}
 
-	public Integer getPaymentAmount() {
-		return paymentAmount;
+	public Integer getContractReward() {
+		return contractReward;
 	}
 
 	public List<ModifierRO> getRequirements() {
@@ -54,9 +54,9 @@ public class ContractRO
 		this.contractTarget = contractTarget;
 	}
 
-	public void setPaymentAmount(Integer paymentAmount)
+	public void setContractReward(Integer contractReward)
 	{
-		this.paymentAmount = paymentAmount;
+		this.contractReward = contractReward;
 	}
 
 	public void setRequirements(List<ModifierRO> requirements)

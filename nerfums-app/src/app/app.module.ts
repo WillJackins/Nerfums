@@ -11,12 +11,17 @@ import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolb
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContractItemComponent } from './contract-item/contract-item.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { ContractCreateComponent } from './contract-create/contract-create.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {MatSelectModule} from "@angular/material/select";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     ContractListComponent,
-    ContractItemComponent
+    ContractItemComponent,
+    ContractCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatInputModule,
     MatListModule,
     MatToolbarModule,
-    MatGridListModule
+    MatGridListModule,
+    DragDropModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

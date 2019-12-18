@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class ContractDO
 {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "contract_id")
 	private Long contractId;
 
@@ -21,7 +22,7 @@ public class ContractDO
 	private UserDO contractTarget;
 
 	@Column(name = "contract_payment")
-	private Integer paymentAmount;
+	private Integer contractReward;
 
 	@ManyToMany
 	@JoinTable
@@ -57,9 +58,9 @@ public class ContractDO
 		return contractTarget;
 	}
 
-	public Integer getPaymentAmount()
+	public Integer getContractReward()
 	{
-		return paymentAmount;
+		return contractReward;
 	}
 
 	public List<ModifierDO> getRequirements()
@@ -88,9 +89,9 @@ public class ContractDO
 		this.contractTarget = targetName;
 	}
 
-	public void setPaymentAmount(Integer paymentAmount)
+	public void setContractReward(Integer paymentAmount)
 	{
-		this.paymentAmount = paymentAmount;
+		this.contractReward = paymentAmount;
 	}
 
 	public void setRequirements(List<ModifierDO> requirements)

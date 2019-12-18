@@ -1,0 +1,21 @@
+.contract-create-card {
+  max-width: 500px;
+  max-height: 300px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: 30px;
+}
+
+.input-field {
+  width: 40%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.extra-details-field {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
