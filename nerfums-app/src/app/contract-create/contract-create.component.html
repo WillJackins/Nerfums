@@ -9,7 +9,7 @@
       <mat-select #target (selectionChange)="setTarget(target.value)" [formControl]="targetInputControl">
         <mat-option>--</mat-option>
         <mat-option *ngFor="let user of users" [value]="user">
-          {{user.fullname}}
+          {{user.fullName}}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="targetInputControl.hasError('required')">Please enter a Contract Target.</mat-error>
@@ -53,7 +53,7 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <button mat-button>Cancel</button>
+    <button mat-button (click)="clearContract()">Cancel</button>
     <button mat-button (click)="postContract()" [disabled]="!isValidContract()">Submit</button>
   </mat-card-actions>
 </mat-card>

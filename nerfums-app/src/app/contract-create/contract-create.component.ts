@@ -77,4 +77,8 @@ export class ContractCreateComponent implements OnInit {
       console.log('Invalid Contract');
     }
   }
+
+  clearContract() {
+    this.contract = new Contract();
+  }
 }
