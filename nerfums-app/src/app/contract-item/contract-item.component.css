@@ -1,8 +1,8 @@
 .contract-card {
   position: center;
   width: 90%;
-  height: 90px;
 
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -10,4 +10,9 @@
 .test-avatar {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
+  display: inline-block;
+}
+
+.owner-display {
+  display: inline-block;
 }

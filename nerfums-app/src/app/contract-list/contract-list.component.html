@@ -4,15 +4,18 @@
   </mat-card-header>
 
   <mat-card-content>
-    <mat-grid-list cols="1" rowHeight="fit" gutterSize="1px" [style.height]="'400px'">
-      <mat-grid-tile *ngFor="let contract of currentContracts">
-        <app-contract-item [contract]="contract"></app-contract-item>
-      </mat-grid-tile>
-    </mat-grid-list>
+    <mat-accordion *ngFor="let contract of currentContracts">
+      <app-contract-item [contract]="contract"></app-contract-item>
+    </mat-accordion>
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <button mat-button (click)="prevPage()" [disabled]="!hasPrevPage()">Prev</button>
-    <button mat-button (click)="nextPage()" [disabled]="!hasNextPage()">Next</button>
+    <mat-paginator #paginator [length]="this.allContracts.length"
+                   [pageSize]="this.defaultPageSize"
+                   [pageIndex]="this.defaultPageIndex"
+                   [pageSizeOptions]="[2, 5, 10, 25, 100]"
+
+                   (page) ="paginatorEvent($event)">
+    </mat-paginator>
   </mat-card-actions>
 </mat-card>

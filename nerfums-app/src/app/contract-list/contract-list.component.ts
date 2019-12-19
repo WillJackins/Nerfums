@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { NerfumsService } from '../nerfums.service';
 import {Contract} from '../../model/Contract';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-contract-list',
@@ -9,49 +10,29 @@ import {Contract} from '../../model/Contract';
 })
 export class ContractListComponent implements OnInit {
   allContracts: Array<Contract>;
-  pageCount: number;
-  pageSize: number;
+  currentContracts: Array<Contract>;
 
-  currentContracts: Array<any>;
-  currentPage: number;
+  defaultPageIndex: number;
+  defaultPageSize: number;
 
   constructor(private nerfumsService: NerfumsService) { }
 
   ngOnInit() {
     this.nerfumsService.getAllContracts().subscribe(data => {
       this.allContracts = data;
-      this.pageSize = 3;
-      this.pageCount = this.allContracts.length / this.pageSize;
 
-      this.currentPage = 0;
-      this.currentContracts = this.getContractsFromPageNum(this.currentPage);
+      this.defaultPageIndex = 0;
+      this.defaultPageSize = 5;
+
+      this.updateContractList(this.defaultPageIndex, this.defaultPageSize);
     });
   }
 
-  private getContractsFromPageNum(page: number) {
-    return this.allContracts.slice((page * this.pageSize), (page * this.pageSize) + this.pageSize);
+  private paginatorEvent(event?: PageEvent) {
+    this.updateContractList(event.pageIndex, event.pageSize);
   }
 
-  nextPage() {
-    if (this.hasNextPage()) {
-      this.currentPage++;
-      this.currentContracts = this.getContractsFromPageNum(this.currentPage);
-    }
+  private updateContractList(pageIndex: number, pageSize: number) {
+    this.currentContracts = this.allContracts.slice((pageIndex * pageSize), (pageIndex * pageSize) + pageSize);
   }
-
-  prevPage() {
-    if (this.hasPrevPage()) {
-      this.currentPage--;
-      this.currentContracts = this.getContractsFromPageNum(this.currentPage);
-    }
-  }
-
-  hasNextPage() {
-    return this.currentPage < this.pageCount - 1;
-  }
-
-  hasPrevPage() {
-    return this.currentPage > 0;
-  }
-
 }

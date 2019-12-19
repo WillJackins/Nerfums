@@ -1,15 +1,41 @@
-<mat-card class = contract-card>
+<mat-card class="contract-card">
   <mat-card-header>
     <div mat-card-avatar class = test-avatar></div>
-    <mat-card-title>{{contract.targetName}}</mat-card-title>
-    <mat-card-subtitle>{{contract.paymentAmount}}</mat-card-subtitle>
-
+    <mat-card-title>{{contract.contractTarget.fullName}}</mat-card-title>
+    <mat-card-subtitle>{{contract.contractReward}}</mat-card-subtitle>
   </mat-card-header>
-
   <mat-card-content>
     <p>
-      Contract details go here. The details about contract requirements and optional bonuses goes here.
-      Maybe also a descriptions.
+      {{contract.contractDetails}}
+      Test stuff, just adding stuff here to pad out the test. This paragraph needs to be
+      of some sort of length in order to test stuff, which is what I am doing, testing
+      stuff. So this should be about enough testing.
     </p>
   </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title><h3>Contract Details:</h3></mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <h3>Contract From:</h3>
+      <div mat-card-avatar class = test-avatar></div>
+      <mat-card-title class="owner-display">{{contract.contractTarget.fullName}}</mat-card-title>
+
+
+      <h3>Requirements</h3>
+      <ul *ngFor="let modifier of contract.requirements">
+        <li>{{modifier.modifierTitle}}</li>
+      </ul>
+
+      <h3>Optional</h3>
+      <ul *ngFor="let modifier of contract.optionals">
+        <li>{{modifier.modifierTitle}}</li>
+      </ul>
+    </mat-expansion-panel>
+  </mat-card-actions>
+
 </mat-card>
+
+
