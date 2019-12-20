@@ -12,16 +12,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContractItemComponent } from './contract-item/contract-item.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ContractCreateComponent } from './contract-create/contract-create.component';
-import {DragDropModule} from "@angular/cdk/drag-drop";
-import {MatSelectModule} from "@angular/material/select";
-import {ReactiveFormsModule} from "@angular/forms";
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatSelectModule} from '@angular/material/select';
+import {ReactiveFormsModule} from '@angular/forms';
+import { ContractManagerComponent } from './contract-manager/contract-manager.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContractListComponent,
     ContractItemComponent,
-    ContractCreateComponent
+    ContractCreateComponent,
+    ContractManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatGridListModule,
     DragDropModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -19,6 +19,10 @@ export class NerfumsService {
     return this.http.get<Array<Contract>>('http://localhost:8081/Nerfums/api/contracts');
   }
 
+  getUsersContracts(userId: number): Observable<Array<Contract>> {
+    return this.http.get<Array<Contract>>('http://localhost:8081/Nerfums/api/users/' + userId + '/contracts');
+  }
+
   getAllUsers(): Observable<Array<User>> {
     return this.http.get<Array<User>>('http://localhost:8081/Nerfums/api/users');
   }
@@ -53,5 +57,5 @@ export class NerfumsService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
 }
