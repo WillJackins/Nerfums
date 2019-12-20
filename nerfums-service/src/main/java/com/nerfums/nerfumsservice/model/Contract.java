@@ -10,6 +10,7 @@ public class Contract
 	private Integer contractReward;
 	private List<Modifier> requirements;
 	private List<Modifier> optionals;
+	private String contractDetails;
 
 
 	public Long getContractId() {
@@ -36,6 +37,11 @@ public class Contract
 	public List<Modifier> getOptionals()
 	{
 		return optionals;
+	}
+
+	public String getContractDetails()
+	{
+		return contractDetails;
 	}
 
 
@@ -67,5 +73,10 @@ public class Contract
 	public void setOptionals(List<Modifier> optionals)
 	{
 		this.optionals = optionals;
+	}
+
+	public void setContractDetails(String contractDetails)
+	{
+		this.contractDetails = contractDetails;
 	}
 }
