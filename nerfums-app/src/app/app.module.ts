@@ -11,12 +11,15 @@ import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolb
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContractItemComponent } from './contract-item/contract-item.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { UserLoginComponent } from './user-login/user-login.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContractListComponent,
-    ContractItemComponent
+    ContractItemComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatInputModule,
     MatListModule,
     MatToolbarModule,
-    MatGridListModule
+    MatGridListModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
