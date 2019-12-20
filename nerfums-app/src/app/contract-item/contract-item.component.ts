@@ -9,6 +9,8 @@ import {Contract} from '../../model/Contract';
 export class ContractItemComponent implements OnInit {
   @Input() contract: Contract;
 
+  displayedColumns: string[] = ['title', 'description', 'bonus'];
+
   constructor() { }
 
   ngOnInit() {

@@ -17,6 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -25,23 +26,24 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ContractItemComponent,
     ContractCreateComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatListModule,
-    MatToolbarModule,
-    MatGridListModule,
-    DragDropModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatExpansionModule,
-    MatPaginatorModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatInputModule,
+        MatListModule,
+        MatToolbarModule,
+        MatGridListModule,
+        DragDropModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        MatPaginatorModule,
+        MatTableModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
