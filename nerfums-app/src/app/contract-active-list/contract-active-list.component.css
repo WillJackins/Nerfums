@@ -1,0 +1,39 @@
+table {
+  width: 90%;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.active-contracts {
+  width: 60%;
+  height: 80%;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+
+.table-header {
+  margin-left: 5%;
+}
+
+.contract-create-card {
+  width: 40%;
+  height: 80%;
+  margin: auto;
+
+  display: inline-block;
+}
+
+.input-field {
+  width: 40%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.extra-details-field {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}

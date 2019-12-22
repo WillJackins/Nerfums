@@ -19,8 +19,8 @@ export class NerfumsService {
     return this.http.get<Array<Contract>>('http://localhost:8081/Nerfums/api/contracts');
   }
 
-  getUsersContracts(userId: number): Observable<Array<Contract>> {
-    return this.http.get<Array<Contract>>('http://localhost:8081/Nerfums/api/users/' + userId + '/contracts');
+  getAllContractsByOwnerId(ownerId: number): Observable<Array<Contract>> {
+    return this.http.get<Array<Contract>>('http://localhost:8081/Nerfums/api/users/' + ownerId + '/contracts');
   }
 
   getAllUsers(): Observable<Array<User>> {

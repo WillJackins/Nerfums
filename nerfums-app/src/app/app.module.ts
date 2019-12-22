@@ -17,6 +17,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
 import { ContractManagerComponent } from './contract-manager/contract-manager.component';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {ContractActiveListComponent, ContractDeleteDialogComponent} from './contract-active-list/contract-active-list.component';
+import {ContractDashboardComponent } from './contract-dashboard/contract-dashboard.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,14 @@ import {MatTableModule} from '@angular/material/table';
     ContractListComponent,
     ContractItemComponent,
     ContractCreateComponent,
-    ContractManagerComponent
+    ContractManagerComponent,
+    ContractActiveListComponent,
+    ContractDashboardComponent,
+    ContractDeleteDialogComponent
+  ],
+  entryComponents: [
+    ContractCreateComponent,
+    ContractDeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +52,10 @@ import {MatTableModule} from '@angular/material/table';
     DragDropModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
