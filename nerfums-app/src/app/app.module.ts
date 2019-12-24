@@ -22,6 +22,8 @@ import {ContractActiveListComponent, ContractDeleteDialogComponent} from './cont
 import {ContractDashboardComponent } from './contract-dashboard/contract-dashboard.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
+import { ContractCompleteComponent } from './contract-complete/contract-complete.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -32,10 +34,12 @@ import {MatIconModule} from '@angular/material/icon';
     ContractManagerComponent,
     ContractActiveListComponent,
     ContractDashboardComponent,
-    ContractDeleteDialogComponent
+    ContractDeleteDialogComponent,
+    ContractCompleteComponent
   ],
   entryComponents: [
     ContractCreateComponent,
+    ContractCompleteComponent,
     ContractDeleteDialogComponent
   ],
   imports: [
@@ -55,7 +59,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatTableModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

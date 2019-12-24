@@ -14,26 +14,18 @@ table {
   margin-top: 5%;
 }
 
-.table-header {
-  margin-left: 5%;
+.table-number-col {
+  width: 10%;
 }
 
-.contract-create-card {
-  width: 40%;
-  height: 80%;
-  margin: auto;
-
-  display: inline-block;
+.table-info-col {
+  width: 15%
 }
 
-.input-field {
-  width: 40%;
-  margin-left: 5%;
-  margin-right: 5%;
+.table-description-col {
+  width: 35%
 }
 
-.extra-details-field {
-  width: 90%;
-  margin-left: 5%;
-  margin-right: 5%;
+.table-button-col {
+  width: 10%;
 }

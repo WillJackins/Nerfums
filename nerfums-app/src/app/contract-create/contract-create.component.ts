@@ -1,4 +1,4 @@
-import {Component, DebugElement, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NerfumsService} from '../nerfums.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Contract} from '../../model/Contract';
@@ -76,6 +76,7 @@ export class ContractCreateComponent implements OnInit {
 
       this.nerfumsService.postContract(this.contract).subscribe(data =>
         console.log(data));
+      location.reload();
       this.closeDialog();
     } else {
       console.log('Invalid Contract');

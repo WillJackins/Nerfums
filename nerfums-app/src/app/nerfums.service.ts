@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Contract} from '../model/Contract';
 import {User} from '../model/User';
 import {Modifier} from '../model/Modifier';
@@ -10,25 +9,18 @@ import {Modifier} from '../model/Modifier';
   providedIn: 'root'
 })
 export class NerfumsService {
+  urlRoot = 'http://localhost:8081/Nerfums/api';
 
   constructor(private http: HttpClient) {
 
   }
 
   getAllContracts(): Observable<Array<Contract>> {
-    return this.http.get<Array<Contract>>('http://localhost:8081/Nerfums/api/contracts');
+    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts');
   }
 
   getAllContractsByOwnerId(ownerId: number): Observable<Array<Contract>> {
-    return this.http.get<Array<Contract>>('http://localhost:8081/Nerfums/api/users/' + ownerId + '/contracts');
-  }
-
-  getAllUsers(): Observable<Array<User>> {
-    return this.http.get<Array<User>>('http://localhost:8081/Nerfums/api/users');
-  }
-
-  getAllModifiers(): Observable<Array<Modifier>> {
-    return this.http.get<Array<Modifier>>('http://localhost:8081/Nerfums/api/modifiers');
+    return this.http.get<Array<Contract>>(this.urlRoot + '/users/' + ownerId + '/contracts');
   }
 
   postContract(contract: Contract): Observable<Contract> {
@@ -38,24 +30,22 @@ export class NerfumsService {
         'Content-Type': 'application/json'
       })};
 
-    return this.http.post<Contract>('http://localhost:8081/Nerfums/api/contracts', JSON.stringify(contract), httpOptions)
-      .pipe(
-        catchError(this.handleError));
+    return this.http.post<Contract>(this.urlRoot + '/contracts', JSON.stringify(contract), httpOptions);
   }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
+  completeContract(completedContract: Contract): Observable<Contract> {
+    return this.http.patch<Contract>(this.urlRoot + '/contracts/' + completedContract.contractId, completedContract);
+  }
+
+  deleteContractById(contractId: number): Observable<Contract> {
+    return this.http.delete<Contract>(this.urlRoot + '/contracts/' + contractId);
+  }
+
+  getAllUsers(): Observable<Array<User>> {
+    return this.http.get<Array<User>>(this.urlRoot + '/users');
+  }
+
+  getAllModifiers(): Observable<Array<Modifier>> {
+    return this.http.get<Array<Modifier>>(this.urlRoot + '/modifiers');
   }
 }
