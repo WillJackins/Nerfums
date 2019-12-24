@@ -1,15 +1,78 @@
-<mat-card class = contract-card>
+<mat-card class="contract-card">
   <mat-card-header>
-    <div mat-card-avatar class = test-avatar></div>
-    <mat-card-title>{{contract.targetName}}</mat-card-title>
-    <mat-card-subtitle>{{contract.paymentAmount}}</mat-card-subtitle>
-
+    <div mat-card-avatar class = target-avatar></div>
+    <mat-card-title>{{contract.contractTarget.fullName}}</mat-card-title>
+    <mat-card-subtitle>{{contract.contractReward}}</mat-card-subtitle>
   </mat-card-header>
-
   <mat-card-content>
     <p>
-      Contract details go here. The details about contract requirements and optional bonuses goes here.
-      Maybe also a descriptions.
+      {{contract.contractDetails}}
     </p>
   </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title><h3>Contract Details:</h3></mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <h3>Contract From:</h3>
+      <div class="owner">
+        <div mat-card-avatar class = owner-avatar></div>
+        <mat-card-title class="owner-name">Contract Owner Name Here</mat-card-title>
+      </div>
+
+      <div *ngIf="contract.requirements.length > 0">
+        <h3>Requirements</h3>
+        <table mat-table [dataSource]="contract.requirements" class="modifier-table">
+
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>Modifier</th>
+            <td mat-cell class="modifier-table-title" *matCellDef="let modifier">{{modifier.modifierTitle}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell class="modifier-table-description" *matCellDef="let modifier">{{modifier.modifierDescription}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="bonus">
+            <th mat-header-cell *matHeaderCellDef>Bonus</th>
+            <td mat-cell class="modifier-table-bonus" *matCellDef="let modifier">${{modifier.modifierBonus}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+      <div *ngIf="contract.optionals.length > 0">
+        <h3>Optional</h3>
+        <table mat-table [dataSource]="contract.optionals" class="modifier-table">
+
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>Modifier</th>
+            <td mat-cell class="modifier-table-title" *matCellDef="let modifier">{{modifier.modifierTitle}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell class="modifier-table-description" *matCellDef="let modifier">{{modifier.modifierDescription}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="bonus">
+            <th mat-header-cell *matHeaderCellDef>Bonus</th>
+            <td mat-cell class="modifier-table-bonus" *matCellDef="let modifier">${{modifier.modifierBonus}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-card-actions>
+
 </mat-card>
+
+

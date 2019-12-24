@@ -15,6 +15,7 @@ import { ContractCreateComponent } from './contract-create/contract-create.compo
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { ContractManagerComponent } from './contract-manager/contract-manager.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -58,6 +59,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ReactiveFormsModule,
     MatTableModule,
     MatPaginatorModule,
+    MatExpansionModule,
     MatDialogModule,
     MatIconModule,
     MatCheckboxModule
