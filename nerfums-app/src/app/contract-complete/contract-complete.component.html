@@ -1,0 +1,30 @@
+<mat-card class="mat-elevation-z0">
+  <mat-card-header>
+    <mat-card-title>Complete Contract</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-form-field class="complete-user">
+      <mat-label>Completed By:</mat-label>
+      <mat-select #user (selectionChange)="setCompleteBy(user.value)" [formControl]="userInputControl">
+        <mat-option *ngFor="let user of users" [value]="user">{{user.fullName}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="userInputControl.hasError('required')">Please select a User.</mat-error>
+    </mat-form-field>
+
+    <mat-list #requirements *ngIf="hasRequirements()">
+      <mat-label>Required Modifiers</mat-label>
+      <mat-list-item *ngFor="let modifier of contractToComplete.requirements">{{modifier.modifierTitle}}</mat-list-item>
+    </mat-list>
+
+    <mat-selection-list #optionals *ngIf="hasOptionals()" (selectionChange)="setCompletedOptionalFromSelectList(optionals.selectedOptions.selected.flat())">
+      <mat-label>Optional Modifiers</mat-label>
+      <mat-list-option #optional *ngFor="let modifier of contractToComplete.optionals" [value] = modifier>{{modifier.modifierTitle}}</mat-list-option>
+    </mat-selection-list>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-flat-button (click)="closeDialog()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="completeContract()" [disabled]="!contractValid()">Save</button>
+  </mat-card-actions>
+</mat-card>
