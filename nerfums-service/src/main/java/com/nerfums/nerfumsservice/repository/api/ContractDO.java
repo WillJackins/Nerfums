@@ -42,6 +42,9 @@ public class ContractDO
 	)
 	private List<ModifierDO> optionals;
 
+	@Column(name = "contract_details")
+	private String contractDetails;
+
 
 	public Long getContractId()
 	{
@@ -73,6 +76,11 @@ public class ContractDO
 		return optionals;
 	}
 
+	public String getContractDetails()
+	{
+		return contractDetails;
+	}
+
 
 	public void setContractId(Long contractId)
 	{
@@ -102,5 +110,10 @@ public class ContractDO
 	public void setOptionals(List<ModifierDO> optionals)
 	{
 		this.optionals = optionals;
+	}
+
+	public void setContractDetails(String contractDetails)
+	{
+		this.contractDetails = contractDetails;
 	}
 }
