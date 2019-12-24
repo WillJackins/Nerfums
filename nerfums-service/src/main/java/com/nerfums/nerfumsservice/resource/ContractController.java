@@ -42,8 +42,20 @@ public class ContractController
 	public ResponseEntity<ContractRO> createNewContract(@RequestBody ContractRO contractRO)
 	{
 		ContractRO createdContract = contractDelegate.createNewContract(contractRO);
-		System.out.println("POST");
-		System.out.println(createdContract.getContractReward());
 		return ResponseEntity.ok(createdContract);
+	}
+
+	@PatchMapping
+	public ResponseEntity<ContractRO> completeContract(@RequestBody ContractRO contractRO)
+	{
+		ContractRO completedContract = contractDelegate.completeContract(contractRO);
+		return ResponseEntity.ok(completedContract);
+	}
+
+	@DeleteMapping("/{contractId}")
+	public void deleteContract(@PathVariable Long contractId)
+	{
+		System.out.println("DELETE");
+		contractDelegate.deleteContract(contractId);
 	}
 }

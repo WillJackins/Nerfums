@@ -11,7 +11,9 @@ public class Contract
 	private List<Modifier> requirements;
 	private List<Modifier> optionals;
 	private String contractDetails;
-
+	private Boolean contractActive;
+	private User contractCompletedBy;
+	private List<Modifier> contractOptionalsCompleted;
 
 	public Long getContractId() {
 		return contractId;
@@ -42,6 +44,21 @@ public class Contract
 	public String getContractDetails()
 	{
 		return contractDetails;
+	}
+
+	public Boolean getContractActive()
+	{
+		return contractActive;
+	}
+
+	public User getContractCompletedBy()
+	{
+		return contractCompletedBy;
+	}
+
+	public List<Modifier> getContractOptionalsCompleted()
+	{
+		return contractOptionalsCompleted;
 	}
 
 
@@ -78,5 +95,20 @@ public class Contract
 	public void setContractDetails(String contractDetails)
 	{
 		this.contractDetails = contractDetails;
+	}
+
+	public void setContractActive(Boolean contractActive)
+	{
+		this.contractActive = contractActive;
+	}
+
+	public void setContractCompletedBy(User contractCompletedBy)
+	{
+		this.contractCompletedBy = contractCompletedBy;
+	}
+
+	public void setContractOptionalsCompleted(List<Modifier> contractOptionalsCompleted)
+	{
+		this.contractOptionalsCompleted = contractOptionalsCompleted;
 	}
 }

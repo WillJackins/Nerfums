@@ -45,6 +45,22 @@ public class ContractDO
 	@Column(name = "contract_details")
 	private String contractDetails;
 
+	@Column(name = "contract_active")
+	private Boolean contractActive;
+
+	@ManyToOne
+	@JoinColumn(name = "contract_completed_by_id")
+	private UserDO contractCompletedBy;
+
+	@ManyToMany
+	@JoinTable
+	(
+		name = "contract_modifier_optionals_completed",
+		joinColumns = @JoinColumn(name = "contract_id"),
+		inverseJoinColumns = @JoinColumn(name = "modifier_id")
+	)
+	private List<ModifierDO> contractOptionalsCompleted;
+
 
 	public Long getContractId()
 	{
@@ -81,6 +97,21 @@ public class ContractDO
 		return contractDetails;
 	}
 
+	public Boolean getContractActive()
+	{
+		return contractActive;
+	}
+
+	public UserDO getContractCompletedBy()
+	{
+		return contractCompletedBy;
+	}
+
+	public List<ModifierDO> getContractOptionalsCompleted()
+	{
+		return contractOptionalsCompleted;
+	}
+
 
 	public void setContractId(Long contractId)
 	{
@@ -115,5 +146,20 @@ public class ContractDO
 	public void setContractDetails(String contractDetails)
 	{
 		this.contractDetails = contractDetails;
+	}
+
+	public void setContractActive(Boolean contractActive)
+	{
+		this.contractActive = contractActive;
+	}
+
+	public void setContractCompletedBy(UserDO contractCompletedBy)
+	{
+		this.contractCompletedBy = contractCompletedBy;
+	}
+
+	public void setContractOptionalsCompleted(List<ModifierDO> contractOptionalsCompleted)
+	{
+		this.contractCompletedBy = contractCompletedBy;
 	}
 }

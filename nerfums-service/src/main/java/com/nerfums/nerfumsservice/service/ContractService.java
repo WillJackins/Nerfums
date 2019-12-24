@@ -49,11 +49,26 @@ public class ContractService
 				.collect(Collectors.toList());
 	}
 
-	public Contract createNewContract(Contract contract)
+	public Contract createNewContract(Contract contractToCreate)
 	{
-		ContractDO preCreate = contractServiceMapper.mapContractToContractDO(contract);
-		ContractDO postCreate = contractRepository.save(preCreate);
+		ContractDO preCreate = contractServiceMapper.mapContractToContractDO(contractToCreate);
+		preCreate.setContractActive(true);
 
+		ContractDO postCreate = contractRepository.save(preCreate);
 		return contractServiceMapper.mapContractDOToContract(postCreate);
+	}
+
+	public Contract completeContract(Contract contractToComplete)
+	{
+		ContractDO preComplete = contractServiceMapper.mapContractToContractDO(contractToComplete);
+		preComplete.setContractActive(false);
+
+		ContractDO postComplete = contractRepository.save(preComplete);
+		return contractServiceMapper.mapContractDOToContract(postComplete);
+	}
+
+	public void deleteContract(Long contractId)
+	{
+		contractRepository.deleteById(contractId);
 	}
 }

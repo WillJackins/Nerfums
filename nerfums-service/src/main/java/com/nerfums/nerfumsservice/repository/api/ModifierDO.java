@@ -29,6 +29,9 @@ public class ModifierDO
 	@ManyToMany(mappedBy = "optionals")
 	private List<ContractDO> contractOptionals;
 
+	@ManyToMany(mappedBy = "contractOptionalsCompleted")
+	private List<ContractDO> contractOptionalsCompleted;
+
 
 	public Long getModifierId()
 	{
@@ -60,6 +63,11 @@ public class ModifierDO
 		return contractOptionals;
 	}
 
+	public List<ContractDO> getContractOptionalsCompleted()
+	{
+		return contractOptionalsCompleted;
+	}
+
 
 	public void setModifierId(Long modifierId)
 	{
@@ -89,5 +97,10 @@ public class ModifierDO
 	public void setContractOptionals(List<ContractDO> contractOptionals)
 	{
 		this.contractOptionals = contractOptionals;
+	}
+
+	public void setContractOptionalsCompleted(List<ContractDO> contractOptionalsCompleted)
+	{
+		this.contractOptionalsCompleted = contractOptionalsCompleted;
 	}
 }

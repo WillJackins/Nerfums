@@ -38,6 +38,7 @@ export class NerfumsService {
   }
 
   deleteContractById(contractId: number): Observable<Contract> {
+    console.log('DELETE');
     return this.http.delete<Contract>(this.urlRoot + '/contracts/' + contractId);
   }
 
