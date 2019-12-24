@@ -16,34 +16,54 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { ContractManagerComponent } from './contract-manager/contract-manager.component';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {ContractActiveListComponent, ContractDeleteDialogComponent} from './contract-active-list/contract-active-list.component';
+import {ContractDashboardComponent } from './contract-dashboard/contract-dashboard.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
+import { ContractCompleteComponent } from './contract-complete/contract-complete.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContractListComponent,
     ContractItemComponent,
-    ContractCreateComponent
+    ContractCreateComponent,
+    ContractManagerComponent,
+    ContractActiveListComponent,
+    ContractDashboardComponent,
+    ContractDeleteDialogComponent,
+    ContractCompleteComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatInputModule,
-        MatListModule,
-        MatToolbarModule,
-        MatGridListModule,
-        DragDropModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatExpansionModule,
-        MatPaginatorModule,
-        MatTableModule
-    ],
+  entryComponents: [
+    ContractCreateComponent,
+    ContractCompleteComponent,
+    ContractDeleteDialogComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatListModule,
+    MatToolbarModule,
+    MatGridListModule,
+    DragDropModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatIconModule,
+    MatCheckboxModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
