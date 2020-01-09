@@ -21,7 +21,7 @@ public class ContractDataFactory
 		ContractRO contract = new ContractRO();
 
 		contract.setContractId(Long.parseLong(randomNumeric(3)));
-		contract.setPaymentAmount(Integer.parseInt(randomNumeric(5)));
+		contract.setContractReward(Integer.parseInt(randomNumeric(5)));
 
 		contract.setContractOwner(UserDataFactory.generateRandomUserRO());
 		contract.setContractTarget(UserDataFactory.generateRandomUserRO());
@@ -41,7 +41,7 @@ public class ContractDataFactory
 		Contract contract = new Contract();
 
 		contract.setContractId(Long.parseLong(randomNumeric(3)));
-		contract.setPaymentAmount(Integer.parseInt(randomNumeric(5)));
+		contract.setContractReward(Integer.parseInt(randomNumeric(5)));
     
 		contract.setContractOwner(UserDataFactory.generateRandomUser());
 		contract.setContractTarget(UserDataFactory.generateRandomUser());
@@ -61,7 +61,7 @@ public class ContractDataFactory
 		ContractDO contract = new ContractDO();
 
 		contract.setContractId(Long.parseLong(randomNumeric(3)));
-		contract.setPaymentAmount(Integer.parseInt(randomNumeric(5)));
+		contract.setContractReward(Integer.parseInt(randomNumeric(5)));
 
 		contract.setContractOwner(UserDataFactory.generateRandomUserDO());
 		contract.setContractTarget(UserDataFactory.generateRandomUserDO());

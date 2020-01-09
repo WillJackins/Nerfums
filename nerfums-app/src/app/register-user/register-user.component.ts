@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ThrowStmt } from '@angular/compiler';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { NerfumsService } from '../nerfums.service';
+import { stringify } from 'querystring';
+import { User } from 'src/model/User';
 
 @Component({
   selector: 'app-register-user',
@@ -37,7 +40,7 @@ export class RegisterUserComponent implements OnInit {
   confirmPasswordControl = new FormControl('', [
     Validators.required,
   ]);
-  constructor() { }
+  constructor(private nerfumsService: NerfumsService) { }
 
   ngOnInit() {
   }
@@ -99,12 +102,24 @@ export class RegisterUserComponent implements OnInit {
     console.log(this.confirmPassword); console.log(this.validPassword);
   }
 
-  private register(){
-    if(this.full_name === ""){
-      this.validName = false;
-      console.log("Valid name: " + this.validName);
+  private validateAllFields(): Boolean {
+    if(this.full_name === "" || this.email === "" || this.password === "" || this.confirmPassword === "" || this.confirmPassword !== this.password) {
+      return false;
     }
+    console.log("valid");
+    return true;
+  }
 
+  private register(){
+    console.log("Register");
+    if(this.validateAllFields()) {
+      console.log("posting");
+      let user: User = {
+        fullName: this.full_name,
+        availableCash: 1000
+      };
+      this.nerfumsService.postUser(user).subscribe(data => console.log(data));
+    }
     if(this.password === this.confirmPassword) {
 
     }

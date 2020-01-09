@@ -1,0 +1,31 @@
+table {
+  width: 90%;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.active-contracts {
+  width: 60%;
+  height: 80%;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+
+.table-number-col {
+  width: 10%;
+}
+
+.table-info-col {
+  width: 15%
+}
+
+.table-description-col {
+  width: 35%
+}
+
+.table-button-col {
+  width: 10%;
+}

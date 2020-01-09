@@ -1,13 +1,54 @@
 .contract-card {
   position: center;
   width: 90%;
-  height: 90px;
 
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.test-avatar {
+.target-avatar {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
+}
+
+.owner {
+  display: grid;
+  grid-template-columns: 10% 80%;
+}
+.owner-avatar {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.owner-name {
+  height: 50%;
+  margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: center;
+}
+
+.modifier-table {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modifier-table-title {
+  width: 20%;
+  padding: 2%;
+}
+
+.modifier-table-description {
+  width: 50%;
+  padding: 2%;
+
+  text-align: left;
+  word-wrap: normal;
+}
+
+.modifier-table-bonus {
+  width: 20%;
+  padding: 2%;
+
 }

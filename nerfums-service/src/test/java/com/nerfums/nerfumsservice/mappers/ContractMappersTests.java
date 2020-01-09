@@ -50,7 +50,7 @@ public class ContractMappersTests
 
 		// Then
 		assertEquals(expectedContract.getContractId(), actualContract.getContractId());
-		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+		assertEquals(expectedContract.getContractReward(), actualContract.getContractReward());
 
 		assertNotNull(actualContract.getRequirements());
 		assertNotNull(actualContract.getOptionals());
@@ -68,7 +68,7 @@ public class ContractMappersTests
 
 		// Then
 		assertEquals(expectedContract.getContractId(), actualContract.getContractId());
-		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+		assertEquals(expectedContract.getContractReward(), actualContract.getContractReward());
 
 		assertNotNull(actualContract.getContractOwner());
 		assertNotNull(actualContract.getContractTarget());
@@ -93,7 +93,7 @@ public class ContractMappersTests
 
 		// Then
 		assertEquals(expectedContract.getContractId(), actualContract.getContractId());
-		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+		assertEquals(expectedContract.getContractReward(), actualContract.getContractReward());
 
 		assertNotNull(actualContract.getContractOwner());
 		assertNotNull(actualContract.getContractTarget());
@@ -114,7 +114,7 @@ public class ContractMappersTests
 
 		// Then
 		assertEquals(expectedContract.getContractId(), actualContract.getContractId());
-		assertEquals(expectedContract.getPaymentAmount(), actualContract.getPaymentAmount());
+		assertEquals(expectedContract.getContractReward(), actualContract.getContractReward());
 
 		assertNotNull(actualContract.getContractOwner());
 		assertNotNull(actualContract.getContractTarget());

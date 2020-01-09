@@ -37,6 +37,13 @@ public class ContractDelegate
 				.collect(Collectors.toList());
 	}
 
+	public List<ContractRO> getAllContractsByOwnerId(Long ownerId)
+	{
+		return contractService.getAllContractsByOwnerId(ownerId).stream()
+				.map(contractDelegateMapper::mapContractToContractRO)
+				.collect(Collectors.toList());
+	}
+
 	public ContractRO createNewContract(ContractRO contractRO)
 	{
 		Contract preCreate = contractDelegateMapper.mapContractROToContract(contractRO);

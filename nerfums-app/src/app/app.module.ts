@@ -14,6 +14,18 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { UserLoginComponent } from './user-login/user-login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { ContractCreateComponent } from './contract-create/contract-create.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatSelectModule} from '@angular/material/select';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { ContractManagerComponent } from './contract-manager/contract-manager.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {ContractActiveListComponent, ContractDeleteDialogComponent} from './contract-active-list/contract-active-list.component';
+import {ContractDashboardComponent } from './contract-dashboard/contract-dashboard.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ContractCompleteComponent } from './contract-complete/contract-complete.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -21,7 +33,18 @@ import { RegisterUserComponent } from './register-user/register-user.component';
     ContractListComponent,
     ContractItemComponent,
     UserLoginComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    ContractCreateComponent,
+    ContractManagerComponent,
+    ContractActiveListComponent,
+    ContractDashboardComponent,
+    ContractDeleteDialogComponent,
+    ContractCompleteComponent
+  ],
+  entryComponents: [
+    ContractCreateComponent,
+    ContractCompleteComponent,
+    ContractDeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +60,13 @@ import { RegisterUserComponent } from './register-user/register-user.component';
     MatGridListModule,
     FormsModule,
     ReactiveFormsModule,
+    DragDropModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
