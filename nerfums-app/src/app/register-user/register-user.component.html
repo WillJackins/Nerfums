@@ -1,0 +1,44 @@
+<mat-card class=register-user-card>
+    <mat-card-content>
+        <mat-form-field class="fullname-field">
+            <mat-label>Full Name</mat-label>
+            <input type="text" matInput #fullnameInput placeholder="Full Name" [formControl]="fullnameControl"
+                (change)="setFullName(fullnameInput.value)">
+            <mat-error *ngIf="fullnameControl.hasError('required')">Please enter your full name!</mat-error>
+            <mat-error *ngIf="!validName">Please enter your full name!</mat-error>
+            <mat-hint>Enter Full Name</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="email-field">
+            <mat-label>Email</mat-label>
+            <input type="text" matInput #emailInput placeholder="Email" [formControl]="emailControl"
+                (change)="setEmail(emailInput.value)">
+            <mat-error *ngIf="emailControl.hasError('required') || emailControl.invalid">Please enter a valid email!
+            </mat-error>
+            <mat-hint>Enter Email</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="password-field">
+            <mat-label>Password</mat-label>
+            <input [type]="hidePassword ? 'password' : 'text'" matInput #passwordInput placeholder="Password" [formControl]="passwordControl"
+                (change)="setPassword(passwordInput.value)">
+            <button mat-icon-button matSuffix (click)="onHidePasswordClick()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="passwordControl.hasError('required')">Please enter a valid password!</mat-error>
+            <mat-hint>Enter Password</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="confirm-password-field">
+            <mat-label>Confirm Password</mat-label>
+            <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput #confirmPasswordInput placeholder="Confirm Password" [formControl]="confirmPasswordControl" (change)="setConfirmPassword(confirmPasswordInput.value)">
+            <button mat-icon-button matSuffix (click)="onHideConfirmPasswordClick()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="confirmPasswordControl.hasError('required')">Please enter a valid password!</mat-error>
+            <mat-error *ngIf="!validPassword">Passwords do not match!</mat-error>
+            <mat-hint>Confirm Password</mat-hint>
+        </mat-form-field>
+        <mat-card-actions align="end">
+            <button mat-flat-button class="cancel-button" (click)="cancel()">Cancel</button>
+            <button mat-flat-button class="signup-button" color="primary" (click)="register()">Register</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

@@ -14,4 +14,8 @@ export class NerfumsService {
   getAllContracts(): Observable<any> {
     return this.http.get('http://localhost:8081/Nerfums/api/contracts');
   }
+
+  postUser(){
+    
+  }
 }
