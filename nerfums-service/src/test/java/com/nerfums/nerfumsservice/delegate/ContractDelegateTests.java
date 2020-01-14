@@ -51,11 +51,11 @@ public class ContractDelegateTests
 		// Given
 		ContractRO expectedContract = ContractDataFactory.generateRandomContractRO();
 
-		when(mockService.getAllContracts()).thenReturn(Arrays.asList(ContractDataFactory.generateRandomContract()));
+		when(mockService.getAllActiveContracts(anyLong())).thenReturn(Arrays.asList(ContractDataFactory.generateRandomContract()));
 		when(mockMapper.mapContractToContractRO(any(Contract.class))).thenReturn(expectedContract);
 
 		// When
-		List<ContractRO> actualContracts = spyDelegate.getAllContracts();
+		List<ContractRO> actualContracts = spyDelegate.getAllActiveContracts(1l);
 
 		// Then
 		assertNotNull(actualContracts);

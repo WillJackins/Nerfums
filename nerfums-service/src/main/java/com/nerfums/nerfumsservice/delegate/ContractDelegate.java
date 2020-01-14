@@ -25,27 +25,23 @@ public class ContractDelegate
 		this.contractService = contractService;
 	}
 
-	public ContractRO getContractById(Long contractId)
-	{
+	public ContractRO getContractById(Long contractId) {
 		return contractDelegateMapper.mapContractToContractRO(contractService.getContractById(contractId));
 	}
 
-	public List<ContractRO> getAllContracts()
-	{
-		return contractService.getAllContracts().stream()
-				.map(contractDelegateMapper::mapContractToContractRO)
-				.collect(Collectors.toList());
+	public List<ContractRO> getAllActiveContracts(Long requestingUserId) {
+		return contractService.getAllActiveContracts(requestingUserId).stream()
+					   .map(contractDelegateMapper::mapContractToContractRO)
+					   .collect(Collectors.toList());
 	}
 
-	public List<ContractRO> getAllContractsByOwnerId(Long ownerId)
-	{
-		return contractService.getAllContractsByOwnerId(ownerId).stream()
-				.map(contractDelegateMapper::mapContractToContractRO)
-				.collect(Collectors.toList());
+	public List<ContractRO> getAllContractsByOwnerId(Long ownerId, Boolean activeContracts) {
+		return contractService.getAllContractsByOwnerId(ownerId, activeContracts).stream()
+					   .map(contractDelegateMapper::mapContractToContractRO)
+					   .collect(Collectors.toList());
 	}
 
-	public ContractRO createNewContract(ContractRO contractRO)
-	{
+	public ContractRO createNewContract(ContractRO contractRO) {
 		Contract preCreate = contractDelegateMapper.mapContractROToContract(contractRO);
 		Contract postCreate = contractService.createNewContract(preCreate);
 

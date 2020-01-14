@@ -28,29 +28,25 @@ public class ContractService
 		this.contractRepository = contractRepository;
 	}
 
-	public Contract getContractById(Long contractId)
-	{
+	public Contract getContractById(Long contractId) {
 		return contractRepository.findById(contractId)
-				.map(contractServiceMapper::mapContractDOToContract)
-				.orElseThrow(() -> new BusinessServiceException("Contract not found.", NerfumsErrorCode.NO_CONTRACT));
+					   .map(contractServiceMapper::mapContractDOToContract)
+					   .orElseThrow(() -> new BusinessServiceException("Contract not found.", NerfumsErrorCode.NO_CONTRACT));
 	}
 
-	public List<Contract> getAllContracts()
-	{
-		return ((List<ContractDO>)contractRepository.findAll()).stream()
-				.map(contractServiceMapper::mapContractDOToContract)
-				.collect(Collectors.toList());
+	public List<Contract> getAllActiveContracts(Long requestingUserId) {
+		return contractRepository.getAllActiveContracts(requestingUserId).stream()
+					   .map(contractServiceMapper::mapContractDOToContract)
+					   .collect(Collectors.toList());
 	}
 
-	public List<Contract> getAllContractsByOwnerId(Long ownerId)
-	{
-		return contractRepository.getAllContractsByOwnerId(ownerId).stream()
-				.map(contractServiceMapper::mapContractDOToContract)
-				.collect(Collectors.toList());
+	public List<Contract> getAllContractsByOwnerId(Long ownerId, Boolean activeContracts) {
+		return contractRepository.getAllContractsByOwnerId(ownerId, activeContracts).stream()
+					   .map(contractServiceMapper::mapContractDOToContract)
+					   .collect(Collectors.toList());
 	}
 
-	public Contract createNewContract(Contract contractToCreate)
-	{
+	public Contract createNewContract(Contract contractToCreate) {
 		ContractDO preCreate = contractServiceMapper.mapContractToContractDO(contractToCreate);
 		preCreate.setContractActive(true);
 

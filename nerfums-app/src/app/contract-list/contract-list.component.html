@@ -4,18 +4,18 @@
   </mat-card-header>
 
   <mat-card-content>
-    <mat-accordion *ngFor="let contract of currentContracts">
+    <mat-accordion *ngFor="let contract of currentActiveContracts">
       <app-contract-item [contract]="contract"></app-contract-item>
     </mat-accordion>
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <mat-paginator #paginator [length]="this.allContracts.length"
+    <mat-paginator #paginator [length]="this.allActiveContracts.length"
                    [pageSize]="this.defaultPageSize"
                    [pageIndex]="this.defaultPageIndex"
                    [pageSizeOptions]="[2, 5, 10, 25, 100]"
 
-                   (page) ="paginatorEvent($event)">
+                   (page)="paginatorEvent($event)">
     </mat-paginator>
   </mat-card-actions>
 </mat-card>

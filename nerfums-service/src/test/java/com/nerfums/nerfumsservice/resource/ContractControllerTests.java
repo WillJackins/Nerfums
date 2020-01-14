@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +77,7 @@ public class ContractControllerTests
 	{
 		// Given
 		ContractRO contractRO = ContractDataFactory.generateRandomContractRO();
-		when(mockDelegate.getAllContracts()).thenReturn(Arrays.asList(contractRO));
+		when(mockDelegate.getAllActiveContracts(anyLong())).thenReturn(Arrays.asList(contractRO));
 
 		RequestBuilder request = MockMvcRequestBuilders.get("/contracts").contentType(MediaType.APPLICATION_JSON);
 
