@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ThrowStmt } from '@angular/compiler';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { NerfumsService } from '../nerfums.service';
+import { NerfumsService } from '../../nerfums.service';
 import { stringify } from 'querystring';
 import { User } from 'src/model/User';
 

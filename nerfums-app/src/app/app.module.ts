@@ -11,9 +11,8 @@ import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolb
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContractItemComponent } from './contract-item/contract-item.component';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { UserLoginComponent } from './user-login/user-login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { RegisterUserComponent } from './register-user/register-user.component';
+
 import { ContractCreateComponent } from './contract-create/contract-create.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatSelectModule} from '@angular/material/select';
@@ -26,14 +25,13 @@ import {ContractDashboardComponent } from './contract-dashboard/contract-dashboa
 import {MatDialogModule} from '@angular/material/dialog';
 import { ContractCompleteComponent } from './contract-complete/contract-complete.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContractListComponent,
     ContractItemComponent,
-    UserLoginComponent,
-    RegisterUserComponent,
     ContractCreateComponent,
     ContractManagerComponent,
     ContractActiveListComponent,
@@ -66,7 +64,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatPaginatorModule,
     MatExpansionModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
