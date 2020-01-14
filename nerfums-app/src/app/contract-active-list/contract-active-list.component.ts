@@ -38,7 +38,7 @@ export class ContractActiveListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         console.log(result);
-        this.nerfumsService.deleteContractById(result);
+        this.nerfumsService.deleteContractById(result).subscribe();
         location.reload();
       }
     });
@@ -47,10 +47,6 @@ export class ContractActiveListComponent implements OnInit {
   openCompleteDialog(contract: Contract) {
     const dialogRef = this.dialog.open(ContractCompleteComponent, {
       data: {contract}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     });
   }
 
