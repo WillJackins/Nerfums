@@ -1,9 +1,22 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <mat-toolbar color="primary">
-  <span>Welcome to {{title}}!</span>
+  <mat-toolbar-row>
+    <span><strong>{{title}}</strong></span>
+    <span class="toolbar-fill"></span>
+    <span><button mat-flat-button color="accent" [mat-menu-trigger-for]="test">Log In</button></span>
+  </mat-toolbar-row>
 </mat-toolbar>
+<nav mat-tab-nav-bar>
+  <div *ngFor="let link of navLinks">
+    <a mat-tab-link
+       *ngIf="true"
+       [routerLink]="link.link"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      {{link.label}}
+    </a>
+  </div>
 
+</nav>
 
-<app-contract-manager></app-contract-manager>
-<app-contract-list></app-contract-list>
 <router-outlet></router-outlet>
