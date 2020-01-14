@@ -2,6 +2,8 @@ package com.nerfums.nerfumsservice.resource.api;
 
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 public class ContractRO
 {
 	private Long contractId;
@@ -11,6 +13,9 @@ public class ContractRO
 	private List<ModifierRO> requirements;
 	private List<ModifierRO> optionals;
 	private String contractDetails;
+	private Boolean contractActive;
+	private UserRO contractCompletedBy;
+	private List<ModifierRO> contractOptionalsCompleted;
 
 
 	public Long getContractId() {
@@ -42,6 +47,21 @@ public class ContractRO
 	public String getContractDetails()
 	{
 		return contractDetails;
+	}
+
+	public Boolean getContractActive()
+	{
+		return contractActive;
+	}
+
+	public UserRO getContractCompletedBy()
+	{
+		return contractCompletedBy;
+	}
+
+	public List<ModifierRO> getContractOptionalsCompleted()
+	{
+		return contractOptionalsCompleted;
 	}
 
 
@@ -78,5 +98,20 @@ public class ContractRO
 	public void setContractDetails(String contractDetails)
 	{
 		this.contractDetails = contractDetails;
+	}
+
+	public void setContractActive(Boolean contractActive)
+	{
+		this.contractActive = contractActive;
+	}
+
+	public void setContractCompletedBy(UserRO contractCompletedBy)
+	{
+		this.contractCompletedBy = contractCompletedBy;
+	}
+
+	public void setContractOptionalsCompleted(List<ModifierRO> contractOptionalsCompleted)
+	{
+		this.contractOptionalsCompleted = contractOptionalsCompleted;
 	}
 }

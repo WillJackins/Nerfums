@@ -15,7 +15,6 @@ import com.nerfums.nerfumsservice.dataFactory.ContractDataFactory;
 import com.nerfums.nerfumsservice.model.Contract;
 import com.nerfums.nerfumsservice.repository.ContractRepository;
 import com.nerfums.nerfumsservice.repository.api.ContractDO;
-import com.nerfums.nerfumsservice.resource.api.ContractRO;
 import com.nerfums.nerfumsservice.service.mappers.ContractServiceMapper;
 
 import common.exception.BusinessServiceException;
@@ -68,7 +67,7 @@ public class ContractServiceTests
 		when(mockMapper.mapContractDOToContract(any(ContractDO.class))).thenReturn(expectedContract);
 
 		// When
-		List<Contract> actualContracts = spyService.getAllContracts();
+		List<Contract> actualContracts = spyService.getAllActiveContracts(1l);
 
 		// Then
 		assertNotNull(actualContracts);

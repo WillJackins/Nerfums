@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Contract} from '../../model/Contract';
 import {NerfumsService} from '../nerfums.service';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {PageEvent} from '@angular/material/paginator';
 import {ContractCompleteComponent} from '../contract-complete/contract-complete.component';
 
@@ -24,29 +24,31 @@ export class ContractActiveListComponent implements OnInit {
     this.defaultPageIndex = 0;
     this.defaultPageSize = 5;
 
-    this.nerfumsService.getAllContractsByOwnerId(1).subscribe(data => {
-      this.allUserActiveContracts = data;
-      this.updateContractList(this.defaultPageIndex, this.defaultPageSize);
-    });
+    this.retrieveContractList();
   }
 
-  openDeleteDialog(contractToDeleteId: number) {
-    const dialogRef = this.dialog.open(ContractDeleteDialogComponent, {
-      data: {contractToDeleteId}
+  private openCompleteDialog(contract: Contract) {
+    const dialogRef = this.dialog.open(ContractCompleteComponent, {
+      data: {contract}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-        console.log(result);
-        this.nerfumsService.deleteContractById(result).subscribe();
-        location.reload();
-      }
+      console.log(result);
+      this.retrieveContractList();
     });
   }
 
-  openCompleteDialog(contract: Contract) {
-    const dialogRef = this.dialog.open(ContractCompleteComponent, {
-      data: {contract}
+  private openDeleteDialog(contractToDeleteId: number) {
+    const dialogRef = this.dialog.open(ContractDeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('DELETE CONTRACT: ' + result);
+
+      if (result) {
+        this.nerfumsService.deleteContractById(contractToDeleteId).subscribe(data => {
+          this.retrieveContractList();
+        });
+      }
     });
   }
 
@@ -54,6 +56,13 @@ export class ContractActiveListComponent implements OnInit {
     this.updateContractList(event.pageIndex, event.pageSize);
   }
 
+  private retrieveContractList() {
+    this.nerfumsService.getAllContractsByOwnerId(1, true).subscribe(data => {
+      console.log('CONTRACT LIST RETRIEVED || COUNT: ' + data.length);
+      this.allUserActiveContracts = data;
+      this.updateContractList(this.defaultPageIndex, this.defaultPageSize);
+    });
+  }
 
   private updateContractList(pageIndex: number, pageSize: number) {
     this.currentUserActiveContracts = this.allUserActiveContracts.slice((pageIndex * pageSize), (pageIndex * pageSize) + pageSize);
@@ -66,15 +75,14 @@ export class ContractActiveListComponent implements OnInit {
 })
 export class ContractDeleteDialogComponent {
 
-  constructor(
-    public dialogRef: MatDialogRef<ContractDeleteDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MatDialogRef<ContractDeleteDialogComponent>) {
   }
 
   onNoClick(): void {
-    this.dialogRef.close(null);
+    this.dialogRef.close(false);
   }
 
   onDeleteClick() {
-    this.dialogRef.close(this.data.contractToDeleteId);
+    this.dialogRef.close(true);
   }
 }

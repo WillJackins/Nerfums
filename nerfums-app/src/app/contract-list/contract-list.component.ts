@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { NerfumsService } from '../nerfums.service';
+import {Component, OnInit} from '@angular/core';
+import {NerfumsService} from '../nerfums.service';
 import {Contract} from '../../model/Contract';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-contract-list',
@@ -9,17 +9,18 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
   styleUrls: ['./contract-list.component.css']
 })
 export class ContractListComponent implements OnInit {
-  allContracts: Array<Contract>;
-  currentContracts: Array<Contract>;
+  allActiveContracts: Array<Contract>;
+  currentActiveContracts: Array<Contract>;
 
   defaultPageIndex: number;
   defaultPageSize: number;
 
-  constructor(private nerfumsService: NerfumsService) { }
+  constructor(private nerfumsService: NerfumsService) {
+  }
 
   ngOnInit() {
-    this.nerfumsService.getAllContracts().subscribe(data => {
-      this.allContracts = data;
+    this.nerfumsService.getAllActiveContracts(true).subscribe(data => {
+      this.allActiveContracts = data;
 
       this.defaultPageIndex = 0;
       this.defaultPageSize = 5;
@@ -33,6 +34,6 @@ export class ContractListComponent implements OnInit {
   }
 
   private updateContractList(pageIndex: number, pageSize: number) {
-    this.currentContracts = this.allContracts.slice((pageIndex * pageSize), (pageIndex * pageSize) + pageSize);
+    this.currentActiveContracts = this.allActiveContracts.slice((pageIndex * pageSize), (pageIndex * pageSize) + pageSize);
   }
 }

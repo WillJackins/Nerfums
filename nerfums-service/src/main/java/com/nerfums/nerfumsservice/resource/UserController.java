@@ -1,15 +1,16 @@
 package com.nerfums.nerfumsservice.resource;
 
-import com.nerfums.nerfumsservice.delegate.ContractDelegate;
-import com.nerfums.nerfumsservice.delegate.UserDelegate;
-import com.nerfums.nerfumsservice.resource.api.ContractRO;
-import com.nerfums.nerfumsservice.resource.api.UserRO;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.nerfums.nerfumsservice.delegate.ContractDelegate;
+import com.nerfums.nerfumsservice.delegate.UserDelegate;
+import com.nerfums.nerfumsservice.resource.api.ContractRO;
+import com.nerfums.nerfumsservice.resource.api.UserRO;
 @RestController
 @RequestMapping("users")
 public class UserController
@@ -33,9 +34,11 @@ public class UserController
     }
 
     @GetMapping("/{ownerId}/contracts")
-    public ResponseEntity<List<ContractRO>> getAllContractsByOwnerId(@PathVariable Long ownerId)
-    {
-        List<ContractRO> userContracts = contractDelegate.getAllContractsByOwnerId(ownerId);
+    public ResponseEntity<List<ContractRO>> getAllContractsByOwnerId(
+            @PathVariable Long ownerId,
+            @RequestParam(name = "activeContracts") Boolean activeContracts
+    ) {
+        List<ContractRO> userContracts = contractDelegate.getAllContractsByOwnerId(ownerId, activeContracts);
         return ResponseEntity.ok(userContracts);
     }
 

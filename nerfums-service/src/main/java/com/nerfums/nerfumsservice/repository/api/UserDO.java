@@ -26,6 +26,9 @@ public class UserDO
     @OneToMany(mappedBy = "contractTarget")
     private List<ContractDO> userAsTargetContracts;
 
+    @OneToMany(mappedBy = "contractCompletedBy")
+    private List<ContractDO> userCompletedContracts;
+
     //endregion
 
     //region GETTERS
@@ -53,6 +56,11 @@ public class UserDO
     {
         return userAsTargetContracts;
     }
+
+    public List<ContractDO> getUserCompletedContracts()
+    {
+        return userCompletedContracts;
+    }
     //endregion
 
     //region SETTERS
@@ -79,6 +87,11 @@ public class UserDO
     public void setUserAsTargetContracts(List<ContractDO> userAsTargetContracts)
     {
         this.userAsTargetContracts = userAsTargetContracts;
+    }
+
+    public void setUserCompletedContracts(List<ContractDO> userCompletedContracts)
+    {
+        this.userCompletedContracts = userCompletedContracts;
     }
     //endregion
 }
