@@ -13,16 +13,16 @@ import { User } from 'src/model/User';
 export class RegisterUserComponent implements OnInit {
   submitted: Boolean = false;
   
-  private full_name: String = "";
-  private email: String = "";
-  private password: String = "";
-  private confirmPassword: String = "";
+  private full_name: string = "";
+  private email: string = "";
+  private password: string = "";
+  private confirmPassword: string = "";
 
-  private validName:Boolean = true;
-  private validPassword: Boolean = false;
+  private validName: boolean = true;
+  private validPassword: boolean = false;
 
-  private hidePassword:Boolean = true;
-  private hideConfirmPassword:Boolean = true;
+  private hidePassword: boolean = true;
+  private hideConfirmPassword: boolean = true;
 
   fullnameControl = new FormControl('', [
     Validators.required
@@ -81,52 +81,51 @@ export class RegisterUserComponent implements OnInit {
   private onReset() {
     this.submitted = false;
   }
-  private setFullName(full_name: String) {
+  private setFullName(full_name: string) {
     this.full_name = full_name;
     console.log(this.full_name);
   }
 
-  private setEmail(email: String) {
+  private setEmail(email: string) {
     this.email = email;
     console.log(this.email);
   }
 
-  private setPassword(password: String) {
+  private setPassword(password: string) {
     this.password = password;
     console.log(this.password);
   }
 
-  private setConfirmPassword(confirmPassword: String){
+  private setConfirmPassword(confirmPassword: string){
     this.confirmPassword = confirmPassword;
     this.validPassword = this.confirmPassword === this.password;
     console.log(this.confirmPassword); console.log(this.validPassword);
   }
 
-  private validateAllFields(): Boolean {
-    if(this.full_name === "" || this.email === "" || this.password === "" || this.confirmPassword === "" || this.confirmPassword !== this.password) {
+  private validateAllFields(): boolean {
+    if(this.full_name === "" 
+        || this.email === "" 
+        || this.password === "" 
+        || this.confirmPassword === "" 
+        || this.confirmPassword !== this.password) {
       return false;
     }
-    console.log("valid");
     return true;
   }
 
   private register(){
-    console.log("Register");
-    if(this.validateAllFields()) {
-      console.log("posting");
-      let user: User = {
-        fullName: this.full_name,
-        availableCash: 1000
-      };
-      this.nerfumsService.postUser(user).subscribe(data => console.log(data));
+    if(!this.validateAllFields()) {
+      //todo error
+      return;
     }
-    if(this.password === this.confirmPassword) {
-
-    }
-    console.log("Register:" + this.password === this.confirmPassword);
+    let user: User = {
+       fullName: this.full_name,
+       availableCash: 1000
+    };
+    this.nerfumsService.postUser(user).subscribe(data => console.log(data));
   }
 
-  private validatePasswords(): Boolean {
+  private validatePasswords(): boolean {
     return this.password.length > 6 && this.password === this.confirmPassword;
   }
 }

@@ -1,4 +1,4 @@
 export class User {
-  fullName: String;
+  fullName: string;
   availableCash: number;
 }
