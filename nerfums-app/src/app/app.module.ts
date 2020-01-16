@@ -28,6 +28,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AboutPageComponent} from './about-page/about-page.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
+import { ContractUserHistoryListComponent } from './contract-user-history-list/contract-user-history-list.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
     ContractDashboardComponent,
     ContractDeleteDialogComponent,
     ContractCompleteComponent,
-    AboutPageComponent
+    AboutPageComponent,
+    ContractUserHistoryListComponent
   ],
   entryComponents: [
     ContractCreateComponent,

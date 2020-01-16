@@ -8,10 +8,15 @@ import {Contract} from '../../model/Contract';
   styleUrls: ['./contract-manager.component.css']
 })
 export class ContractManagerComponent implements OnInit {
-
+  allUserContractHistory: Array<Contract>;
   constructor(private nerfumsService: NerfumsService) { }
 
   ngOnInit() {
   }
 
+  private retrieveUserContractHistoryList() {
+    this.nerfumsService.getAllContractsByOwnerId(1, true).subscribe(data => {
+      this.allUserContractHistory = data;
+    })
+  }
 }

@@ -1,0 +1,35 @@
+<mat-card class="inactive-contracts">
+  <mat-card-header>
+    <mat-card-title>
+      Contract History
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <table mat-table [dataSource]="allUserContractHistory">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell class="table-number-col" *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let i = index">{{i + 1}}</td>
+      </ng-container>
+      <ng-container matColumnDef="contractTarget">
+        <th mat-header-cell class = "table-info-col" *matHeaderCellDef>Target</th>
+        <td mat-cell *matCellDef="let contract">{{contract.contractTarget.fullName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="contractReward">
+        <th mat-header-cell class = "table-info-col" *matHeaderCellDef>Contract Reward</th>
+        <td mat-cell *matCellDef="let contract">{{contract.contractReward}}</td>
+      </ng-container>
+      <ng-container matColumnDef="contractDetails">
+        <th mat-header-cell class = "table-info-col" *matHeaderCellDef>Details</th>
+        <td mat-cell *matCellDef="let contract">{{contract.contractDetails}}</td>
+      </ng-container>
+      <ng-container matColumnDef="contractCompletedBy">
+        <th mat-header-cell class = "table-info-col" *matHeaderCellDef>Completed By</th>
+        <td mat-cell *matCellDef="let contract">{{contract.contractCompletedBy.fullName}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+    </table>
+  </mat-card-content>
+</mat-card>
