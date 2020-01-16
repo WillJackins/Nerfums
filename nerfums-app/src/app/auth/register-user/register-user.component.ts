@@ -13,6 +13,8 @@ import { User } from 'src/model/User';
 export class RegisterUserComponent implements OnInit {
   submitted: Boolean = false;
   
+  private
+
   private full_name: string = "";
   private email: string = "";
   private password: string = "";
@@ -24,6 +26,8 @@ export class RegisterUserComponent implements OnInit {
   private hidePassword: boolean = true;
   private hideConfirmPassword: boolean = true;
 
+
+  //todo - use a form, custom form validations
   fullnameControl = new FormControl('', [
     Validators.required
   ]);
@@ -38,7 +42,7 @@ export class RegisterUserComponent implements OnInit {
   ]);
 
   confirmPasswordControl = new FormControl('', [
-    Validators.required,
+    Validators.required
   ]);
   constructor(private nerfumsService: NerfumsService) { }
 
@@ -118,11 +122,13 @@ export class RegisterUserComponent implements OnInit {
       //todo error
       return;
     }
+
+    //todo - AuthClass
     let user: User = {
        fullName: this.full_name,
        availableCash: 1000
     };
-    this.nerfumsService.postUser(user).subscribe(data => console.log(data));
+    //this.nerfumsService.postUser(user).subscribe(data => console.log(data));
   }
 
   private validatePasswords(): boolean {
