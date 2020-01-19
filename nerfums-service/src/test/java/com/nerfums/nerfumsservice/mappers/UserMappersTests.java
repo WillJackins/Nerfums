@@ -1,17 +1,18 @@
 package com.nerfums.nerfumsservice.mappers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+
 import com.nerfums.nerfumsservice.dataFactory.UserDataFactory;
 import com.nerfums.nerfumsservice.delegate.mappers.UserDelegateMapper;
 import com.nerfums.nerfumsservice.model.User;
 import com.nerfums.nerfumsservice.repository.api.UserDO;
 import com.nerfums.nerfumsservice.resource.api.UserRO;
 import com.nerfums.nerfumsservice.service.mappers.UserServiceMapper;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserMappersTests
 {
@@ -37,8 +38,7 @@ public class UserMappersTests
 	//================================================================================================================================================
 
 	@Test
-	public void testMappingUserToUserRO()
-	{
+	public void testMappingUserToUserRO() {
 		// Given
 		User expectedUser = UserDataFactory.generateRandomUser();
 		UserRO actualUser;
@@ -48,13 +48,12 @@ public class UserMappersTests
 
 		// Then
 		assertEquals(expectedUser.getUserId(), actualUser.getUserId());
-		assertEquals(expectedUser.getFullName(), actualUser.getFullName());
+		assertEquals(expectedUser.getDisplayName(), actualUser.getDisplayName());
 		assertEquals(expectedUser.getAvailableCash(), expectedUser.getAvailableCash());
 	}
 
 	@Test
-	public void testMappingUserROToUser()
-	{
+	public void testMappingUserROToUser() {
 		// Given
 		UserRO expectedUser = UserDataFactory.generateRandomUserRO();
 		User actualUser;
@@ -64,7 +63,7 @@ public class UserMappersTests
 
 		// Then
 		assertEquals(expectedUser.getUserId(), actualUser.getUserId());
-		assertEquals(expectedUser.getFullName(), actualUser.getFullName());
+		assertEquals(expectedUser.getDisplayName(), actualUser.getDisplayName());
 		assertEquals(expectedUser.getAvailableCash(), expectedUser.getAvailableCash());
 	}
 
@@ -73,8 +72,7 @@ public class UserMappersTests
 	//================================================================================================================================================
 
 	@Test
-	public void testMappingUserDOToUser()
-	{
+	public void testMappingUserDOToUser() {
 		// Given
 		UserDO expectedUser = UserDataFactory.generateRandomUserDO();
 		User actualUser;
@@ -84,13 +82,12 @@ public class UserMappersTests
 
 		// Then
 		assertEquals(expectedUser.getUserId(), actualUser.getUserId());
-		assertEquals(expectedUser.getFullName(), actualUser.getFullName());
+		assertEquals(expectedUser.getDisplayName(), actualUser.getDisplayName());
 		assertEquals(expectedUser.getAvailableCash(), expectedUser.getAvailableCash());
 	}
 
 	@Test
-	public void testMappingUserToUserDO()
-	{
+	public void testMappingUserToUserDO() {
 		// Given
 		User expectedUser = UserDataFactory.generateRandomUser();
 		UserDO actualUser;
@@ -100,7 +97,7 @@ public class UserMappersTests
 
 		// Then
 		assertEquals(expectedUser.getUserId(), actualUser.getUserId());
-		assertEquals(expectedUser.getFullName(), actualUser.getFullName());
+		assertEquals(expectedUser.getDisplayName(), actualUser.getDisplayName());
 		assertEquals(expectedUser.getAvailableCash(), expectedUser.getAvailableCash());
 	}
 }

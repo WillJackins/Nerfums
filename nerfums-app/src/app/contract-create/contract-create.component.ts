@@ -32,7 +32,7 @@ export class ContractCreateComponent implements OnInit {
       this.modifiers = data;
     });
 
-    this.contract = new Contract();
+    this.contract = null;
   }
 
   setTarget(target: any) {
@@ -84,7 +84,7 @@ export class ContractCreateComponent implements OnInit {
   }
 
   closeDialog() {
-    this.contract = new Contract();
+    this.contract = null;
     this.dialogRef.close();
   }
 }

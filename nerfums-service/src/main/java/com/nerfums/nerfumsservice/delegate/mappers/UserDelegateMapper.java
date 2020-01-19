@@ -1,12 +1,15 @@
 package com.nerfums.nerfumsservice.delegate.mappers;
 
-import com.nerfums.nerfumsservice.model.User;
-import com.nerfums.nerfumsservice.resource.api.UserRO;
+import javax.annotation.PostConstruct;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import com.nerfums.nerfumsservice.model.Session;
+import com.nerfums.nerfumsservice.model.User;
+import com.nerfums.nerfumsservice.resource.api.SessionRO;
+import com.nerfums.nerfumsservice.resource.api.UserRO;
 
 @Component
 public class UserDelegateMapper
@@ -21,32 +24,38 @@ public class UserDelegateMapper
     }
 
     @PostConstruct
-    public void addMappings()
-    {
-        //User -> UserRO
-        addMappingUserToUserRO(modelMapper);
+    public void addMappings() {
+		// Session -> SessionRO
+		addMappingSessionToSessionRO(modelMapper);
 
-        //UserRO -> User
-        addMappingUserROToUser(modelMapper);
-    }
+		//User -> UserRO
+		addMappingUserToUserRO(modelMapper);
 
-    public UserRO mapUserToUserRO(User user)
-    {
-        return modelMapper.map(user, UserRO.class);
-    }
+		//UserRO -> User
+		addMappingUserROToUser(modelMapper);
+	}
 
-    public User mapUserROToUser(UserRO userRO)
-    {
-        return modelMapper.map(userRO, User.class);
-    }
+	public SessionRO mapSessionToSessionRO(Session session) {
+		return modelMapper.map(session, SessionRO.class);
+	}
 
-    private void addMappingUserToUserRO(ModelMapper modelMapper)
-    {
-        modelMapper.typeMap(User.class, UserRO.class);
-    }
+	public UserRO mapUserToUserRO(User user) {
+		return modelMapper.map(user, UserRO.class);
+	}
 
-    private void addMappingUserROToUser(ModelMapper modelMapper)
-    {
-        modelMapper.typeMap(UserRO.class, User.class);
-    }
+	public User mapUserROToUser(UserRO userRO) {
+		return modelMapper.map(userRO, User.class);
+	}
+
+	private void addMappingSessionToSessionRO(ModelMapper modelMapper) {
+		modelMapper.typeMap(Session.class, SessionRO.class);
+	}
+
+	private void addMappingUserToUserRO(ModelMapper modelMapper) {
+		modelMapper.typeMap(User.class, UserRO.class);
+	}
+
+	private void addMappingUserROToUser(ModelMapper modelMapper) {
+		modelMapper.typeMap(UserRO.class, User.class);
+	}
 }
