@@ -6,6 +6,7 @@ import {User} from '../model/User';
 import {Modifier} from '../model/Modifier';
 import {Session} from "../model/Session";
 import {map} from "rxjs/operators";
+import {Register} from "../model/Register";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,18 @@ export class NerfumsService {
     return this.currentSessionSubject.value.user;
   }
 
+  register(register: Register) {
+    return this.http.post<Session>(this.urlRoot + '/authentication/register', register)
+      .pipe(map(session => {
+        if (session && session.token) {
+          localStorage.setItem('currentSession', JSON.stringify(session));
+          this.currentSessionSubject.next(session);
+        }
+
+        return session;
+      }))
+  }
+
   login(username: string, password: string) {
     return this.http.post<Session>(this.urlRoot + '/authentication/login', {username, password})
       .pipe(map(session => {
@@ -39,7 +52,6 @@ export class NerfumsService {
           this.currentSessionSubject.next(session);
         }
 
-        console.log(session);
         return session;
       }))
   }

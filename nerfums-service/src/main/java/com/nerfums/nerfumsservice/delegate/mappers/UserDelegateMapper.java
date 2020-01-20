@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.nerfums.nerfumsservice.model.Session;
 import com.nerfums.nerfumsservice.model.User;
+import com.nerfums.nerfumsservice.resource.api.RegisterRO;
 import com.nerfums.nerfumsservice.resource.api.SessionRO;
 import com.nerfums.nerfumsservice.resource.api.UserRO;
 
@@ -25,6 +26,9 @@ public class UserDelegateMapper
 
     @PostConstruct
     public void addMappings() {
+		//RegisterRO -> User
+		addMappingRegisterROToUser(modelMapper);
+
 		// Session -> SessionRO
 		addMappingSessionToSessionRO(modelMapper);
 
@@ -33,6 +37,10 @@ public class UserDelegateMapper
 
 		//UserRO -> User
 		addMappingUserROToUser(modelMapper);
+	}
+
+	public User mapRegisterROToUser(RegisterRO registerRO) {
+		return modelMapper.map(registerRO, User.class);
 	}
 
 	public SessionRO mapSessionToSessionRO(Session session) {
@@ -45,6 +53,14 @@ public class UserDelegateMapper
 
 	public User mapUserROToUser(UserRO userRO) {
 		return modelMapper.map(userRO, User.class);
+	}
+
+
+	private void addMappingRegisterROToUser(ModelMapper modelMapper) {
+		modelMapper.typeMap(RegisterRO.class, User.class)
+				.addMapping(RegisterRO::getDisplayName, User::setDisplayName)
+				.addMapping(RegisterRO::getUsername, User::setUsername)
+				.addMapping(RegisterRO::getPassword, User::setPassword);
 	}
 
 	private void addMappingSessionToSessionRO(ModelMapper modelMapper) {

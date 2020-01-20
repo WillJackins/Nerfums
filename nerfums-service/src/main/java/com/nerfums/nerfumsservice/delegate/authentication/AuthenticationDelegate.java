@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.nerfums.nerfumsservice.delegate.mappers.UserDelegateMapper;
 import com.nerfums.nerfumsservice.model.User;
 import com.nerfums.nerfumsservice.resource.api.LoginRO;
+import com.nerfums.nerfumsservice.resource.api.RegisterRO;
 import com.nerfums.nerfumsservice.resource.api.SessionRO;
 import com.nerfums.nerfumsservice.resource.api.UserRO;
 import com.nerfums.nerfumsservice.service.UserService;
@@ -32,6 +33,14 @@ public class AuthenticationDelegate {
 		this.userService = userService;
 	}
 
+	public SessionRO registerUser(RegisterRO registerUser) {
+		User userToCreate = userDelegateMapper.mapRegisterROToUser(registerUser);
+		User newUser = userService.createNewUser(userToCreate);
+
+		LoginRO login = new LoginRO(newUser.getUsername(), newUser.getPassword());
+		return userLogin(login);
+	}
+
 	public SessionRO userLogin(LoginRO login) throws BadCredentialsException {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
 		authenticationManager.authenticate(authentication);
@@ -42,4 +51,6 @@ public class AuthenticationDelegate {
 
 		return new SessionRO(token, userRO);
 	}
+
+	
 }

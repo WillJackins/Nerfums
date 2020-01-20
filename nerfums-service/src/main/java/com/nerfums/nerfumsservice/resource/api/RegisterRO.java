@@ -1,15 +1,12 @@
 package com.nerfums.nerfumsservice.resource.api;
 
-public class LoginRO {
+public class RegisterRO {
+	private String displayName;
 	private String username;
 	private String password;
 
-	public LoginRO() {
-	}
-
-	public LoginRO(String username, String password) {
-		this.username = username;
-		this.password = password;
+	public String getDisplayName() {
+		return displayName;
 	}
 
 	public String getUsername() {
@@ -18,6 +15,10 @@ public class LoginRO {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
 	public void setUsername(String username) {
