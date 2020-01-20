@@ -1,4 +1,4 @@
-package com.nerfums.nerfumsservice.service;
+package com.nerfums.nerfumsservice.delegate.authentication;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -14,8 +14,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
-public class JwtTokenService {
+public class AuthenticationUtil {
 	private final String SECRET_KEY = "test_secret";
+
 
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
@@ -28,14 +29,6 @@ public class JwtTokenService {
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = extractAllClaims(token);
 		return claimsResolver.apply(claims);
-	}
-
-	private Claims extractAllClaims(String token) {
-		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-	}
-
-	private Boolean isTokenExpired(String token) {
-		return extractExpiration(token).before(new Date());
 	}
 
 	public String generateToken(User user) {
@@ -52,6 +45,15 @@ public class JwtTokenService {
 	public Boolean validateToken(String token, User user) {
 		final String username = extractUsername(token);
 		return (username.equals(user.getUsername()) && !isTokenExpired(token));
+	}
+
+
+	private Claims extractAllClaims(String token) {
+		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+	}
+
+	private Boolean isTokenExpired(String token) {
+		return extractExpiration(token).before(new Date());
 	}
 
 	private Date getTimeOneHourFromNow() {

@@ -32,7 +32,7 @@ export class NerfumsService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<Session>(this.urlRoot + '/users/login', {username, password})
+    return this.http.post<Session>(this.urlRoot + '/authentication/login', {username, password})
       .pipe(map(session => {
         if (session && session.token) {
           localStorage.setItem('currentSession', JSON.stringify(session));

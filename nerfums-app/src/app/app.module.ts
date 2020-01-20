@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ContractListComponent} from './contract-list/contract-list.component';
 
 import {MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule} from '@angular/material';
@@ -28,6 +28,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AboutPageComponent} from './about-page/about-page.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
+import {JwtInterceptor} from "./JwtInterceptor";
 
 @NgModule({
   declarations: [
@@ -71,7 +72,9 @@ import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
     _MatMenuDirectivesModule,
     MatMenuModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -49,7 +49,7 @@ export class AppComponent {
   test(): void {
     console.log('BUTTON PRESS');
     if (!this.testService.currentSessionValue) {
-      this.testService.login("Dave_Ding", "dong").subscribe();
+      this.testService.login("Dave", "Dave_Password").subscribe();
     } else {
       this.testService.logout();
     }

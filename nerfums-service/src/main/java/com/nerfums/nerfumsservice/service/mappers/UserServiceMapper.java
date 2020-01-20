@@ -44,6 +44,8 @@ public class UserServiceMapper
     private void addMappingUserDOToUser(ModelMapper modelMapper) {
 		modelMapper.typeMap(UserDO.class, User.class)
 				.addMapping(UserDO::getUserId, User::setUserId)
+				.addMapping(UserDO::getUsername, User::setUsername)
+				.addMapping(UserDO::getPasswordHash, User::setPassword)
 				.addMapping(UserDO::getDisplayName, User::setDisplayName)
 				.addMapping(UserDO::getAvailableCash, User::setAvailableCash);
 	}
