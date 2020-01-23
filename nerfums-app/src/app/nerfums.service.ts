@@ -13,7 +13,7 @@ import {Register} from "../model/Register";
 })
 export class NerfumsService {
   urlRoot = 'http://localhost:8081/Nerfums/api';
-  TEMP_SESSION_USERID = 1;
+  TEMP_SESSION_USERID = 11;
 
   private currentSessionSubject: BehaviorSubject<Session>;
   public currentSession: Observable<Session>;
