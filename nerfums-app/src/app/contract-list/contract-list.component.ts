@@ -18,6 +18,7 @@ export class ContractListComponent implements OnInit {
   constructor(private nerfumsService: NerfumsService) { }
 
   ngOnInit() {
+    this.allContracts = new Array<Contract>();
     this.nerfumsService.getAllContracts().subscribe(data => {
       this.allContracts = data;
 

@@ -23,7 +23,7 @@ export class ContractActiveListComponent implements OnInit {
   ngOnInit() {
     this.defaultPageIndex = 0;
     this.defaultPageSize = 5;
-
+    this.allUserActiveContracts = new Array<Contract>();
     this.nerfumsService.getAllContractsByOwnerId(1).subscribe(data => {
       this.allUserActiveContracts = data;
       this.updateContractList(this.defaultPageIndex, this.defaultPageSize);

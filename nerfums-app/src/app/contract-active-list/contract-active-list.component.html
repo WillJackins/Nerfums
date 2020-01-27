@@ -51,7 +51,7 @@
     </table>
   </mat-card-content>
   <mat-card-footer>
-    <mat-paginator #paginator [length]="1"
+    <mat-paginator #paginator [length]="allUserActiveContracts.length"
                               [pageSize]="defaultPageSize"
                               [pageIndex]="defaultPageIndex"
                               [pageSizeOptions]="[2,5,10,25,50]"

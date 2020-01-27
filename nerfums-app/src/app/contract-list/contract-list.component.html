@@ -10,7 +10,7 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <mat-paginator #paginator [length]="1"
+    <mat-paginator #paginator [length]="allContracts.length"
                    [pageSize]="this.defaultPageSize"
                    [pageIndex]="this.defaultPageIndex"
                    [pageSizeOptions]="[2, 5, 10, 25, 100]"
