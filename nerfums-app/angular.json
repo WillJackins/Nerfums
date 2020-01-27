@@ -23,6 +23,9 @@
               "src/assets"
             ],
             "styles": [
+              {
+                "input": "src/nerfums-Theme.scss"
+              },
               "src/styles.css"
             ],
             "scripts": []

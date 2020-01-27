@@ -8,7 +8,10 @@
         </mat-form-field>
         <mat-form-field class ="password-field">
             <mat-label>Password</mat-label>
-            <input type="password" matInput #passwordInput placeholder="Password" [formControl] = "passwordControl" (change)="setPassword(passwordInput.value)">
+            <input [type]="hidePassword ? 'password' : 'text'" matInput #passwordInput placeholder="Password" [formControl] = "passwordControl" (change)="setPassword(passwordInput.value)">
+            <button mat-icon-button matSuffix (click)="onHidePasswordClick()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-error *ngIf="passwordControl.hasError('required')">Please enter a valid password!</mat-error>
             <mat-hint>Enter Password</mat-hint>
         </mat-form-field>

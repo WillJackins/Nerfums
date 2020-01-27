@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Contract} from '../model/Contract';
 import {User} from '../model/User';
@@ -10,17 +10,24 @@ import {Modifier} from '../model/Modifier';
 })
 export class NerfumsService {
   urlRoot = 'http://localhost:8081/Nerfums/api';
+  TEMP_SESSION_USERID = 1;
 
   constructor(private http: HttpClient) {
 
   }
 
-  getAllContracts(): Observable<Array<Contract>> {
-    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts');
+  getAllActiveContracts(activeContracts: boolean): Observable<Array<Contract>> {
+    let params = new HttpParams();
+    params = params.append('requestingUserId', String(this.TEMP_SESSION_USERID));
+
+    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts', {params});
   }
 
-  getAllContractsByOwnerId(ownerId: number): Observable<Array<Contract>> {
-    return this.http.get<Array<Contract>>(this.urlRoot + '/users/' + ownerId + '/contracts');
+  getAllContractsByOwnerId(ownerId: number, activeContracts: boolean): Observable<Array<Contract>> {
+    let params = new HttpParams();
+    params = params.append('activeContracts', String(activeContracts));
+
+    return this.http.get<Array<Contract>>(this.urlRoot + '/users/' + this.TEMP_SESSION_USERID + '/contracts', {params});
   }
 
   postContract(contract: Contract): Observable<Contract> {
@@ -28,13 +35,14 @@ export class NerfumsService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
-      })};
+      })
+    };
 
     return this.http.post<Contract>(this.urlRoot + '/contracts', JSON.stringify(contract), httpOptions);
   }
 
   completeContract(completedContract: Contract): Observable<Contract> {
-    return this.http.patch<Contract>(this.urlRoot + '/contracts/' + completedContract.contractId, completedContract);
+    return this.http.patch<Contract>(this.urlRoot + '/contracts', completedContract);
   }
 
   deleteContractById(contractId: number): Observable<Contract> {

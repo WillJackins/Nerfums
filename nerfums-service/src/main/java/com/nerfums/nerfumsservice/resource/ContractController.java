@@ -31,19 +31,30 @@ public class ContractController
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ContractRO>> getAllContracts()
-	{
-		List<ContractRO> contracts = contractDelegate.getAllContracts();
+	public ResponseEntity<List<ContractRO>> getAllActiveContracts(
+			@RequestParam(name = "requestingUserId") Long requestingUserId
+	) {
+		List<ContractRO> contracts = contractDelegate.getAllActiveContracts(requestingUserId);
 		return ResponseEntity.ok(contracts);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<ContractRO> createNewContract(@RequestBody ContractRO contractRO)
-	{
+	public ResponseEntity<ContractRO> createNewContract(@RequestBody ContractRO contractRO) {
 		ContractRO createdContract = contractDelegate.createNewContract(contractRO);
-		System.out.println("POST");
-		System.out.println(createdContract.getContractReward());
 		return ResponseEntity.ok(createdContract);
+	}
+
+	@PatchMapping()
+	public ResponseEntity<ContractRO> completeContract(@RequestBody ContractRO contractRO) {
+		System.out.println("PATCH");
+		ContractRO completedContract = contractDelegate.completeContract(contractRO);
+		return ResponseEntity.ok(completedContract);
+	}
+
+	@DeleteMapping("/{contractId}")
+	public void deleteContract(@PathVariable Long contractId) {
+		System.out.println("DELETE");
+		contractDelegate.deleteContract(contractId);
 	}
 }

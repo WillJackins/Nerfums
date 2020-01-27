@@ -4,6 +4,7 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 import { NerfumsService } from '../../nerfums.service';
 import { stringify } from 'querystring';
 import { User } from 'src/model/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
@@ -44,7 +45,7 @@ export class RegisterUserComponent implements OnInit {
   confirmPasswordControl = new FormControl('', [
     Validators.required
   ]);
-  constructor(private nerfumsService: NerfumsService) { }
+  constructor(private nerfumsService: NerfumsService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -129,6 +130,10 @@ export class RegisterUserComponent implements OnInit {
        availableCash: 1000
     };
     //this.nerfumsService.postUser(user).subscribe(data => console.log(data));
+  }
+
+  private cancel() {
+    this.router.navigate(['./loginPage']);
   }
 
   private validatePasswords(): boolean {

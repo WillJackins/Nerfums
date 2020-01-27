@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class UserLoginComponent implements OnInit {
   private user_name: string;
   private password:string;
+  private hidePassword: boolean = true;
   usernameControl = new FormControl('', [
     Validators.required
   ]);
@@ -21,6 +22,10 @@ export class UserLoginComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  private onHidePasswordClick(){
+    this.hidePassword = !this.hidePassword;
   }
 
   private setUserName(name: string){
@@ -38,7 +43,7 @@ export class UserLoginComponent implements OnInit {
   }
 
   private register(){
-    console.log("todo register");
+    this.router.navigate(['./registerPage'])
     //use the router here i think
   }
 }
