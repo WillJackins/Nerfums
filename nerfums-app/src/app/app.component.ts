@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+import {NerfumsService} from "./nerfums.service";
 
 @Component({
   selector: 'app-root',
@@ -12,27 +13,31 @@ export class AppComponent {
   navLinks: any[];
   activeLinkIndex = -1;
 
-  constructor(private router: Router) {
+  testService: NerfumsService;
+
+  constructor(private router: Router, private service: NerfumsService) {
     this.navLinks = [
       {
         label: 'About',
         link: './about',
-        requireLogIn: false,
+        requireLogin: false,
         index: 0
       },
       {
         label: 'Contract List',
         link: './contractList',
-        requireLogIn: true,
+        requireLogin: true,
         index: 1
       },
       {
         label: 'Contract Manager',
         link: './contractManager',
-        requireLogIn: true,
+        requireLogin: true,
         index: 2
       }
     ];
+
+    this.testService = service;
   }
 
   ngOnInit(): void {
@@ -43,5 +48,15 @@ export class AppComponent {
 
   private goToLoginPage(){
       this.router.navigate(['./loginPage'])
+  }
+
+  test(): void {
+    console.log('BUTTON PRESS');
+    if (!this.testService.currentSessionValue) {
+      this.testService.login("Dave", "Dave_Password").subscribe();
+    } else {
+      this.testService.logout();
+    }
+
   }
 }

@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ContractListComponent} from './contract-list/contract-list.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule} from '@angular/material';
@@ -29,6 +29,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
 import {AuthModule} from './auth/auth.module';
 import {UserLoginMenuComponent} from './user-login-menu/user-login-menu.component';
+import {JwtInterceptor} from "./JwtInterceptor";
 
 @NgModule({
   declarations: [
@@ -76,7 +77,9 @@ import {UserLoginMenuComponent} from './user-login-menu/user-login-menu.componen
     MatMenuModule,
     AuthModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

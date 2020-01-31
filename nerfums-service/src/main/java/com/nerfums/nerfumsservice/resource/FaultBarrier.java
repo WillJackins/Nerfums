@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -17,9 +19,18 @@ import common.exception.BusinessValidationException;
 import common.exception.ErrorDetails;
 
 @ControllerAdvice
-public class FaultBarrier
-{
+public class FaultBarrier {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FaultBarrier.class);
+
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public ResponseEntity<ErrorDetails> handleUsernameNotFoundException(UsernameNotFoundException ex, WebRequest request) {
+		return prepareErrorResponse(ex, ex.getMessage(), request, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<ErrorDetails> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
+		return prepareErrorResponse(ex, ex.getMessage(), request, HttpStatus.FORBIDDEN);
+	}
 
 	@ExceptionHandler(BusinessValidationException.class)
 	public ResponseEntity<ErrorDetails> handleBusinessValidationException(BusinessValidationException ex, WebRequest request) {

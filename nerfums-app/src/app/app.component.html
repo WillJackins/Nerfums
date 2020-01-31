@@ -11,7 +11,7 @@
 <nav mat-tab-nav-bar>
   <div *ngFor="let link of navLinks">
     <a mat-tab-link
-       *ngIf="true"
+       *ngIf="!link.requireLogin || testService.currentSessionValue"
        [routerLink]="link.link"
        routerLinkActive #rla="routerLinkActive"
        [active]="rla.isActive">
