@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
+import {UserLoginMenuComponent} from "../../user-login-menu/user-login-menu.component";
 
 @Component({
   selector: 'app-user-login',
@@ -10,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class UserLoginComponent implements OnInit {
   private user_name: string;
-  private password:string;
+  private password: string;
   private hidePassword: boolean = true;
   usernameControl = new FormControl('', [
     Validators.required
@@ -19,7 +18,9 @@ export class UserLoginComponent implements OnInit {
   passwordControl = new FormControl('', [
     Validators.required
   ]);
-  constructor(private router: Router) { }
+
+  constructor(private loginMenu: UserLoginMenuComponent) {
+  }
 
   ngOnInit() {
   }
@@ -43,7 +44,6 @@ export class UserLoginComponent implements OnInit {
   }
 
   private register(){
-    this.router.navigate(['./registerPage'])
-    //use the router here i think
+    this.loginMenu.toggleRegister(true);
   }
 }

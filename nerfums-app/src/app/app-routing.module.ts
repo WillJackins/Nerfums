@@ -3,8 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {AboutPageComponent} from './about-page/about-page.component';
 import {ContractManagerComponent} from './contract-manager/contract-manager.component';
 import {ContractListComponent} from './contract-list/contract-list.component';
-import { UserLoginComponent } from './auth/user-login/user-login.component';
-import { RegisterUserComponent } from './auth/register-user/register-user.component';
+import {UserLoginComponent} from './auth/user-login/user-login.component';
+import {RegisterUserComponent} from './auth/user-register/register-user.component';
 
 
 const routes: Routes = [

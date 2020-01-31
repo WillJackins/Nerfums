@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ThrowStmt } from '@angular/compiler';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { NerfumsService } from '../../nerfums.service';
-import { stringify } from 'querystring';
-import { User } from 'src/model/User';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NerfumsService} from '../../nerfums.service';
+import {User} from 'src/model/User';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
@@ -12,9 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register-user.component.css']
 })
 export class RegisterUserComponent implements OnInit {
-  submitted: Boolean = false;
-  
-  private
+  private submitted: Boolean = false;
 
   private full_name: string = "";
   private email: string = "";
@@ -108,11 +104,11 @@ export class RegisterUserComponent implements OnInit {
   }
 
   private validateAllFields(): boolean {
-    if(this.full_name === "" 
-        || this.email === "" 
-        || this.password === "" 
-        || this.confirmPassword === "" 
-        || this.confirmPassword !== this.password) {
+    if (this.full_name === ""
+      || this.email === ""
+      || this.password === ""
+      || this.confirmPassword === ""
+      || this.confirmPassword !== this.password) {
       return false;
     }
     return true;

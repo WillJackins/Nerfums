@@ -1,5 +1,6 @@
 <mat-card class = user-login-card>
     <mat-card-content>
+      <mat-card-title>Log-In</mat-card-title>
         <mat-form-field class ="username-field">
             <mat-label>Username</mat-label>
             <input type="text" matInput #usernameInput placeholder="Username" [formControl] = "usernameControl" (change)="setUserName(usernameInput.value)">

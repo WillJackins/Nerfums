@@ -27,7 +27,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AboutPageComponent} from './about-page/about-page.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
-import { AuthModule } from './auth/auth.module';
+import {AuthModule} from './auth/auth.module';
+import {UserLoginMenuComponent} from './user-login-menu/user-login-menu.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AuthModule } from './auth/auth.module';
     ContractDashboardComponent,
     ContractDeleteDialogComponent,
     ContractCompleteComponent,
-    AboutPageComponent
+    AboutPageComponent,
+    UserLoginMenuComponent
   ],
   entryComponents: [
     ContractCreateComponent,

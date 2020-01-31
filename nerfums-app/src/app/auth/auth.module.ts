@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UserLoginComponent } from './user-login/user-login.component';
-import { RegisterUserComponent } from './register-user/register-user.component';
-import { MatButtonModule, MatIconModule, MatInputModule, MatCardModule } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {UserLoginComponent} from './user-login/user-login.component';
+import {RegisterUserComponent} from './user-register/register-user.component';
+import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule} from '@angular/material';
+import {ReactiveFormsModule} from '@angular/forms';
+
 @NgModule({
   declarations: [UserLoginComponent, RegisterUserComponent],
   imports: [
