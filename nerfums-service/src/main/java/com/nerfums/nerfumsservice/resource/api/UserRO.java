@@ -3,9 +3,9 @@ package com.nerfums.nerfumsservice.resource.api;
 public class UserRO
 {
     //region MEMBER VARIABLES
-    private Long userId;
-    private String fullName;
-    private Integer availableCash;
+	private Long userId;
+	private String displayName;
+	private Integer availableCash;
     //endregion
 
     //region GETTERS
@@ -14,10 +14,9 @@ public class UserRO
         return userId;
     }
 
-    public String getFullName()
-    {
-        return fullName;
-    }
+	public String getDisplayName() {
+		return displayName;
+	}
 
     public Integer getAvailableCash()
     {
@@ -31,10 +30,9 @@ public class UserRO
         this.userId = userId;
     }
 
-    public void setFullName(String fullName)
-    {
-        this.fullName = fullName;
-    }
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
 
     public void setAvailableCash(Integer availableCash)
     {

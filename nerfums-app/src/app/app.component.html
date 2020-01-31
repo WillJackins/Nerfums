@@ -3,13 +3,13 @@
   <mat-toolbar-row>
     <span><strong>{{title}}</strong></span>
     <span class="toolbar-fill"></span>
-    <span><button mat-flat-button color="accent" [mat-menu-trigger-for]="test">Log In</button></span>
+    <span><button mat-flat-button color="accent" (click)="test()">Log In</button></span>
   </mat-toolbar-row>
 </mat-toolbar>
 <nav mat-tab-nav-bar>
   <div *ngFor="let link of navLinks">
     <a mat-tab-link
-       *ngIf="true"
+       *ngIf="!link.requireLogin || testService.currentSessionValue"
        [routerLink]="link.link"
        routerLinkActive #rla="routerLinkActive"
        [active]="rla.isActive">

@@ -6,16 +6,21 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class UserDO
-{
+public class UserDO {
     //region MEMBER VARIABLES
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "fullname")
-    private String fullName;
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password_hash")
+    private String passwordHash;
+
+    @Column(name = "display_name")
+    private String displayName;
 
     @Column(name = "available_cash")
     private Integer availableCash;
@@ -32,23 +37,27 @@ public class UserDO
     //endregion
 
     //region GETTERS
-    public Long getUserId()
-    {
+    public Long getUserId() {
         return userId;
     }
 
-    public String getFullName()
-    {
-        return fullName;
+    public String getUsername() {
+        return username;
     }
 
-    public Integer getAvailableCash()
-    {
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public Integer getAvailableCash() {
         return availableCash;
     }
 
-    public List<ContractDO> getUsersContracts()
-    {
+    public List<ContractDO> getUsersContracts() {
         return usersContracts;
     }
 
@@ -64,23 +73,27 @@ public class UserDO
     //endregion
 
     //region SETTERS
-    public void setUserId(Long userId)
-    {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public void setFullName(String fullName)
-    {
-        this.fullName = fullName;
+    public void setUsername(String loginId) {
+        this.username = loginId;
     }
 
-    public void setAvailableCash(Integer availableCash)
-    {
+    public void setPasswordHash(String password) {
+        this.passwordHash = password;
+    }
+
+    public void setDisplayName(String fullName) {
+        this.displayName = fullName;
+    }
+
+    public void setAvailableCash(Integer availableCash) {
         this.availableCash = availableCash;
     }
 
-    public void setUsersContracts(List<ContractDO> usersContracts)
-    {
+    public void setUsersContracts(List<ContractDO> usersContracts) {
         this.usersContracts = usersContracts;
     }
 

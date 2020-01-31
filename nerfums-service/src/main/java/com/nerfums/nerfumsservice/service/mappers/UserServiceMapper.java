@@ -1,12 +1,13 @@
 package com.nerfums.nerfumsservice.service.mappers;
 
-import com.nerfums.nerfumsservice.model.User;
-import com.nerfums.nerfumsservice.repository.api.UserDO;
+import javax.annotation.PostConstruct;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import com.nerfums.nerfumsservice.model.User;
+import com.nerfums.nerfumsservice.repository.api.UserDO;
 
 @Component
 public class UserServiceMapper
@@ -40,10 +41,14 @@ public class UserServiceMapper
         return modelMapper.map(user, UserDO.class);
     }
 
-    private void addMappingUserDOToUser(ModelMapper modelMapper)
-    {
-        modelMapper.typeMap(UserDO.class, User.class);
-    }
+    private void addMappingUserDOToUser(ModelMapper modelMapper) {
+		modelMapper.typeMap(UserDO.class, User.class)
+				.addMapping(UserDO::getUserId, User::setUserId)
+				.addMapping(UserDO::getUsername, User::setUsername)
+				.addMapping(UserDO::getPasswordHash, User::setPassword)
+				.addMapping(UserDO::getDisplayName, User::setDisplayName)
+				.addMapping(UserDO::getAvailableCash, User::setAvailableCash);
+	}
 
     private void addMappingUserToUserDO(ModelMapper modelMapper)
     {

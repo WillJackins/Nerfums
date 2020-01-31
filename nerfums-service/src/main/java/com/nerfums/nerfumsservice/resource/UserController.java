@@ -11,6 +11,7 @@ import com.nerfums.nerfumsservice.delegate.ContractDelegate;
 import com.nerfums.nerfumsservice.delegate.UserDelegate;
 import com.nerfums.nerfumsservice.resource.api.ContractRO;
 import com.nerfums.nerfumsservice.resource.api.UserRO;
+
 @RestController
 @RequestMapping("users")
 public class UserController
@@ -42,14 +43,14 @@ public class UserController
         return ResponseEntity.ok(userContracts);
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<UserRO>> getAllUsers()
     {
         List<UserRO> users = userDelegate.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserRO> createNewUser(@RequestBody UserRO userRO)
     {

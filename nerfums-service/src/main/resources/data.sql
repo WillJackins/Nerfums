@@ -1,8 +1,8 @@
-Insert into users(user_id, fullname, available_cash)
-VALUES (1, 'Dave', 1000)
-Insert into users(user_id, fullname, available_cash)
+Insert into users(user_id, username, password_hash, display_name, available_cash)
+values (1, 'Dave', 'Dave_Password', 'Dave_Display', 1000)
+Insert into users(user_id, display_name, available_cash)
 VALUES (2, 'Will', 1000)
-Insert into users(user_id, fullname, available_cash)
+Insert into users(user_id, display_name, available_cash)
 VALUES (3, 'Luke', 1000)
 
 INSERT into modifiers(modifier_id, modifier_title, modifier_description, modifier_value)
