@@ -86,6 +86,7 @@ public class UserMappersTests
 		assertEquals(expectedUser.getAvailableCash(), expectedUser.getAvailableCash());
 		//TEST
 		//TEST2
+		//TEST3
 	}
 
 	@Test
