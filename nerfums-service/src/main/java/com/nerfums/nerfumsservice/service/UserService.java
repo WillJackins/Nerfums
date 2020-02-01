@@ -20,7 +20,7 @@ import common.exception.BusinessServiceException;
 @Service
 public class UserService implements UserDetailsService {
     private final UserServiceMapper userServiceMapper;
-    private final UserRepository userRepository;
+	private final UserRepository userRepository;
 
     @Autowired
     public UserService(UserServiceMapper userServiceMapper, UserRepository userRepository) {
@@ -44,6 +44,7 @@ public class UserService implements UserDetailsService {
 			throw new UsernameNotFoundException("Could not find user: " + username);
 		}
 
+		System.out.println("RETRIEVED: " + userDO.getUsername() + " || " + userDO.getPasswordHash());
 		return userServiceMapper.mapUserDOToUser(userDO);
 	}
 
@@ -55,8 +56,9 @@ public class UserService implements UserDetailsService {
 
 	public User createNewUser(User user) {
 		UserDO preCreatedUserDO = userServiceMapper.mapUserToUserDO(user);
-		UserDO postCreatedUserDO = userRepository.save(preCreatedUserDO);
 
-        return userServiceMapper.mapUserDOToUser(postCreatedUserDO);
-    }
+		UserDO postCreatedUserDO = userRepository.save(preCreatedUserDO);
+		System.out.println("SAVED: " + postCreatedUserDO.getPasswordHash());
+		return userServiceMapper.mapUserDOToUser(postCreatedUserDO);
+	}
 }

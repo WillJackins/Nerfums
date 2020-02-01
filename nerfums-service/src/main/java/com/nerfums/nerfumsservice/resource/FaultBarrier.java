@@ -60,6 +60,6 @@ public class FaultBarrier {
 	private ResponseEntity<ErrorDetails> prepareErrorResponse(Exception ex, String message, WebRequest request, HttpStatus httpStatus) {
 		LOGGER.error(ex.getMessage(), ex);
 		ErrorDetails errorDetails = new ErrorDetails(new Date(), message, request.getDescription(false));
-		return new ResponseEntity<>(errorDetails, httpStatus);
+		return ResponseEntity.status(httpStatus).body(errorDetails);
 	}
 }

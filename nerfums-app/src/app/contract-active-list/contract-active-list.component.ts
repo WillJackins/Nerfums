@@ -21,6 +21,7 @@ export class ContractActiveListComponent implements OnInit {
   constructor(private nerfumsService: NerfumsService, private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.allUserActiveContracts = new Array<Contract>();
     this.defaultPageIndex = 0;
     this.defaultPageSize = 5;
 

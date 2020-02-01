@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {Contract} from '../model/Contract';
 import {User} from '../model/User';
 import {Modifier} from '../model/Modifier';
 import {Session} from "../model/Session";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {Register} from "../model/Register";
 
 @Injectable({
@@ -18,10 +18,12 @@ export class NerfumsService {
   private currentSessionSubject: BehaviorSubject<Session>;
   public currentSession: Observable<Session>;
 
-
   constructor(private http: HttpClient) {
     this.currentSessionSubject = new BehaviorSubject<Session>(JSON.parse(localStorage.getItem('currentSession')));
     this.currentSession = this.currentSessionSubject.asObservable();
+
+    //TODO REMOVE
+    this.logout();
   }
 
   public get currentSessionValue(): Session {
@@ -46,14 +48,18 @@ export class NerfumsService {
 
   login(username: string, password: string) {
     return this.http.post<Session>(this.urlRoot + '/authentication/login', {username, password})
-      .pipe(map(session => {
-        if (session && session.token) {
-          localStorage.setItem('currentSession', JSON.stringify(session));
-          this.currentSessionSubject.next(session);
-        }
+      .pipe(
+        map(session => {
+          if (session && session.token) {
+            console.log(session);
+            localStorage.setItem('currentSession', JSON.stringify(session));
+            this.currentSessionSubject.next(session);
+          }
 
-        return session;
-      }))
+          return session;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   logout() {
@@ -100,5 +106,19 @@ export class NerfumsService {
 
   getAllModifiers(): Observable<Array<Modifier>> {
     return this.http.get<Array<Modifier>>(this.urlRoot + '/modifiers');
+  }
+
+  postUser(user: User): Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post<User>(this.urlRoot + '/users', JSON.stringify(user), httpOptions);
+  }
+
+  handleError(error: HttpErrorResponse) {
+    console.log("DINGUM: " + error.status);
+    return throwError(error);
   }
 }

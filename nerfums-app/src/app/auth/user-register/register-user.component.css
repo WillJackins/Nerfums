@@ -1,0 +1,40 @@
+.register-user-card {
+}
+
+.email-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.fullname-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+.password-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.confirm-password-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.signup-button {
+    display: flex;
+    justify-content: flex-start;
+}
+.cancel-button {
+    display: flex;
+    justify-content: space-around;
+    color: blue;
+}

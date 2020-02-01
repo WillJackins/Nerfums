@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ContractListComponent} from './contract-list/contract-list.component';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ContractItemComponent} from './contract-item/contract-item.component';
@@ -14,7 +14,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {ContractCreateComponent} from './contract-create/contract-create.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatSelectModule} from '@angular/material/select';
-import {ReactiveFormsModule} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {ContractManagerComponent} from './contract-manager/contract-manager.component';
 import {MatTableModule} from '@angular/material/table';
@@ -28,6 +27,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AboutPageComponent} from './about-page/about-page.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
+import {AuthModule} from './auth/auth.module';
+import {UserLoginMenuComponent} from './user-login-menu/user-login-menu.component';
 import {JwtInterceptor} from "./JwtInterceptor";
 
 @NgModule({
@@ -41,7 +42,8 @@ import {JwtInterceptor} from "./JwtInterceptor";
     ContractDashboardComponent,
     ContractDeleteDialogComponent,
     ContractCompleteComponent,
-    AboutPageComponent
+    AboutPageComponent,
+    UserLoginMenuComponent
   ],
   entryComponents: [
     ContractCreateComponent,
@@ -54,14 +56,16 @@ import {JwtInterceptor} from "./JwtInterceptor";
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatIconModule,
     MatCardModule,
     MatInputModule,
     MatListModule,
     MatToolbarModule,
     MatGridListModule,
+    FormsModule,
+    ReactiveFormsModule,
     DragDropModule,
     MatSelectModule,
-    ReactiveFormsModule,
     MatTableModule,
     MatPaginatorModule,
     MatExpansionModule,
@@ -70,7 +74,8 @@ import {JwtInterceptor} from "./JwtInterceptor";
     MatCheckboxModule,
     MatTabsModule,
     _MatMenuDirectivesModule,
-    MatMenuModule
+    MatMenuModule,
+    AuthModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}

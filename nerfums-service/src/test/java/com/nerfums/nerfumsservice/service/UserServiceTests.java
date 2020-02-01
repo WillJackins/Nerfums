@@ -1,37 +1,35 @@
 package com.nerfums.nerfumsservice.service;
 
-import com.nerfums.nerfumsservice.dataFactory.ContractDataFactory;
-import com.nerfums.nerfumsservice.dataFactory.UserDataFactory;
-import com.nerfums.nerfumsservice.model.Contract;
-import com.nerfums.nerfumsservice.model.User;
-import com.nerfums.nerfumsservice.repository.ContractRepository;
-import com.nerfums.nerfumsservice.repository.UserRepository;
-import com.nerfums.nerfumsservice.repository.api.ContractDO;
-import com.nerfums.nerfumsservice.repository.api.UserDO;
-import com.nerfums.nerfumsservice.service.mappers.ContractServiceMapper;
-import com.nerfums.nerfumsservice.service.mappers.UserServiceMapper;
-import common.exception.BusinessServiceException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class UserServiceTests
-{
+import com.nerfums.nerfumsservice.dataFactory.UserDataFactory;
+import com.nerfums.nerfumsservice.model.User;
+import com.nerfums.nerfumsservice.repository.UserRepository;
+import com.nerfums.nerfumsservice.repository.api.UserDO;
+import com.nerfums.nerfumsservice.service.mappers.UserServiceMapper;
+
+import common.exception.BusinessServiceException;
+
+public class UserServiceTests {
 	private static UserRepository mockRepository;
+	private static PasswordEncoder mockEncoder;
 	private static UserServiceMapper mockMapper;
 	private static UserService spyService;
 
 	@BeforeAll
-	static void beforeAll()
-	{
+	static void beforeAll() {
 		mockRepository = mock(UserRepository.class);
+		mockEncoder = mock(PasswordEncoder.class);
 		mockMapper = mock(UserServiceMapper.class);
 		spyService = spy(new UserService(mockMapper, mockRepository));
 	}
