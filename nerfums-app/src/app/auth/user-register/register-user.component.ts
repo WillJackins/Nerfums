@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NerfumsService} from '../../nerfums.service';
-import {User} from 'src/model/User';
 import {Router} from '@angular/router';
+import {Register} from "../../../model/Register";
 
 @Component({
   selector: 'app-register-user',
@@ -10,12 +10,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./register-user.component.css']
 })
 export class RegisterUserComponent implements OnInit {
-  private submitted: Boolean = false;
-
-  private full_name: string = "";
-  private email: string = "";
-  private password: string = "";
-  private confirmPassword: string = "";
+  private register: Register;
+  private confirmPassword: string;
 
   private validName: boolean = true;
   private validPassword: boolean = false;
@@ -44,7 +40,9 @@ export class RegisterUserComponent implements OnInit {
   constructor(private nerfumsService: NerfumsService, private router: Router) { }
 
   ngOnInit() {
+    this.initRegisterObject();
   }
+
   private MustMatch(controlName: string, matchingControlName: string){
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
@@ -54,8 +52,8 @@ export class RegisterUserComponent implements OnInit {
         return;
       }
 
-      if(control.value !== matchingControl.value) {
-        matchingControl.setErrors({ mustMatch: true});
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({mustMatch: true});
       } else {
         matchingControl.setErrors(null);
       }
@@ -63,76 +61,63 @@ export class RegisterUserComponent implements OnInit {
     }
   }
 
-  private onSubmit() {
-    // this.submitted = true;
-    // if(this.registerUser.invalid) {
-    //   console.log("invalid form");
-    //   return;
-    // }
+  private initRegisterObject() {
+    this.register = new class implements Register {
+      displayName: string;
+      password: string;
+      username: string;
+    };
   }
 
-  private onHideConfirmPasswordClick(){
+  private onHideConfirmPasswordClick() {
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 
-  private onHidePasswordClick(){
+  private onHidePasswordClick() {
     this.hidePassword = !this.hidePassword;
   }
 
-  private onReset() {
-    this.submitted = false;
-  }
-  private setFullName(full_name: string) {
-    this.full_name = full_name;
-    console.log(this.full_name);
+  private setFullName(displayName: string) {
+    console.log(displayName);
+    this.register.displayName = displayName;
   }
 
   private setEmail(email: string) {
-    this.email = email;
-    console.log(this.email);
+    this.register.username = email;
+    console.log(email);
   }
 
   private setPassword(password: string) {
-    this.password = password;
-    console.log(this.password);
+    this.register.password = password;
+    console.log(password);
   }
 
   private setConfirmPassword(confirmPassword: string){
     this.confirmPassword = confirmPassword;
-    this.validPassword = this.confirmPassword === this.password;
     console.log(this.confirmPassword); console.log(this.validPassword);
+    //TODO log at this
   }
 
   private validateAllFields(): boolean {
-    if (this.full_name === ""
-      || this.email === ""
-      || this.password === ""
+    if (this.register.displayName === ""
+      || this.register.username === ""
+      || this.register.password === ""
       || this.confirmPassword === ""
-      || this.confirmPassword !== this.password) {
+      || this.confirmPassword !== this.register.password) {
       return false;
     }
     return true;
   }
 
-  private register(){
-    if(!this.validateAllFields()) {
-      //todo error
+  private registerUser() {
+    if (!this.validateAllFields()) {
       return;
     }
 
-    //todo - AuthClass
-    let user: User = {
-       fullName: this.full_name,
-       availableCash: 1000
-    };
-    //this.nerfumsService.postUser(user).subscribe(data => console.log(data));
-  }
-
-  private cancel() {
-    this.router.navigate(['./loginPage']);
+    this.nerfumsService.register(this.register).subscribe();
   }
 
   private validatePasswords(): boolean {
-    return this.password.length > 6 && this.password === this.confirmPassword;
+    return this.register.password.length > 6 && this.register.password === this.confirmPassword;
   }
 }

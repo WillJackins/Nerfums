@@ -13,37 +13,33 @@ export class AppComponent {
   navLinks: any[];
   activeLinkIndex = -1;
 
-  testService: NerfumsService;
-
-  constructor(private router: Router, private service: NerfumsService) {
+  constructor(private router: Router, private nerfumsService: NerfumsService) {
     this.navLinks = [
       {
         label: 'About',
         link: './about',
-        requireLogin: false,
+        unauthenticated: true,
         index: 0
       },
       {
         label: 'Contract List',
         link: './contractList',
-        requireLogin: true,
+        unauthenticated: false,
         index: 1
       },
       {
         label: 'Contract Manager',
         link: './contractManager',
-        requireLogin: true,
+        unauthenticated: false,
         index: 2
       }
     ];
-
-    this.testService = service;
   }
 
   ngOnInit(): void {
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === '.' + this.router.url));
-    }); 
+    });
   }
 
   private goToLoginPage(){
@@ -52,10 +48,10 @@ export class AppComponent {
 
   test(): void {
     console.log('BUTTON PRESS');
-    if (!this.testService.currentSessionValue) {
-      this.testService.login("Dave", "Dave_Password").subscribe();
+    if (!this.nerfumsService.currentSessionValue) {
+      this.nerfumsService.login("Dave", "Dave_Password").subscribe();
     } else {
-      this.testService.logout();
+      this.nerfumsService.logout();
     }
 
   }

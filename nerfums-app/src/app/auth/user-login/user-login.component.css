@@ -16,12 +16,36 @@
 }
 
 .login-button {
-    display: flex;
-    justify-content: flex-start;
+  display: flex;
+  justify-content: flex-start;
 }
+
 .register-button {
-    display: flex;
-    justify-content: space-around;
-    color: blue;
+  display: flex;
+  justify-content: space-around;
+  color: blue;
+}
+
+.shake {
+  animation-name: shake-animation;
+  animation-duration: 0.3s;
+}
+
+@keyframes shake-animation {
+  10%, 90% {
+    transform: translate3d(-0.5px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(3px, 0, 0);
+  }
 }
 

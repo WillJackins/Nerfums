@@ -23,6 +23,7 @@ public class AuthenticationController {
 
 	@PostMapping("/register")
 	public ResponseEntity<SessionRO> registerUser(@RequestBody RegisterRO registerUser) {
+		System.out.println("REGISTER: " + registerUser.getPassword());
 		SessionRO session = authenticationDelegate.registerUser(registerUser);
 		return ResponseEntity.ok(session);
 	}

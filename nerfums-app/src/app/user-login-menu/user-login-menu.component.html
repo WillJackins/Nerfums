@@ -1,4 +1,6 @@
-<button mat-flat-button color="accent" [matMenuTriggerFor]="loginMenu" (menuClosed)="toggleRegister(false)">Log In</button>
+<button *ngIf="!nerfumService.currentSessionValue" mat-flat-button color="accent" [matMenuTriggerFor]="loginMenu"
+        (menuClosed)="toggleRegister(false)">Log In
+</button>
 <mat-menu class="login-menu" #loginMenu="matMenu">
   <div (click)="$event.stopPropagation()">
     <app-user-login *ngIf="!isRegistering"></app-user-login>
