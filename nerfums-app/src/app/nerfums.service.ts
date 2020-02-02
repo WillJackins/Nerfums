@@ -7,6 +7,7 @@ import {Modifier} from '../model/Modifier';
 import {Session} from "../model/Session";
 import {catchError, map} from "rxjs/operators";
 import {Register} from "../model/Register";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,9 @@ export class NerfumsService {
   private currentSessionSubject: BehaviorSubject<Session>;
   public currentSession: Observable<Session>;
 
-  constructor(private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient) {
     this.currentSessionSubject = new BehaviorSubject<Session>(JSON.parse(localStorage.getItem('currentSession')));
     this.currentSession = this.currentSessionSubject.asObservable();
-
-    //TODO REMOVE
-    this.logout();
   }
 
   public get currentSessionValue(): Session {
@@ -65,6 +63,7 @@ export class NerfumsService {
   logout() {
     localStorage.removeItem('currentSession');
     this.currentSessionSubject.next(null);
+    this.router.navigate(['/about'])
   }
 
   getAllActiveContracts(activeContracts: boolean): Observable<Array<Contract>> {

@@ -3,6 +3,27 @@
   background-color: red;
 }
 
+.user-menu-button {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: inline-block;
+}
+
+.user-menu-divider {
+  padding: 10px 10px;
+  display: inline-block;
+}
+
+.user-menu-info {
+  padding: 10% 0;
+  display: inline-block;
+}
+
+.menu-icon {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 ::ng-deep .mat-menu-content {
   padding-bottom: 0px;
   padding-top: 0px;
