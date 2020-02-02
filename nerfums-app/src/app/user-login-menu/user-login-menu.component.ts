@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NerfumsService} from "../nerfums.service";
+import {User} from "../../model/User";
 
 @Component({
   selector: 'app-user-login-menu',
@@ -8,12 +9,14 @@ import {NerfumsService} from "../nerfums.service";
 })
 export class UserLoginMenuComponent implements OnInit {
 
+  private user: User;
   private isRegistering: boolean;
 
   constructor(private nerfumService: NerfumsService) {
   }
 
   ngOnInit() {
+    this.user = this.nerfumService.currentUserValue;
     this.isRegistering = false;
   }
 

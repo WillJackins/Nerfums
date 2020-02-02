@@ -1,9 +1,15 @@
 <button *ngIf="!nerfumService.currentSessionValue" mat-flat-button color="accent" [matMenuTriggerFor]="loginMenu"
         (menuClosed)="toggleRegister(false)">Log In
 </button>
-<button *ngIf="nerfumService.currentSessionValue" mat-button [matMenuTriggerFor]="userMenu">
-  <mat-icon>menu</mat-icon>
-</button>
+<div *ngIf="nerfumService.currentSessionValue">
+  <h2 class="user-menu-info">{{user.displayName}}</h2>
+  <h1 class="user-menu-divider">|</h1>
+  <h2 class="user-menu-info"> ${{user.availableCash}}</h2>
+  <button *ngIf="nerfumService.currentSessionValue" mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
+    <mat-icon style="margin-bottom: 7px">menu</mat-icon>
+  </button>
+</div>
+
 
 <mat-menu class="login-menu" #loginMenu="matMenu">
   <div (click)="$event.stopPropagation()">
@@ -14,5 +20,5 @@
 
 <mat-menu #userMenu="matMenu">
   <button mat-menu-item>Settings</button>
-  <button mat-menu-item>Log Out</button>
+  <button mat-menu-item (click)="nerfumService.logout()">Log Out</button>
 </mat-menu>
