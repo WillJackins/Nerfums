@@ -22,7 +22,6 @@ export class NerfumsService {
     this.currentSessionSubject = new BehaviorSubject<Session>(JSON.parse(localStorage.getItem('currentSession')));
     this.currentSession = this.currentSessionSubject.asObservable();
 
-    //TODO REMOVE
     this.logout();
   }
 
@@ -31,7 +30,7 @@ export class NerfumsService {
   }
 
   public get currentUserValue(): User {
-    return this.currentSessionSubject.value.user;
+    return this.currentSessionSubject.value.userRO;
   }
 
   register(register: Register) {

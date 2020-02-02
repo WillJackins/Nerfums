@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {ContractCreateComponent} from '../contract-create/contract-create.component';
+import {NerfumsService} from "../nerfums.service";
+import {User} from "../../model/User";
 
 @Component({
   selector: 'app-contract-dashboard',
@@ -9,9 +11,14 @@ import {ContractCreateComponent} from '../contract-create/contract-create.compon
 })
 export class ContractDashboardComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  user: User;
+
+  constructor(private nerfumsService: NerfumsService, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
+    this.user = this.nerfumsService.currentUserValue;
+    console.log("USER: " + this.user);
   }
 
   openContractCreator() {

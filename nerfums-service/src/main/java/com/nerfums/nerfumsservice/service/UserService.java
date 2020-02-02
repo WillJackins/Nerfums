@@ -19,12 +19,14 @@ import common.exception.BusinessServiceException;
 
 @Service
 public class UserService implements UserDetailsService {
-    private final UserServiceMapper userServiceMapper;
+	private final UserServiceMapper userServiceMapper;
 	private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserServiceMapper userServiceMapper, UserRepository userRepository) {
-        super();
+	private static final Integer STARTING_MONEY = 10000;
+
+	@Autowired
+	public UserService(UserServiceMapper userServiceMapper, UserRepository userRepository) {
+		super();
 		this.userServiceMapper = userServiceMapper;
 		this.userRepository = userRepository;
 	}
@@ -44,7 +46,6 @@ public class UserService implements UserDetailsService {
 			throw new UsernameNotFoundException("Could not find user: " + username);
 		}
 
-		System.out.println("RETRIEVED: " + userDO.getUsername() + " || " + userDO.getPasswordHash());
 		return userServiceMapper.mapUserDOToUser(userDO);
 	}
 
@@ -55,10 +56,18 @@ public class UserService implements UserDetailsService {
 	}
 
 	public User createNewUser(User user) {
+		user.setAvailableCash(STARTING_MONEY);
+		user.setCommittedCash(0);
 		UserDO preCreatedUserDO = userServiceMapper.mapUserToUserDO(user);
 
 		UserDO postCreatedUserDO = userRepository.save(preCreatedUserDO);
-		System.out.println("SAVED: " + postCreatedUserDO.getPasswordHash());
 		return userServiceMapper.mapUserDOToUser(postCreatedUserDO);
+	}
+
+	public User updateUser(User user) {
+		UserDO preUpdateUser = userServiceMapper.mapUserToUserDO(user);
+
+		UserDO postUpdateUser = userRepository.save(preUpdateUser);
+		return userServiceMapper.mapUserDOToUser(postUpdateUser);
 	}
 }
