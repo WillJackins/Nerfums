@@ -1,4 +1,4 @@
 export interface User {
-  fullName: string;
+  displayName: string;
   availableCash: number;
 }

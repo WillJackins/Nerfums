@@ -9,7 +9,7 @@
       <mat-select #target (selectionChange)="setTarget(target.value)" [formControl]="targetInputControl">
         <mat-option>--</mat-option>
         <mat-option *ngFor="let user of users" [value]="user">
-          {{user.fullName}}
+          {{user.displayName}}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="targetInputControl.hasError('required')">Please enter a Contract Target.</mat-error>
