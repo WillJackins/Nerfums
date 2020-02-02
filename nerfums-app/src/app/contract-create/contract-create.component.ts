@@ -26,28 +26,44 @@ export class ContractCreateComponent implements OnInit {
   ngOnInit() {
     this.nerfumsService.getAllUsers().subscribe(data => {
       this.users = data;
+      console.log("USERS: " + this.users.length);
     });
 
     this.nerfumsService.getAllModifiers().subscribe(data => {
       this.modifiers = data;
     });
 
-    this.contract = null;
+    this.initContract();
   }
 
-  setTarget(target: any) {
+  initContract() {
+    this.contract = new class implements Contract {
+      contractActive: boolean;
+      contractCompletedBy: User;
+      contractCompletedOptionals: Array<Modifier>;
+      contractDetails: string;
+      contractId: number;
+      contractOwner: User;
+      contractReward: number;
+      contractTarget: User;
+      optionals: Array<Modifier>;
+      requirements: Array<Modifier>;
+    }
+  }
+
+  setTarget(target: User) {
     this.contract.contractTarget = target;
   }
 
-  setReward(reward: any) {
+  setReward(reward: number) {
     this.contract.contractReward = reward;
   }
 
-  setRequirements(requirements: Array<any>) {
+  setRequirements(requirements: Array<Modifier>) {
     this.contract.requirements = requirements;
   }
 
-  setOptionals(optionals: Array<any>) {
+  setOptionals(optionals: Array<Modifier>) {
     this.contract.optionals = optionals;
   }
 
@@ -56,23 +72,13 @@ export class ContractCreateComponent implements OnInit {
   }
 
   isValidContract(): boolean {
-
-    // if (this.contract.contractOwner == null) {
-    //   return false;
-    // }
-    if (this.contract.contractTarget == null) {
-      return false;
-    }
-    if (this.contract.contractReward == null) {
-      return false;
-    }
-    return true;
+    return (this.contract.contractTarget != null) && (this.contract.contractReward != null && this.contract.contractReward > 0);
   }
 
   postContract() {
 
     if (this.isValidContract()) {
-      this.contract.contractOwner = this.users[0];
+      this.contract.contractOwner = this.nerfumsService.currentUserValue;
 
       this.nerfumsService.postContract(this.contract).subscribe(data =>
         console.log(data));
@@ -84,7 +90,7 @@ export class ContractCreateComponent implements OnInit {
   }
 
   closeDialog() {
-    this.contract = null;
+    this.initContract();
     this.dialogRef.close();
   }
 }
