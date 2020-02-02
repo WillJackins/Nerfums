@@ -12,6 +12,7 @@ public class User implements UserDetails {
 	private String passwordHash;
 	private String displayName;
 	private Integer availableCash;
+	private Integer committedCash;
 
 	public User() {
 		super();
@@ -46,6 +47,10 @@ public class User implements UserDetails {
 		return availableCash;
 	}
 
+	public Integer getCommittedCash() {
+		return committedCash;
+	}
+
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
@@ -65,6 +70,10 @@ public class User implements UserDetails {
 
 	public void setAvailableCash(Integer availableCash) {
 		this.availableCash = availableCash;
+	}
+
+	public void setCommittedCash(Integer committedCash) {
+		this.committedCash = committedCash;
 	}
 
 

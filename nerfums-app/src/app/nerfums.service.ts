@@ -29,7 +29,7 @@ export class NerfumsService {
   }
 
   public get currentUserValue(): User {
-    return this.currentSessionSubject.value.user;
+    return this.currentSessionSubject.value.userRO;
   }
 
   register(register: Register) {

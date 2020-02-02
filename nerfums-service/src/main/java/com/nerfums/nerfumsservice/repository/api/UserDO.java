@@ -25,6 +25,9 @@ public class UserDO {
     @Column(name = "available_cash")
     private Integer availableCash;
 
+    @Column(name = "committed_cash")
+    private Integer committedCash;
+
     @OneToMany(mappedBy = "contractOwner")
     private List<ContractDO> usersContracts;
 
@@ -57,12 +60,15 @@ public class UserDO {
         return availableCash;
     }
 
+    public Integer getCommittedCash() {
+        return committedCash;
+    }
+
     public List<ContractDO> getUsersContracts() {
         return usersContracts;
     }
 
-    public List<ContractDO> getUserAsTargetContracts()
-    {
+    public List<ContractDO> getUserAsTargetContracts() {
         return userAsTargetContracts;
     }
 
@@ -93,12 +99,15 @@ public class UserDO {
         this.availableCash = availableCash;
     }
 
+    public void setCommittedCash(Integer committedCash) {
+        this.committedCash = committedCash;
+    }
+
     public void setUsersContracts(List<ContractDO> usersContracts) {
         this.usersContracts = usersContracts;
     }
 
-    public void setUserAsTargetContracts(List<ContractDO> userAsTargetContracts)
-    {
+    public void setUserAsTargetContracts(List<ContractDO> userAsTargetContracts) {
         this.userAsTargetContracts = userAsTargetContracts;
     }
 

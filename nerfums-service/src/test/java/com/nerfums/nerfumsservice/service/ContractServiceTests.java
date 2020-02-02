@@ -19,18 +19,18 @@ import com.nerfums.nerfumsservice.service.mappers.ContractServiceMapper;
 
 import common.exception.BusinessServiceException;
 
-public class ContractServiceTests
-{
+public class ContractServiceTests {
 	private static ContractRepository mockRepository;
+	private static UserService mockUserService;
 	private static ContractServiceMapper mockMapper;
 	private static ContractService spyService;
 
 	@BeforeAll
-	static void beforeAll()
-	{
+	static void beforeAll() {
 		mockRepository = mock(ContractRepository.class);
+		mockUserService = mock(UserService.class);
 		mockMapper = mock(ContractServiceMapper.class);
-		spyService = spy(new ContractService(mockMapper, mockRepository));
+		spyService = spy(new ContractService(mockMapper, mockUserService, mockRepository));
 	}
 
 	@Test
