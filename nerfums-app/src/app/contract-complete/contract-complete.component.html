@@ -7,7 +7,7 @@
     <mat-form-field class="complete-user">
       <mat-label>Completed By:</mat-label>
       <mat-select #user (selectionChange)="setCompleteBy(user.value)" [formControl]="userInputControl">
-        <mat-option *ngFor="let user of users" [value]="user">{{user.fullName}}</mat-option>
+        <mat-option *ngFor="let user of users" [value]="user">{{user.displayName}}</mat-option>
       </mat-select>
       <mat-error *ngIf="userInputControl.hasError('required')">Please select a User.</mat-error>
     </mat-form-field>
