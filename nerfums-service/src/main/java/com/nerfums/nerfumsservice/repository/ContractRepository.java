@@ -11,16 +11,16 @@ public interface ContractRepository extends CrudRepository<ContractDO, Long> {
 	@Query(value =
 				   "select contract " +
 						   "from ContractDO contract " +
-						   "where contract.contractTarget.userId <> :requestingUserId " +
+						   "where contract.contractTarget.username <> :requesterUsername " +
 						   "and contract.contractActive = true"
 	)
-	List<ContractDO> getAllActiveContracts(Long requestingUserId);
+	List<ContractDO> getPostedContracts(String requesterUsername);
 
 	@Query(value =
 				   "select contract " +
 						   "from ContractDO contract " +
-						   "where contract.contractOwner.userId = :ownerId " +
-						   "and contract.contractActive = :activeContracts"
+						   "where contract.contractOwner.username = :ownerUsername " +
+						   "and contract.contractActive = :active"
 	)
-	List<ContractDO> getAllContractsByOwnerId(Long ownerId, Boolean activeContracts);
+	List<ContractDO> getOwnerContracts(String ownerUsername, Boolean active);
 }

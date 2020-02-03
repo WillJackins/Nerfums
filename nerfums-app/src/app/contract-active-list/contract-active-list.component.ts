@@ -58,7 +58,7 @@ export class ContractActiveListComponent implements OnInit {
   }
 
   private retrieveContractList() {
-    this.nerfumsService.getAllContractsByOwnerId(1, true).subscribe(data => {
+    this.nerfumsService.getOwnerContracts(true).subscribe(data => {
       console.log('CONTRACT LIST RETRIEVED || COUNT: ' + data.length);
       this.allUserActiveContracts = data;
       this.updateContractList(this.defaultPageIndex, this.defaultPageSize);
