@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public List<User> getAllUsers() {
-		return ((List<UserDO>) userRepository.findAll()).stream()
+		return userRepository.findAll().stream()
 					   .map(userServiceMapper::mapUserDOToUser)
 					   .collect(Collectors.toList());
 	}
@@ -64,10 +64,16 @@ public class UserService implements UserDetailsService {
 		return userServiceMapper.mapUserDOToUser(postCreatedUserDO);
 	}
 
-	public User updateUser(User user) {
-		UserDO preUpdateUser = userServiceMapper.mapUserToUserDO(user);
+	public User updateUser(User updatedUser) {
+		UserDO newUser = userServiceMapper.mapUserToUserDO(updatedUser);
+		UserDO oldUser = userRepository.getOne(updatedUser.getUserId());
 
-		UserDO postUpdateUser = userRepository.save(preUpdateUser);
+		oldUser.setDisplayName(newUser.getDisplayName() != null ? newUser.getDisplayName() : oldUser.getDisplayName());
+		oldUser.setAvailableCash(newUser.getAvailableCash() != null ? newUser.getAvailableCash() : oldUser.getAvailableCash());
+		oldUser.setCommittedCash(newUser.getCommittedCash() != null ? newUser.getCommittedCash() : oldUser.getCommittedCash());
+
+
+		UserDO postUpdateUser = userRepository.save(oldUser);
 		return userServiceMapper.mapUserDOToUser(postUpdateUser);
 	}
 }

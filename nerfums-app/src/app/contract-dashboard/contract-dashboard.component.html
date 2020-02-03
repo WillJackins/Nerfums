@@ -6,7 +6,7 @@
 
     <mat-grid-list cols="2" rowHeight="6:1">
       <mat-grid-tile><b>Total Cash:</b></mat-grid-tile>
-      <mat-grid-tile>$ {{user.availableCash}}</mat-grid-tile>
+      <mat-grid-tile>$ {{user.availableCash + user.committedCash}}</mat-grid-tile>
       <mat-grid-tile><b>Contracted Cash:</b></mat-grid-tile>
       <mat-grid-tile>$ {{user.committedCash}}</mat-grid-tile>
     </mat-grid-list>
@@ -15,7 +15,7 @@
 
     <mat-grid-list cols="2" rowHeight="6:1">
       <mat-grid-tile><b>Available Cash:</b></mat-grid-tile>
-      <mat-grid-tile>$1000</mat-grid-tile>
+      <mat-grid-tile>${{user.availableCash}}</mat-grid-tile>
     </mat-grid-list>
 
   </mat-card-content>

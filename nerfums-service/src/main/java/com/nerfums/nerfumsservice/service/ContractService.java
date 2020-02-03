@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nerfums.nerfumsservice.delegate.authentication.AuthenticationUtil;
 import com.nerfums.nerfumsservice.exception.NerfumsErrorCode;
 import com.nerfums.nerfumsservice.model.Contract;
 import com.nerfums.nerfumsservice.model.Modifier;
@@ -20,13 +21,15 @@ import common.exception.BusinessServiceException;
 public class ContractService {
 	private final ContractServiceMapper contractServiceMapper;
 	private final UserService userService;
+	private final AuthenticationUtil authenticationUtil;
 	private final ContractRepository contractRepository;
 
 	@Autowired
-	public ContractService(ContractServiceMapper contractServiceMapper, UserService userService, ContractRepository contractRepository) {
+	public ContractService(ContractServiceMapper contractServiceMapper, UserService userService, AuthenticationUtil authenticationUtil, ContractRepository contractRepository) {
 		super();
 		this.contractServiceMapper = contractServiceMapper;
 		this.userService = userService;
+		this.authenticationUtil = authenticationUtil;
 		this.contractRepository = contractRepository;
 	}
 
@@ -36,14 +39,16 @@ public class ContractService {
 					   .orElseThrow(() -> new BusinessServiceException("Contract not found.", NerfumsErrorCode.NO_CONTRACT));
 	}
 
-	public List<Contract> getAllActiveContracts(Long requestingUserId) {
-		return contractRepository.getAllActiveContracts(requestingUserId).stream()
+	public List<Contract> getPostedContracts(String requesterToken) {
+		String requestingUsername = authenticationUtil.extractUsername(requesterToken);
+		return contractRepository.getPostedContracts(requestingUsername).stream()
 					   .map(contractServiceMapper::mapContractDOToContract)
 					   .collect(Collectors.toList());
 	}
 
-	public List<Contract> getAllContractsByOwnerId(Long ownerId, Boolean activeContracts) {
-		return contractRepository.getAllContractsByOwnerId(ownerId, activeContracts).stream()
+	public List<Contract> getOwnerContracts(String ownerToken, Boolean active) {
+		String ownerUsername = authenticationUtil.extractUsername(ownerToken);
+		return contractRepository.getOwnerContracts(ownerUsername, active).stream()
 					   .map(contractServiceMapper::mapContractDOToContract)
 					   .collect(Collectors.toList());
 	}

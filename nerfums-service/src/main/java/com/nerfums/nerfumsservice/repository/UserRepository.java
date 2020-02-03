@@ -1,11 +1,11 @@
 package com.nerfums.nerfumsservice.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import com.nerfums.nerfumsservice.repository.api.UserDO;
 
-public interface UserRepository extends CrudRepository<UserDO, Long> {
+public interface UserRepository extends JpaRepository<UserDO, Long> {
 	@Query(value =
 				   "select user " +
 						   "from UserDO user " +
