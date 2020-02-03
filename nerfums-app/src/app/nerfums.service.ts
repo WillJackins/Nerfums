@@ -66,18 +66,15 @@ export class NerfumsService {
     this.router.navigate(['/about'])
   }
 
-  getAllActiveContracts(activeContracts: boolean): Observable<Array<Contract>> {
-    let params = new HttpParams();
-    params = params.append('requestingUserId', String(this.TEMP_SESSION_USERID));
-
-    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts', {params});
+  getPostedContracts(): Observable<Array<Contract>> {
+    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts/posted');
   }
 
-  getAllContractsByOwnerId(ownerId: number, activeContracts: boolean): Observable<Array<Contract>> {
+  getOwnerContracts(activeContracts: boolean): Observable<Array<Contract>> {
     let params = new HttpParams();
-    params = params.append('activeContracts', String(activeContracts));
+    params = params.append('active', String(activeContracts));
 
-    return this.http.get<Array<Contract>>(this.urlRoot + '/users/' + this.TEMP_SESSION_USERID + '/contracts', {params});
+    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts/owner', {params});
   }
 
   postContract(contract: Contract): Observable<Contract> {

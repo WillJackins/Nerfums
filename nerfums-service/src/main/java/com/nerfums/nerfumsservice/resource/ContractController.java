@@ -24,17 +24,22 @@ public class ContractController
 	}
 
 	@GetMapping("/{contractId}")
-	public ResponseEntity<ContractRO> getContractById(@PathVariable Long contractId)
-	{
+	public ResponseEntity<ContractRO> getContractById(@PathVariable Long contractId) {
 		ContractRO contractRO = contractDelegate.getContractById(contractId);
 		return ResponseEntity.ok(contractRO);
 	}
 
-	@GetMapping
-	public ResponseEntity<List<ContractRO>> getAllActiveContracts(
-			@RequestParam(name = "requestingUserId") Long requestingUserId
-	) {
-		List<ContractRO> contracts = contractDelegate.getAllActiveContracts(requestingUserId);
+	@GetMapping("/posted")
+	public ResponseEntity<List<ContractRO>> getPostedContracts(@RequestHeader("Authorization") String token) {
+		token = token.substring(7);
+		List<ContractRO> contracts = contractDelegate.getPostedContracts(token);
+		return ResponseEntity.ok(contracts);
+	}
+
+	@GetMapping("/owner")
+	public ResponseEntity<List<ContractRO>> getOwnerContracts(@RequestHeader("Authorization") String token, @RequestParam("active") Boolean active) {
+		token = token.substring(7);
+		List<ContractRO> contracts = contractDelegate.getOwnerContracts(token, active);
 		return ResponseEntity.ok(contracts);
 	}
 
@@ -47,14 +52,12 @@ public class ContractController
 
 	@PatchMapping()
 	public ResponseEntity<ContractRO> completeContract(@RequestBody ContractRO contractRO) {
-		System.out.println("PATCH");
 		ContractRO completedContract = contractDelegate.completeContract(contractRO);
 		return ResponseEntity.ok(completedContract);
 	}
 
 	@DeleteMapping("/{contractId}")
 	public void deleteContract(@PathVariable Long contractId) {
-		System.out.println("DELETE");
 		contractDelegate.deleteContract(contractId);
 	}
 }

@@ -1,3 +1,10 @@
+INSERT into users(user_id, display_name, username, password_hash)
+values (100, 'TEST TARGET 1', 'TEST TARGET 1', 'BLAH')
+INSERT into users(user_id, display_name, username, password_hash)
+values (200, 'TEST TARGET 2', 'TEST TARGET 2', 'BLAH')
+INSERT into users(user_id, display_name, username, password_hash)
+values (300, 'TEST TARGET 3', 'TEST TARGET 3', 'BLAH')
+
 INSERT into modifiers(modifier_id, modifier_title, modifier_description, modifier_value)
 values (1, 'Modifier 1', 'Modifier Description', 500)
 INSERT into modifiers(modifier_id, modifier_title, modifier_description, modifier_value)

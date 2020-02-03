@@ -18,8 +18,7 @@ public class ContractDelegate
 	private final ContractService contractService;
 
 	@Autowired
-	public ContractDelegate(ContractDelegateMapper contractDelegateMapper, ContractService contractService)
-	{
+	public ContractDelegate(ContractDelegateMapper contractDelegateMapper, ContractService contractService) {
 		super();
 		this.contractDelegateMapper = contractDelegateMapper;
 		this.contractService = contractService;
@@ -29,14 +28,14 @@ public class ContractDelegate
 		return contractDelegateMapper.mapContractToContractRO(contractService.getContractById(contractId));
 	}
 
-	public List<ContractRO> getAllActiveContracts(Long requestingUserId) {
-		return contractService.getAllActiveContracts(requestingUserId).stream()
+	public List<ContractRO> getPostedContracts(String requesterToken) {
+		return contractService.getPostedContracts(requesterToken).stream()
 					   .map(contractDelegateMapper::mapContractToContractRO)
 					   .collect(Collectors.toList());
 	}
 
-	public List<ContractRO> getAllContractsByOwnerId(Long ownerId, Boolean activeContracts) {
-		return contractService.getAllContractsByOwnerId(ownerId, activeContracts).stream()
+	public List<ContractRO> getOwnerContracts(String ownerToken, Boolean active) {
+		return contractService.getOwnerContracts(ownerToken, active).stream()
 					   .map(contractDelegateMapper::mapContractToContractRO)
 					   .collect(Collectors.toList());
 	}
