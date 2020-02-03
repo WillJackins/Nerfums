@@ -5,6 +5,7 @@ import {ContractManagerComponent} from './contract-manager/contract-manager.comp
 import {ContractListComponent} from './contract-list/contract-list.component';
 import {UserLoginComponent} from './auth/user-login/user-login.component';
 import {RegisterUserComponent} from './auth/user-register/register-user.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'contractManager', component: ContractManagerComponent},
   {path: 'contractList', component: ContractListComponent},
   {path: 'loginPage', component: UserLoginComponent},
-  {path: 'registerPage', component: RegisterUserComponent}
+  {path: 'registerPage', component: RegisterUserComponent},
+  {path: 'settingsPage', component: SettingsComponent}
 ];
 
 @NgModule({

@@ -19,6 +19,6 @@
 </mat-menu>
 
 <mat-menu #userMenu="matMenu">
-  <button mat-menu-item>Settings</button>
+  <button mat-menu-item (click)="nerfumService.settingsPage()">Settings</button>
   <button mat-menu-item (click)="nerfumService.logout()">Log Out</button>
 </mat-menu>

@@ -66,6 +66,10 @@ export class NerfumsService {
     this.router.navigate(['/about'])
   }
 
+  settingsPage() {
+    this.router.navigate(['/settingsPage'])
+  }
+
   getAllActiveContracts(activeContracts: boolean): Observable<Array<Contract>> {
     let params = new HttpParams();
     params = params.append('requestingUserId', String(this.TEMP_SESSION_USERID));
