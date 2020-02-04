@@ -47,15 +47,21 @@ export class SettingsComponent implements OnInit {
   }
 
   private confirmUsernameClick(){
-    console.log('Confirm username')
+    console.log('todo Confirm username');
+    this.nerfumsService.patchUsername();
   }
 
   private confirmPasswordClick(){
-    console.log('Confirm password');
+    console.log('todo Confirm password');
+    if(this.password === this.confirmPassword){
+      this.nerfumsService.patchUserPassword();
+    }
+    console.log('error passwords do not match');
   }
 
   private confirmPictureClick(){
-    console.log('Confirm picture');
+    console.log('todo Confirm picture');
+    this.nerfumsService.patchUserAvatar();
   }
 
   private uploadImageClick(){
