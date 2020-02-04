@@ -10,11 +10,12 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let session = this.nerfumsService.currentSessionValue;
-    if (session && session.token) {
+    let token = this.nerfumsService.getCurrentTokenValue;
+
+    if (token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${session.token}`
+          Authorization: `Bearer ${token}`
         }
       });
     }

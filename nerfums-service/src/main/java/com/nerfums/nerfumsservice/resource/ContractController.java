@@ -57,7 +57,8 @@ public class ContractController
 	}
 
 	@DeleteMapping("/{contractId}")
-	public void deleteContract(@PathVariable Long contractId) {
-		contractDelegate.deleteContract(contractId);
+	public ResponseEntity<ContractRO> deleteContract(@PathVariable Long contractId) {
+		ContractRO deletedContract = contractDelegate.deleteContract(contractId);
+		return ResponseEntity.ok(deletedContract);
 	}
 }

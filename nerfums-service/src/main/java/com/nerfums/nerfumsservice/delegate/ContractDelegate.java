@@ -47,16 +47,15 @@ public class ContractDelegate
 		return contractDelegateMapper.mapContractToContractRO(postCreate);
 	}
 
-	public ContractRO completeContract(ContractRO contractRO)
-	{
+	public ContractRO completeContract(ContractRO contractRO) {
 		Contract preComplete = contractDelegateMapper.mapContractROToContract(contractRO);
 		Contract postComplete = contractService.completeContract(preComplete);
 
 		return contractDelegateMapper.mapContractToContractRO(postComplete);
 	}
 
-	public void deleteContract(Long contractId)
-	{
-		contractService.deleteContract(contractId);
+	public ContractRO deleteContract(Long contractId) {
+		Contract deletedContract = contractService.deleteContract(contractId);
+		return contractDelegateMapper.mapContractToContractRO(deletedContract);
 	}
 }

@@ -48,7 +48,7 @@ export class AppComponent {
 
   test(): void {
     console.log('BUTTON PRESS');
-    if (!this.nerfumsService.currentSessionValue) {
+    if (!this.nerfumsService.getCurrentTokenValue) {
       this.nerfumsService.login("Dave", "Dave_Password").subscribe();
     } else {
       this.nerfumsService.logout();

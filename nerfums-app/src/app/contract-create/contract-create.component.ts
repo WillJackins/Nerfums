@@ -13,7 +13,8 @@ import {MatDialogRef} from '@angular/material/dialog';
 })
 export class ContractCreateComponent implements OnInit {
 
-  constructor(private nerfumsService: NerfumsService, private dialogRef: MatDialogRef<ContractCreateComponent>) { }
+  constructor(private nerfumsService: NerfumsService, private dialogRef: MatDialogRef<ContractCreateComponent>) {
+  }
 
   users: Array<User>;
   modifiers: Array<Modifier>;
@@ -78,11 +79,10 @@ export class ContractCreateComponent implements OnInit {
   postContract() {
 
     if (this.isValidContract()) {
-      this.contract.contractOwner = this.nerfumsService.currentUserValue;
+      this.contract.contractOwner = this.nerfumsService.getCurrentUserValue;
 
       this.nerfumsService.postContract(this.contract).subscribe(data =>
         console.log(data));
-      location.reload();
       this.closeDialog();
     } else {
       console.log('Invalid Contract');
