@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-
+import { NerfumsService } from '../nerfums.service';
+import { User } from '../../model/User';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -17,30 +18,58 @@ export class SettingsComponent implements OnInit {
     Validators.required
   ]);
 
-  hidePassword: boolean = true;
-  constructor() { }
+  confirmPasswordControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  private avatar: string = 'assets/shiba1.jpg';
+  private hidePassword: boolean = true;
+  private hideConfirmPassword: boolean = true;
+  private userName: string = '';
+  private password: string = '';
+  private confirmPassword: string ='';
+  constructor(private nerfumsService: NerfumsService) {
+  }
 
   ngOnInit() {
   }
 
   private setUsername(userName: string){
-    //todo
+    this.userName = userName;
   }
 
   private setPassword(password: string){
-    //todo
+    this.password = password;
   }
 
-  private confirmUsername(){
-    console.log('Confirm username');
+  private setConfirmPassword(confirmPassword: string){
+    this.confirmPassword = confirmPassword;
   }
 
-  private confirmPassword(){
+  private confirmUsernameClick(){
+    console.log('Confirm username')
+  }
+
+  private confirmPasswordClick(){
     console.log('Confirm password');
+  }
+
+  private confirmPictureClick(){
+    console.log('Confirm picture');
+  }
+
+  private uploadImageClick(){
+    console.log('todo upload image');
+  }
+
+  private onHideConfirmPasswordClick() {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 
   private onHidePasswordClick(){
     this.hidePassword = !this.hidePassword;
   }
+
+  
 
 }

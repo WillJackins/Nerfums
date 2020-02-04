@@ -114,6 +114,18 @@ export class NerfumsService {
     return this.http.get<Array<Modifier>>(this.urlRoot + '/modifiers');
   }
 
+  patchUserPassword() {
+    
+  }
+
+  patchUserAvatar() {
+
+  }
+
+  patchUsername(){
+
+  }
+
   postUser(user: User): Observable<User> {
     const httpOptions = {
       headers: new HttpHeaders({
