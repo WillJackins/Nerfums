@@ -72,6 +72,8 @@ public class UserDelegateMapper
 	}
 
 	private void addMappingUserROToUser(ModelMapper modelMapper) {
-		modelMapper.typeMap(UserRO.class, User.class);
+		modelMapper.typeMap(UserRO.class, User.class)
+				.addMappings(mapper -> mapper.skip(User::setAvailableCash))
+				.addMappings(mapper -> mapper.skip(User::setCommittedCash));
 	}
 }

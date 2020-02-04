@@ -31,6 +31,7 @@ export class ContractCompleteComponent implements OnInit {
   }
 
   setCompleteBy(completeBy: User) {
+    console.log("COMPLETED BY: " + completeBy.displayName);
     this.contractToComplete.contractCompletedBy = completeBy;
   }
 

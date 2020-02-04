@@ -14,30 +14,59 @@ import {Router} from "@angular/router";
 })
 export class NerfumsService {
   urlRoot = 'http://localhost:8081/Nerfums/api';
-  TEMP_SESSION_USERID = 11;
 
   private currentSessionSubject: BehaviorSubject<Session>;
-  public currentSession: Observable<Session>;
+  private currentSession: Observable<Session>;
 
   constructor(private router: Router, private http: HttpClient) {
     this.currentSessionSubject = new BehaviorSubject<Session>(JSON.parse(localStorage.getItem('currentSession')));
     this.currentSession = this.currentSessionSubject.asObservable();
   }
 
-  public get currentSessionValue(): Session {
+  public observeCurrentSession(): Observable<Session> {
+    return this.currentSession;
+  }
+
+  public get getCurrentSessionValue(): Session {
     return this.currentSessionSubject.value;
   }
 
-  public get currentUserValue(): User {
-    return this.currentSessionSubject.value.userRO;
+  public get getCurrentTokenValue(): string {
+    if (this.getCurrentSessionValue)
+      return this.currentSessionSubject.value.token;
+
+    return null;
+  }
+
+  public get getCurrentUserValue(): User {
+    if (this.getCurrentSessionValue)
+      return this.currentSessionSubject.value.userRO;
+
+    return null;
+  }
+
+  private updateCurrentSession(updatedSession: Session) {
+    localStorage.setItem('currentSession', JSON.stringify(updatedSession));
+    this.currentSessionSubject.next(updatedSession);
+  }
+
+  private updateCurrentTokenValue(updatedToken: string) {
+    this.currentSessionSubject.value.token = updatedToken;
+    let updatedSession = this.currentSessionSubject.value;
+    this.updateCurrentSession(updatedSession);
+  }
+
+  private updateCurrentUserValue(updatedUser: User) {
+    this.currentSessionSubject.value.userRO = updatedUser;
+    let updatedSession = this.currentSessionSubject.value;
+    this.updateCurrentSession(updatedSession);
   }
 
   register(register: Register) {
     return this.http.post<Session>(this.urlRoot + '/authentication/register', register)
       .pipe(map(session => {
         if (session && session.token) {
-          localStorage.setItem('currentSession', JSON.stringify(session));
-          this.currentSessionSubject.next(session);
+          this.updateCurrentSession(session);
         }
 
         return session;
@@ -49,9 +78,7 @@ export class NerfumsService {
       .pipe(
         map(session => {
           if (session && session.token) {
-            console.log(session);
-            localStorage.setItem('currentSession', JSON.stringify(session));
-            this.currentSessionSubject.next(session);
+            this.updateCurrentSession(session);
           }
 
           return session;
@@ -63,7 +90,7 @@ export class NerfumsService {
   logout() {
     localStorage.removeItem('currentSession');
     this.currentSessionSubject.next(null);
-    this.router.navigate(['/about'])
+    this.router.navigate(['/about']).then();
   }
 
   getPostedContracts(): Observable<Array<Contract>> {
@@ -78,22 +105,33 @@ export class NerfumsService {
   }
 
   postContract(contract: Contract): Observable<Contract> {
-
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
 
-    return this.http.post<Contract>(this.urlRoot + '/contracts', JSON.stringify(contract), httpOptions);
+    return this.http.post<Contract>(this.urlRoot + '/contracts', JSON.stringify(contract), httpOptions)
+      .pipe(map(postedContract => {
+        this.updateCurrentUserValue(postedContract.contractOwner);
+        return postedContract;
+      }));
   }
 
-  completeContract(completedContract: Contract): Observable<Contract> {
-    return this.http.patch<Contract>(this.urlRoot + '/contracts', completedContract);
+  completeContract(contract: Contract): Observable<Contract> {
+    return this.http.patch<Contract>(this.urlRoot + '/contracts', contract)
+      .pipe(map(completedContract => {
+        this.updateCurrentUserValue(completedContract.contractOwner);
+        return completedContract;
+      }));
   }
 
   deleteContractById(contractId: number): Observable<Contract> {
-    return this.http.delete<Contract>(this.urlRoot + '/contracts/' + contractId);
+    return this.http.delete<Contract>(this.urlRoot + '/contracts/' + contractId)
+      .pipe(map(deletedContract => {
+        this.updateCurrentUserValue(deletedContract.contractOwner);
+        return deletedContract;
+      }));
   }
 
   getAllUsers(): Observable<Array<User>> {
@@ -104,17 +142,8 @@ export class NerfumsService {
     return this.http.get<Array<Modifier>>(this.urlRoot + '/modifiers');
   }
 
-  postUser(user: User): Observable<User> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.post<User>(this.urlRoot + '/users', JSON.stringify(user), httpOptions);
-  }
-
   handleError(error: HttpErrorResponse) {
-    console.log("DINGUM: " + error.status);
+    console.log("Error: " + error.status);
     return throwError(error);
   }
 }
