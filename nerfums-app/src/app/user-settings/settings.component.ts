@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { NerfumsService } from '../nerfums.service';
-import { User } from '../../model/User';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
+import {NerfumsService} from '../nerfums.service';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-
 
   usernameControl = new FormControl('', [
     Validators.required
@@ -22,7 +21,7 @@ export class SettingsComponent implements OnInit {
     Validators.required
   ]);
 
-  private avatar: string = 'assets/shiba1.jpg';
+  private avatar: string = 'https://material.angular.io/assets/img/examples/shiba1.jpg';
   private hidePassword: boolean = true;
   private hideConfirmPassword: boolean = true;
   private userName: string = '';
@@ -72,10 +71,20 @@ export class SettingsComponent implements OnInit {
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 
-  private onHidePasswordClick(){
+  private onHidePasswordClick() {
     this.hidePassword = !this.hidePassword;
   }
 
-  
+  private onFileChanged(event) {
+    this.avatar = event.target.files[0];
+    console.log(this.avatar);
+
+    var reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.avatar = event.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+    console.log(reader.readAsDataURL(event.target.files[0]));
+  }
 
 }

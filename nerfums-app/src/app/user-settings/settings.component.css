@@ -1,4 +1,24 @@
+.settings-card {
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.settings-section {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.settings-image-box {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
 .target-avatar {
+  width: 150px;
+  height: 150px;
   background-size: cover;
 }
 
