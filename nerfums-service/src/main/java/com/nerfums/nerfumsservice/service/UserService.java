@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.nerfums.nerfumsservice.delegate.authentication.AuthenticationUtil;
 import com.nerfums.nerfumsservice.exception.NerfumsErrorCode;
 import com.nerfums.nerfumsservice.model.User;
 import com.nerfums.nerfumsservice.repository.UserRepository;
@@ -21,14 +22,21 @@ import common.exception.BusinessServiceException;
 public class UserService implements UserDetailsService {
 	private final UserServiceMapper userServiceMapper;
 	private final UserRepository userRepository;
+	private final AuthenticationUtil authenticationUtil;
 
 	private static final Integer STARTING_MONEY = 10000;
 
 	@Autowired
-	public UserService(UserServiceMapper userServiceMapper, UserRepository userRepository) {
+	public UserService(UserServiceMapper userServiceMapper, UserRepository userRepository, AuthenticationUtil authenticationUtil) {
 		super();
 		this.userServiceMapper = userServiceMapper;
 		this.userRepository = userRepository;
+		this.authenticationUtil = authenticationUtil;
+	}
+
+	public User getUserByToken(String token) {
+		String username = authenticationUtil.extractUsername(token);
+		return (User) loadUserByUsername(username);
 	}
 
 	public User getUserById(Long userId) {
@@ -71,7 +79,6 @@ public class UserService implements UserDetailsService {
 		oldUser.setDisplayName(newUser.getDisplayName() != null ? newUser.getDisplayName() : oldUser.getDisplayName());
 		oldUser.setAvailableCash(newUser.getAvailableCash() != null ? newUser.getAvailableCash() : oldUser.getAvailableCash());
 		oldUser.setCommittedCash(newUser.getCommittedCash() != null ? newUser.getCommittedCash() : oldUser.getCommittedCash());
-
 
 		UserDO postUpdateUser = userRepository.save(oldUser);
 		return userServiceMapper.mapUserDOToUser(postUpdateUser);

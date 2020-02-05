@@ -18,7 +18,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {ContractManagerComponent} from './contract-manager/contract-manager.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {ContractActiveListComponent, ContractDeleteDialogComponent} from './contract-active-list/contract-active-list.component';
+import {ContractActiveListComponent} from './contract-active-list/contract-active-list.component';
 import {ContractDashboardComponent} from './contract-dashboard/contract-dashboard.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
@@ -31,26 +31,27 @@ import {AuthModule} from './auth/auth.module';
 import {UserLoginMenuComponent} from './user-login-menu/user-login-menu.component';
 import {JwtInterceptor} from "./JwtInterceptor";
 import { SettingsComponent } from './settings/settings.component';
+import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component";
 
 @NgModule({
   declarations: [
     AppComponent,
+    ConfirmDialogComponent,
     ContractListComponent,
     ContractItemComponent,
     ContractCreateComponent,
     ContractManagerComponent,
     ContractActiveListComponent,
     ContractDashboardComponent,
-    ContractDeleteDialogComponent,
     ContractCompleteComponent,
     AboutPageComponent,
     UserLoginMenuComponent,
     SettingsComponent
   ],
   entryComponents: [
+    ConfirmDialogComponent,
     ContractCreateComponent,
-    ContractCompleteComponent,
-    ContractDeleteDialogComponent
+    ContractCompleteComponent
   ],
   imports: [
     BrowserModule,

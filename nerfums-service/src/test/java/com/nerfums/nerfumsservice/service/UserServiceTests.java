@@ -31,7 +31,7 @@ public class UserServiceTests {
 		mockRepository = mock(UserRepository.class);
 		mockEncoder = mock(PasswordEncoder.class);
 		mockMapper = mock(UserServiceMapper.class);
-		spyService = spy(new UserService(mockMapper, mockRepository));
+		spyService = spy(new UserService(mockMapper, mockRepository, null));
 	}
 
 	@Test

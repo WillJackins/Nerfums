@@ -97,7 +97,7 @@ public class ContractService {
 		return contractServiceMapper.mapContractDOToContract(postComplete);
 	}
 
-	public void deleteContract(Long contractId) {
+	public Contract deleteContract(Long contractId) {
 		Contract contract = getContractById(contractId);
 		User contractOwner = contract.getContractOwner();
 
@@ -108,5 +108,6 @@ public class ContractService {
 
 
 		contractRepository.deleteById(contractId);
+		return contract;
 	}
 }

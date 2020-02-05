@@ -12,9 +12,8 @@ import com.nerfums.nerfumsservice.resource.api.UserRO;
 import com.nerfums.nerfumsservice.service.UserService;
 
 @Component
-public class UserDelegate
-{
-    private final UserDelegateMapper userDelegateMapper;
+public class UserDelegate {
+	private final UserDelegateMapper userDelegateMapper;
 	private final UserService userService;
 
 	@Autowired
@@ -24,6 +23,10 @@ public class UserDelegate
 		this.userService = userService;
 	}
 
+	public UserRO getUserByToken(String token) {
+		return userDelegateMapper.mapUserToUserRO(userService.getUserByToken(token));
+	}
+
 	public UserRO getUserById(Long userId) {
 		return userDelegateMapper.mapUserToUserRO(userService.getUserById(userId));
 	}
@@ -31,8 +34,8 @@ public class UserDelegate
 	public List<UserRO> getAllUsers() {
 		return userService.getAllUsers().stream()
 					   .map(userDelegateMapper::mapUserToUserRO)
-                .collect(Collectors.toList());
-    }
+					   .collect(Collectors.toList());
+	}
 
     public UserRO createNewUser(UserRO userRO)
     {

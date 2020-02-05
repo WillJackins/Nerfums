@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Contract} from '../../model/Contract';
 import {NerfumsService} from '../nerfums.service';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {PageEvent} from '@angular/material/paginator';
 import {ContractCompleteComponent} from '../contract-complete/contract-complete.component';
+import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-contract-active-list',
@@ -40,7 +41,7 @@ export class ContractActiveListComponent implements OnInit {
   }
 
   private openDeleteDialog(contractToDeleteId: number) {
-    const dialogRef = this.dialog.open(ContractDeleteDialogComponent);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {question: "Delete Contract?"}});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('DELETE CONTRACT: ' + result);
@@ -67,23 +68,5 @@ export class ContractActiveListComponent implements OnInit {
 
   private updateContractList(pageIndex: number, pageSize: number) {
     this.currentUserActiveContracts = this.allUserActiveContracts.slice((pageIndex * pageSize), (pageIndex * pageSize) + pageSize);
-  }
-}
-
-@Component({
-  selector: 'app-contract-delete-dialog',
-  templateUrl: 'contract-delete-dialog.html',
-})
-export class ContractDeleteDialogComponent {
-
-  constructor(public dialogRef: MatDialogRef<ContractDeleteDialogComponent>) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close(false);
-  }
-
-  onDeleteClick() {
-    this.dialogRef.close(true);
   }
 }

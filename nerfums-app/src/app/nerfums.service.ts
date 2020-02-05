@@ -8,135 +8,222 @@ import {Session} from "../model/Session";
 import {catchError, map} from "rxjs/operators";
 import {Register} from "../model/Register";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NerfumsService {
   urlRoot = 'http://localhost:8081/Nerfums/api';
-  TEMP_SESSION_USERID = 11;
 
   private currentSessionSubject: BehaviorSubject<Session>;
-  public currentSession: Observable<Session>;
+  private currentSession: Observable<Session>;
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, private dialog: MatDialog) {
     this.currentSessionSubject = new BehaviorSubject<Session>(JSON.parse(localStorage.getItem('currentSession')));
     this.currentSession = this.currentSessionSubject.asObservable();
+
+    if (this.getCurrentSessionValue) {
+      this.refreshLogin();
+      this.refreshLoginTimer();
+    }
   }
 
-  public get currentSessionValue(): Session {
+  //=====================================================================================
+  // Session Managers
+  //=====================================================================================
+
+  public observeCurrentSession(): Observable<Session> {
+    return this.currentSession;
+  }
+
+  public get getCurrentSessionValue(): Session {
     return this.currentSessionSubject.value;
   }
 
-  public get currentUserValue(): User {
-    return this.currentSessionSubject.value.userRO;
+  public get getCurrentTokenValue(): string {
+    if (this.getCurrentSessionValue)
+      return this.currentSessionSubject.value.token;
+
+    return null;
   }
+
+  public get getCurrentUserValue(): User {
+    if (this.getCurrentSessionValue)
+      return this.currentSessionSubject.value.userRO;
+
+    return null;
+  }
+
+  private updateCurrentSession(updatedSession: Session) {
+    localStorage.setItem('currentSession', JSON.stringify(updatedSession));
+    this.currentSessionSubject.next(updatedSession);
+  }
+
+  private updateCurrentTokenValue(updatedToken: string) {
+    this.currentSessionSubject.value.token = updatedToken;
+    let updatedSession = this.currentSessionSubject.value;
+    this.updateCurrentSession(updatedSession);
+  }
+
+  private updateCurrentUserValue(updatedUser: User) {
+    this.currentSessionSubject.value.userRO = updatedUser;
+    let updatedSession = this.currentSessionSubject.value;
+    this.updateCurrentSession(updatedSession);
+  }
+
+  //=====================================================================================
+  // Authentication Managers
+  //=====================================================================================
 
   register(register: Register) {
     return this.http.post<Session>(this.urlRoot + '/authentication/register', register)
-      .pipe(map(session => {
-        if (session && session.token) {
-          localStorage.setItem('currentSession', JSON.stringify(session));
-          this.currentSessionSubject.next(session);
-        }
-
-        return session;
-      }))
+      .pipe(
+        map(session => this.refreshCurrentSession(session)),
+        catchError(this.handleError)
+      );
   }
 
   login(username: string, password: string) {
     return this.http.post<Session>(this.urlRoot + '/authentication/login', {username, password})
       .pipe(
-        map(session => {
-          if (session && session.token) {
-            console.log(session);
-            localStorage.setItem('currentSession', JSON.stringify(session));
-            this.currentSessionSubject.next(session);
-          }
-
-          return session;
-        }),
+        map(session => this.refreshCurrentSession(session)),
         catchError(this.handleError)
       );
   }
 
-  logout() {
+  refreshLogin() {
+    return this.http.get<Session>(this.urlRoot + '/authentication/refresh')
+      .pipe(
+        map(session => this.refreshCurrentSession(session)),
+        catchError(this.handleError)
+      );
+  }
+
+  logout(): void {
     localStorage.removeItem('currentSession');
     this.currentSessionSubject.next(null);
-    this.router.navigate(['/about'])
-  }
-  
-  settingsPage() {
-    this.router.navigate(['/settingsPage'])
+    this.router.navigate(['/about']).then();
   }
 
-  getAllActiveContracts(activeContracts: boolean): Observable<Array<Contract>> {
-    let params = new HttpParams();
-    params = params.append('requestingUserId', String(this.TEMP_SESSION_USERID));
+  //=====================================================================================
+  // API Calls
+  //=====================================================================================
 
-    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts', {params});
-  }
   getPostedContracts(): Observable<Array<Contract>> {
-    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts/posted');
+    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts/posted')
+      .pipe(catchError(error => this.handleError(error)));
   }
 
   getOwnerContracts(activeContracts: boolean): Observable<Array<Contract>> {
     let params = new HttpParams();
     params = params.append('active', String(activeContracts));
 
-    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts/owner', {params});
+    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts/owner', {params})
+      .pipe(catchError(error => this.handleError(error)));
   }
 
   postContract(contract: Contract): Observable<Contract> {
-
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
 
-    return this.http.post<Contract>(this.urlRoot + '/contracts', JSON.stringify(contract), httpOptions);
+    return this.http.post<Contract>(this.urlRoot + '/contracts', JSON.stringify(contract), httpOptions)
+      .pipe(map(postedContract => {
+          this.updateCurrentUserValue(postedContract.contractOwner);
+          return postedContract;
+        }),
+        catchError(error => this.handleError(error))
+      );
   }
 
-  completeContract(completedContract: Contract): Observable<Contract> {
-    return this.http.patch<Contract>(this.urlRoot + '/contracts', completedContract);
+  completeContract(contract: Contract): Observable<Contract> {
+    return this.http.patch<Contract>(this.urlRoot + '/contracts', contract)
+      .pipe(map(completedContract => {
+          this.updateCurrentUserValue(completedContract.contractOwner);
+          return completedContract;
+        }),
+        catchError(error => this.handleError(error))
+      );
   }
 
   deleteContractById(contractId: number): Observable<Contract> {
-    return this.http.delete<Contract>(this.urlRoot + '/contracts/' + contractId);
+    return this.http.delete<Contract>(this.urlRoot + '/contracts/' + contractId)
+      .pipe(map(deletedContract => {
+          this.updateCurrentUserValue(deletedContract.contractOwner);
+          return deletedContract;
+        }),
+        catchError(error => this.handleError(error))
+      );
   }
 
   getAllUsers(): Observable<Array<User>> {
-    return this.http.get<Array<User>>(this.urlRoot + '/users');
+    return this.http.get<Array<User>>(this.urlRoot + '/users')
+      .pipe(catchError(error => this.handleError(error)));
   }
 
   getAllModifiers(): Observable<Array<Modifier>> {
-    return this.http.get<Array<Modifier>>(this.urlRoot + '/modifiers');
+    return this.http.get<Array<Modifier>>(this.urlRoot + '/modifiers')
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  //=====================================================================================
+  // Helpers
+  //=====================================================================================
+
+  private refreshCurrentSession(session: Session) {
+    if (session && session.token) {
+      this.updateCurrentSession(session);
+
+      this.refreshLoginTimer();
+    }
+
+    return session;
+  }
+
+  private async refreshLoginTimer() {
+    await this.sleep(1000 * 60 * 15);
+
+    this.dialog.open(ConfirmDialogComponent, {data: {question: "Stay Logged In?"}}).afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.refreshLogin().subscribe();
+        } else {
+          this.logout();
+        }
+      });
+  }
+
+  private sleep(milliseconds: number) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
   }
 
   patchUserPassword() {
-    
+
   }
 
   patchUserAvatar() {
 
   }
 
-  patchUsername(){
+  patchUsername() {
 
   }
 
-  postUser(user: User): Observable<User> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.post<User>(this.urlRoot + '/users', JSON.stringify(user), httpOptions);
+  settingsPage() {
+    this.router.navigate(['/settingsPage'])
   }
 
   handleError(error: HttpErrorResponse) {
-    console.log("DINGUM: " + error.status);
+    if (this.getCurrentSessionValue && error.status == 403) {
+      this.logout();
+    }
+
     return throwError(error);
   }
 }
+
+

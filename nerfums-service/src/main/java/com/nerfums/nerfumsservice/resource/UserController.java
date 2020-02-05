@@ -12,35 +12,38 @@ import com.nerfums.nerfumsservice.resource.api.UserRO;
 
 @RestController
 @RequestMapping("users")
-public class UserController
-{
-    private final UserDelegate userDelegate;
+public class UserController {
+	private final UserDelegate userDelegate;
 
-    @Autowired
+	@Autowired
 	public UserController(UserDelegate userDelegate) {
 		super();
 		this.userDelegate = userDelegate;
 	}
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<UserRO> getUserById(@PathVariable Long userId)
-    {
-        UserRO userRO = userDelegate.getUserById(userId);
-        return ResponseEntity.ok(userRO);
-    }
+	@GetMapping("/client")
+	public ResponseEntity<UserRO> getClientUser(@RequestHeader("Authorization") String token) {
+		token = token.substring(7);
+		UserRO userRO = userDelegate.getUserByToken(token);
+		return ResponseEntity.ok(userRO);
+	}
 
-    @GetMapping
-    public ResponseEntity<List<UserRO>> getAllUsers()
-    {
-        List<UserRO> users = userDelegate.getAllUsers();
-        return ResponseEntity.ok(users);
-    }
+	@GetMapping("/{userId}")
+	public ResponseEntity<UserRO> getUserById(@PathVariable Long userId) {
+		UserRO userRO = userDelegate.getUserById(userId);
+		return ResponseEntity.ok(userRO);
+	}
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UserRO> createNewUser(@RequestBody UserRO userRO)
-    {
-        UserRO createdUser = userDelegate.createNewUser(userRO);
+	@GetMapping
+	public ResponseEntity<List<UserRO>> getAllUsers() {
+		List<UserRO> users = userDelegate.getAllUsers();
+		return ResponseEntity.ok(users);
+	}
+
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<UserRO> createNewUser(@RequestBody UserRO userRO) {
+		UserRO createdUser = userDelegate.createNewUser(userRO);
         return ResponseEntity.ok(createdUser);
     }
 }

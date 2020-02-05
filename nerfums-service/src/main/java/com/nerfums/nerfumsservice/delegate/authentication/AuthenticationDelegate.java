@@ -59,5 +59,16 @@ public class AuthenticationDelegate {
 		return new SessionRO(token, userRO);
 	}
 
-	
+	public SessionRO userRefresh(String oldToken) {
+		User user = userService.getUserByToken(oldToken);
+		String newToken = authenticationUtil.generateToken(user);
+
+		if (!authenticationUtil.validateToken(oldToken, user)) {
+			throw new BadCredentialsException("Invalid Token");
+		}
+
+		UserRO userRO = userDelegateMapper.mapUserToUserRO(user);
+		return new SessionRO(newToken, userRO);
+	}
+
 }
