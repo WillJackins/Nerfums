@@ -1,0 +1,13 @@
+.dialog-title {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dialog-actions {
+  width: 200px;
+}
+
+.dialog-button {
+  margin-left: 5%;
+  margin-right: 5%;
+}
