@@ -41,18 +41,4 @@ export class AppComponent {
       this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === '.' + this.router.url));
     });
   }
-
-  private goToLoginPage(){
-      this.router.navigate(['./loginPage'])
-  }
-
-  test(): void {
-    console.log('BUTTON PRESS');
-    if (!this.nerfumsService.getCurrentTokenValue) {
-      this.nerfumsService.login("Dave", "Dave_Password").subscribe();
-    } else {
-      this.nerfumsService.logout();
-    }
-
-  }
 }

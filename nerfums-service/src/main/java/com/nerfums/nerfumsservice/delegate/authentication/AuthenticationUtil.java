@@ -42,7 +42,7 @@ public class AuthenticationUtil {
 					   .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}
 
-	public Boolean validateToken(String token, User user) {
+	public boolean validateToken(String token, User user) {
 		final String username = extractUsername(token);
 		return (username.equals(user.getUsername()) && !isTokenExpired(token));
 	}
@@ -57,6 +57,6 @@ public class AuthenticationUtil {
 	}
 
 	private Date getTimeOneHourFromNow() {
-		return new Date(System.currentTimeMillis() * 1000 * 60 * 60);
+		return new Date(System.currentTimeMillis() + 1000 * 60 * 30);
 	}
 }

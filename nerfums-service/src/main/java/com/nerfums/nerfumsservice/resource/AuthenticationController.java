@@ -33,6 +33,14 @@ public class AuthenticationController {
 		return ResponseEntity.ok(session);
 	}
 
+	@GetMapping("/refresh")
+	public ResponseEntity<SessionRO> refreshLogin(@RequestHeader("Authorization") String token) {
+		System.out.println("REFRESH: " + token);
+		token = token.substring(7);
+		SessionRO newSession = authenticationDelegate.userRefresh(token);
+		return ResponseEntity.ok(newSession);
+	}
+
 	@GetMapping("/logout")
 	public ResponseEntity<String> userLogout() {
 		return ResponseEntity.ok("Logged Out.");
