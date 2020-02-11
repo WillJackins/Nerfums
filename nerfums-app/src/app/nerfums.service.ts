@@ -205,12 +205,12 @@ export class NerfumsService {
 
   }
 
-  getUserAvatar(path: string): Observable<string> {
-    return this.http.get<string>(this.urlRoot + '/users/download/'+ path).pipe(catchError(error => this.handleError(error)));
+  getUserAvatar(): Observable<string> {
+    return this.http.get(this.urlRoot + '/avatars', {responseType: 'text'}).pipe(catchError(error => this.handleError(error)));
   }
 
   patchUserAvatar(formData: FormData): Observable<string> {
-    return this.http.post<string>(this.urlRoot + '/users/upload', formData).pipe(catchError(error => this.handleError(error)));
+    return this.http.post<string>(this.urlRoot + '/avatars', formData).pipe(catchError(error => this.handleError(error)));
   }
 
   patchUsername() {

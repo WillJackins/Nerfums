@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {NerfumsService} from '../nerfums.service';
-import { Observable } from 'rxjs';
-
+import {NerfumsService} from '../nerfums.service'; 
+import {DomSanitizer} from '@angular/platform-browser'
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -22,22 +21,38 @@ export class SettingsComponent implements OnInit {
     Validators.required
   ]);
 
-  private avatar: string = ''; //https://material.angular.io/assets/img/examples/shiba1.jpg
+  private blob: Blob; //https://material.angular.io/assets/img/examples/shiba1.jpg
+  private avatar: any;
+  private sanitizedImageData: any;
   private hidePassword: boolean = true;
   private hideConfirmPassword: boolean = true;
   private userName: string = '';
   private password: string = '';
   private confirmPassword: string ='';
   private formData: FormData;
-  constructor(private nerfumsService: NerfumsService) {
+  constructor(private nerfumsService: NerfumsService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
     this.formData = new FormData();
-    this.nerfumsService.getUserAvatar('default-avatar.png').subscribe(data => {
-      this.avatar = data;
+    this.nerfumsService.getUserAvatar().subscribe(data => {
+      //let reader = new FileReader();
+      //reader.onload = (event: any) => {
+        //this.avatar = event.target.result;
+        //console.log(this.avatar)
+      //};
+      //reader.readAsDataURL(new Blob([this.avatar]));
+      this.avatar = 'data:image/png;base64,'+data;
+      this.sanitizedImageData = this.sanitizer.bypassSecurityTrustUrl(this.avatar);
     });
     console.log(this.avatar);
+  }
+
+  private createImageFromBlob(image: Blob){
+    let reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.avatar = event.target.result;
+    };
   }
 
   private setUsername(userName: string){
