@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {NerfumsService} from '../nerfums.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -21,16 +22,22 @@ export class SettingsComponent implements OnInit {
     Validators.required
   ]);
 
-  private avatar: string = 'https://material.angular.io/assets/img/examples/shiba1.jpg';
+  private avatar: string = ''; //https://material.angular.io/assets/img/examples/shiba1.jpg
   private hidePassword: boolean = true;
   private hideConfirmPassword: boolean = true;
   private userName: string = '';
   private password: string = '';
   private confirmPassword: string ='';
+  private formData: FormData;
   constructor(private nerfumsService: NerfumsService) {
   }
 
   ngOnInit() {
+    this.formData = new FormData();
+    this.nerfumsService.getUserAvatar('default-avatar.png').subscribe(data => {
+      this.avatar = data;
+    });
+    console.log(this.avatar);
   }
 
   private setUsername(userName: string){
@@ -59,8 +66,8 @@ export class SettingsComponent implements OnInit {
   }
 
   private confirmPictureClick(){
-    console.log('todo Confirm picture');
-    this.nerfumsService.patchUserAvatar();
+    //console.log(this.formData);
+    console.log(this.nerfumsService.patchUserAvatar(this.formData).subscribe());
   }
 
   private uploadImageClick(){
@@ -84,7 +91,8 @@ export class SettingsComponent implements OnInit {
       this.avatar = event.target.result;
     };
     reader.readAsDataURL(event.target.files[0]);
-    console.log(reader.readAsDataURL(event.target.files[0]));
+    let selectedFile = event.target.files[0];
+    this.formData.append("file", selectedFile);
   }
 
 }

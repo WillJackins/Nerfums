@@ -205,8 +205,12 @@ export class NerfumsService {
 
   }
 
-  patchUserAvatar() {
+  getUserAvatar(path: string): Observable<string> {
+    return this.http.get<string>(this.urlRoot + '/users/download/'+ path).pipe(catchError(error => this.handleError(error)));
+  }
 
+  patchUserAvatar(formData: FormData): Observable<string> {
+    return this.http.post<string>(this.urlRoot + '/users/upload', formData).pipe(catchError(error => this.handleError(error)));
   }
 
   patchUsername() {
@@ -221,7 +225,7 @@ export class NerfumsService {
     if (this.getCurrentSessionValue && error.status == 403) {
       this.logout();
     }
-
+    console.log(error.status);
     return throwError(error);
   }
 }

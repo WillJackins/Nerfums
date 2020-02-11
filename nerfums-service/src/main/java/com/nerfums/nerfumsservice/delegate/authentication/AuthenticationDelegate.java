@@ -39,6 +39,7 @@ public class AuthenticationDelegate {
 
 	public SessionRO registerUser(RegisterRO registerUser) {
 		User userToCreate = userDelegateMapper.mapRegisterROToUser(registerUser);
+		userToCreate.setUserAvatar("default-avatar.png");
 		userToCreate.setPassword(passwordEncoder.encode(userToCreate.getPassword()));
 
 		User newUser = userService.createNewUser(userToCreate);
