@@ -5,40 +5,32 @@
 }
 
 .settings-section {
-  margin-top: 2%;
-  margin-bottom: 2%;
+  margin: 2% 5%;
+}
+
+.settings-content {
+  display: inline-block;
+  margin-right: 5%;
 }
 
 .settings-image-box {
-  margin-top: 5%;
-  margin-bottom: 5%;
-  margin-left: 20%;
-  margin-right: 20%;
+  margin: 5% 20%;
 }
 
 .target-avatar {
   width: 150px;
   height: 150px;
   background-size: cover;
+
+  display: inline-block;
+  margin-right: 5%;
 }
 
-.username-field {
-  display: flex;
+.settings-field {
+  display: inline-block;
   flex-direction: column;
   justify-content: flex-end;
-  width: 20%;
+  width: 30%;
+  margin-right: 5%;
 }
 
-.password-field {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  width: 20%;
-}
-
-.confirm-password-field {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  width: 20%;
-}

@@ -6,8 +6,7 @@
     <div class="settings-section">
       <mat-card-title>Change Avatar:</mat-card-title>
       <div mat-card-avatar [style.background-image]="'url(' + avatar + ')'" class="target-avatar"></div>
-
-      <input type="file" (change)="onFileChanged($event)">
+      <input type="file" (change)="onFileChanged($event)" class="settings-content">
       <mat-card-actions align="end">
         <button mat-flat-button class="confirm-picture-button" color="primary" (click)="confirmPictureClick()">Confirm</button>
       </mat-card-actions>
@@ -17,7 +16,7 @@
 
     <div class="settings-section">
       <mat-card-title>Change Display Name:</mat-card-title>
-      <mat-form-field class="username-field">
+      <mat-form-field class="settings-field">
         <mat-label>Username</mat-label>
         <input type="text" matInput #usernameInput placeholder="Username" [formControl]="usernameControl" (change)="setUsername(usernameInput.value)">
         <mat-error *ngIf="usernameControl.hasError('required')">Please enter a valid user name!</mat-error>
@@ -32,7 +31,7 @@
 
     <div class="settings-section">
       <mat-card-title>Change Password:</mat-card-title>
-      <mat-form-field class="password-field">
+      <mat-form-field class="settings-field">
         <mat-label>Password</mat-label>
         <input [type]="hidePassword ? 'password' : 'text'" matInput #passwordInput placeholder="Password" [formControl]="passwordControl"
                (change)="setPassword(passwordInput.value)">
@@ -43,7 +42,7 @@
         <mat-hint>Enter New Password</mat-hint>
       </mat-form-field>
 
-      <mat-form-field class="confirm-password-field">
+      <mat-form-field class="settings-field">
         <mat-label>Confirm Password</mat-label>
         <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput #passwordInput placeholder="Confirm Password"
                [formControl]="confirmPasswordControl" (change)="setConfirmPassword(passwordInput.value)">
