@@ -28,6 +28,9 @@ public class UserDO {
     @Column(name = "committed_cash")
     private Integer committedCash;
 
+    @Column(name = "user_avatar")
+    private String userAvatar;
+
     @OneToMany(mappedBy = "contractOwner")
     private List<ContractDO> usersContracts;
 
@@ -63,6 +66,8 @@ public class UserDO {
     public Integer getCommittedCash() {
         return committedCash;
     }
+
+    public String getUserAvatar() { return userAvatar; }
 
     public List<ContractDO> getUsersContracts() {
         return usersContracts;
@@ -102,6 +107,8 @@ public class UserDO {
     public void setCommittedCash(Integer committedCash) {
         this.committedCash = committedCash;
     }
+
+    public void setUserAvatar(String userAvatar) { this.userAvatar = userAvatar; }
 
     public void setUsersContracts(List<ContractDO> usersContracts) {
         this.usersContracts = usersContracts;

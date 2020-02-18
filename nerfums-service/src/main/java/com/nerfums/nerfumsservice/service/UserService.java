@@ -1,8 +1,13 @@
 package com.nerfums.nerfumsservice.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.util.Base64;
+import com.amazonaws.util.IOUtils;
+import com.nerfums.nerfumsservice.repository.AmazonS3ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,15 +28,16 @@ public class UserService implements UserDetailsService {
 	private final UserServiceMapper userServiceMapper;
 	private final UserRepository userRepository;
 	private final AuthenticationUtil authenticationUtil;
-
+	private final AmazonS3ClientRepository amazonS3ClientRepository;
 	private static final Integer STARTING_MONEY = 10000;
 
 	@Autowired
-	public UserService(UserServiceMapper userServiceMapper, UserRepository userRepository, AuthenticationUtil authenticationUtil) {
+	public UserService(UserServiceMapper userServiceMapper, UserRepository userRepository, AuthenticationUtil authenticationUtil, AmazonS3ClientRepository amazonS3ClientRepository) {
 		super();
 		this.userServiceMapper = userServiceMapper;
 		this.userRepository = userRepository;
 		this.authenticationUtil = authenticationUtil;
+		this.amazonS3ClientRepository = amazonS3ClientRepository;
 	}
 
 	public User getUserByToken(String token) {
@@ -63,12 +69,21 @@ public class UserService implements UserDetailsService {
 					   .collect(Collectors.toList());
 	}
 
-	public User createNewUser(User user) {
+	public User createNewUser(User user) throws IOException {
+
+
+		user.setUserAvatar("default-avatar.jpg");
 		user.setAvailableCash(STARTING_MONEY);
 		user.setCommittedCash(0);
 		UserDO preCreatedUserDO = userServiceMapper.mapUserToUserDO(user);
 
 		UserDO postCreatedUserDO = userRepository.save(preCreatedUserDO);
+
+		S3Object s3Object = this.amazonS3ClientRepository.downloadFileFromS3Bucket(postCreatedUserDO.getUserAvatar());
+		byte[] avatarBytes = IOUtils.toByteArray(s3Object.getObjectContent());
+		String encodedAvatar = Base64.encodeAsString(avatarBytes);
+
+		postCreatedUserDO.setUserAvatar(encodedAvatar);
 		return userServiceMapper.mapUserDOToUser(postCreatedUserDO);
 	}
 

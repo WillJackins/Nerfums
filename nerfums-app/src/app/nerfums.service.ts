@@ -57,6 +57,7 @@ export class NerfumsService {
   }
 
   private updateCurrentSession(updatedSession: Session) {
+    console.log(updatedSession.userRO.userAvatar)
     localStorage.setItem('currentSession', JSON.stringify(updatedSession));
     this.currentSessionSubject.next(updatedSession);
   }
@@ -205,8 +206,12 @@ export class NerfumsService {
 
   }
 
-  patchUserAvatar() {
+  getUserAvatar(): Observable<string> {
+    return this.http.get(this.urlRoot + '/avatars', {responseType: 'text'}).pipe(catchError(error => this.handleError(error)));
+  }
 
+  patchUserAvatar(formData: FormData): Observable<string> {
+    return this.http.post<string>(this.urlRoot + '/avatars', formData).pipe(catchError(error => this.handleError(error)));
   }
 
   patchUsername() {
@@ -221,7 +226,7 @@ export class NerfumsService {
     if (this.getCurrentSessionValue && error.status == 403) {
       this.logout();
     }
-
+    console.log(error.status);
     return throwError(error);
   }
 }
