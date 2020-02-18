@@ -1,5 +1,6 @@
 package com.nerfums.nerfumsservice.delegate;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,8 +38,7 @@ public class UserDelegate {
 					   .collect(Collectors.toList());
 	}
 
-    public UserRO createNewUser(UserRO userRO)
-    {
+    public UserRO createNewUser(UserRO userRO) throws IOException {
         User preCreatedUser = userDelegateMapper.mapUserROToUser(userRO);
         User postCreatedUser = userService.createNewUser(preCreatedUser);
         return userDelegateMapper.mapUserToUserRO(postCreatedUser);

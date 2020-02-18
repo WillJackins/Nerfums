@@ -57,15 +57,14 @@ public class UserController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<UserRO> createNewUser(@RequestBody UserRO userRO) {
+	public ResponseEntity<UserRO> createNewUser(@RequestBody UserRO userRO) throws IOException {
 		UserRO createdUser = userDelegate.createNewUser(userRO);
         return ResponseEntity.ok(createdUser);
     }
 
-    @PostMapping("/upload")
+    @PatchMapping("/upload")
 	public ResponseEntity<String> uploadAvatarImage(@RequestHeader("Authorization") String token, @RequestParam("file") MultipartFile file) {
 		token = token.substring(7);
-		System.out.println("recieved");
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		Path path = Paths.get("src/main/resources/avatars/" + fileName);
 		try {

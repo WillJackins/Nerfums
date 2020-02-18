@@ -16,6 +16,8 @@ import com.nerfums.nerfumsservice.resource.api.SessionRO;
 import com.nerfums.nerfumsservice.resource.api.UserRO;
 import com.nerfums.nerfumsservice.service.UserService;
 
+import java.io.IOException;
+
 @Component
 public class AuthenticationDelegate {
 	private UserDelegateMapper userDelegateMapper;
@@ -37,9 +39,8 @@ public class AuthenticationDelegate {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	public SessionRO registerUser(RegisterRO registerUser) {
+	public SessionRO registerUser(RegisterRO registerUser) throws IOException {
 		User userToCreate = userDelegateMapper.mapRegisterROToUser(registerUser);
-		userToCreate.setUserAvatar("default-avatar.png");
 		userToCreate.setPassword(passwordEncoder.encode(userToCreate.getPassword()));
 
 		User newUser = userService.createNewUser(userToCreate);

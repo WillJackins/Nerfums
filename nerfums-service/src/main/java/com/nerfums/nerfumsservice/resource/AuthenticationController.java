@@ -9,6 +9,8 @@ import com.nerfums.nerfumsservice.resource.api.LoginRO;
 import com.nerfums.nerfumsservice.resource.api.RegisterRO;
 import com.nerfums.nerfumsservice.resource.api.SessionRO;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("authentication")
 public class AuthenticationController {
@@ -22,7 +24,7 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<SessionRO> registerUser(@RequestBody RegisterRO registerUser) {
+	public ResponseEntity<SessionRO> registerUser(@RequestBody RegisterRO registerUser) throws IOException {
 		SessionRO session = authenticationDelegate.registerUser(registerUser);
 		return ResponseEntity.ok(session);
 	}

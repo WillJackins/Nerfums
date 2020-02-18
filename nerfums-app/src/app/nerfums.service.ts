@@ -57,6 +57,7 @@ export class NerfumsService {
   }
 
   private updateCurrentSession(updatedSession: Session) {
+    console.log(updatedSession.userRO.userAvatar)
     localStorage.setItem('currentSession', JSON.stringify(updatedSession));
     this.currentSessionSubject.next(updatedSession);
   }

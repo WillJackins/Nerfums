@@ -1,6 +1,6 @@
 <mat-card class="contract-card">
   <mat-card-header>
-    <div mat-card-avatar class = target-avatar></div>
+    <div mat-card-avatar class = target-avatar [style.background-image]="'url(' + targetAvatar+ ')'"></div>
     <mat-card-title>{{contract.contractTarget.displayName}}</mat-card-title>
     <mat-card-subtitle>{{contract.contractReward}}</mat-card-subtitle>
   </mat-card-header>
