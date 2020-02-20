@@ -1,5 +1,17 @@
 package com.nerfums.nerfumsservice.repository;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.regions.Region;
@@ -8,17 +20,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 @Component
 public class AmazonS3ClientRepository {
@@ -36,27 +37,31 @@ public class AmazonS3ClientRepository {
     }
 
     @Async
-    public void uploadFileToS3Bucket(MultipartFile multipartFile, boolean enablePublicReadAccess)
-    {
-        String fileName = multipartFile.getOriginalFilename();
+    public void uploadFileToS3Bucket(String fileName, MultipartFile multipartFile) {
+        File file = new File(fileName);
+
+        try (FileOutputStream copyStream = new FileOutputStream(file)) {
+            //creating the file in the server (temporarily)
+            copyStream.write(multipartFile.getBytes());
+        }
+        catch (IOException ex) {
+            logger.error("error [{}] occurred while uploading [{}] ", ex.getMessage(), fileName);
+        }
 
         try {
-            //creating the file in the server (temporarily)
-            File file = new File(fileName);
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(multipartFile.getBytes());
-            fos.close();
-
             PutObjectRequest putObjectRequest = new PutObjectRequest(this.awsS3AudioBucket, fileName, file);
-
-            if (enablePublicReadAccess) {
-                putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
-            }
+            putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
             this.amazonS3.putObject(putObjectRequest);
-            //removing the file created in the server
-            file.delete();
-        } catch (IOException | AmazonServiceException ex) {
-            logger.error("error [" + ex.getMessage() + "] occurred while uploading [" + fileName + "] ");
+        }
+        catch (AmazonServiceException ex) {
+            logger.error("error [{}] occurred while uploading [{}] ", ex.getMessage(), fileName);
+        }
+
+        try {
+            Files.delete(file.toPath());
+        }
+        catch (IOException ex) {
+            logger.error("error [{}] occurred while uploading [{}] ", ex.getMessage(), fileName);
         }
     }
 
@@ -66,13 +71,7 @@ public class AmazonS3ClientRepository {
         try {
             amazonS3.deleteObject(new DeleteObjectRequest(awsS3AudioBucket, fileName));
         } catch (AmazonServiceException ex) {
-            logger.error("error [" + ex.getMessage() + "] occurred while removing [" + fileName + "] ");
+            logger.error("error [{}] occurred while uploading [{}] ", ex.getMessage(), fileName);
         }
-    }
-
-    @Async
-    public S3Object downloadFileFromS3Bucket(String filename) {
-        S3Object s3Object = amazonS3.getObject(awsS3AudioBucket, filename);
-        return s3Object;
     }
 }

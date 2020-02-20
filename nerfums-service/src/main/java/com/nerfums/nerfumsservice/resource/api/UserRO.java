@@ -6,7 +6,7 @@ public class UserRO {
 	private String displayName;
 	private Integer availableCash;
 	private Integer committedCash;
-	private String userAvatar;
+	private String userAvatarURL;
 	//endregion
 
 	//region GETTERS
@@ -26,7 +26,9 @@ public class UserRO {
 		return committedCash;
 	}
 
-	public String getUserAvatar() { return userAvatar; }
+	public String getUserAvatarURL() {
+		return userAvatarURL;
+	}
 	//endregion
 
 	//region SETTERS
@@ -46,6 +48,8 @@ public class UserRO {
 		this.committedCash = committedCash;
 	}
 
-	public void setUserAvatar(String userAvatar) { this.userAvatar = userAvatar; }
+	public void setUserAvatarURL(String userAvatarURL) {
+		this.userAvatarURL = userAvatarURL;
+	}
 	//endregion
 }

@@ -64,7 +64,7 @@ public class ContractService {
 
 		contractOwner.setCommittedCash(contractOwner.getCommittedCash() + contractAmount);
 		contractOwner.setAvailableCash(contractOwner.getAvailableCash() - contractAmount);
-		User updatedUser = userService.updateUser(contractOwner);
+		User updatedUser = userService.updateUserMoney(contractOwner);
 
 
 		ContractDO preCreate = contractServiceMapper.mapContractToContractDO(contractToCreate);
@@ -86,8 +86,8 @@ public class ContractService {
 		}
 		contractCompleter.setAvailableCash(contractCompleter.getAvailableCash() + contractAmount);
 
-		User updatedPoster = userService.updateUser(contractPoster);
-		User updatedCompleter = userService.updateUser(contractCompleter);
+		User updatedPoster = userService.updateUserMoney(contractPoster);
+		User updatedCompleter = userService.updateUserMoney(contractCompleter);
 
 
 		ContractDO preComplete = contractServiceMapper.mapContractToContractDO(contractToComplete);
@@ -104,7 +104,7 @@ public class ContractService {
 		Integer contractAmount = contract.getContractReward();
 		contractOwner.setCommittedCash(contractOwner.getCommittedCash() - contractAmount);
 		contractOwner.setAvailableCash(contractOwner.getAvailableCash() + contractAmount);
-		User updatedUser = userService.updateUser(contractOwner);
+		User updatedUser = userService.updateUserMoney(contractOwner);
 
 
 		contractRepository.deleteById(contractId);

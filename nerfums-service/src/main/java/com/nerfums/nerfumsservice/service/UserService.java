@@ -1,22 +1,19 @@
 package com.nerfums.nerfumsservice.service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.util.Base64;
-import com.amazonaws.util.IOUtils;
-import com.nerfums.nerfumsservice.repository.AmazonS3ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nerfums.nerfumsservice.delegate.authentication.AuthenticationUtil;
 import com.nerfums.nerfumsservice.exception.NerfumsErrorCode;
 import com.nerfums.nerfumsservice.model.User;
+import com.nerfums.nerfumsservice.repository.AmazonS3ClientRepository;
 import com.nerfums.nerfumsservice.repository.UserRepository;
 import com.nerfums.nerfumsservice.repository.api.UserDO;
 import com.nerfums.nerfumsservice.service.mappers.UserServiceMapper;
@@ -29,6 +26,9 @@ public class UserService implements UserDetailsService {
 	private final UserRepository userRepository;
 	private final AuthenticationUtil authenticationUtil;
 	private final AmazonS3ClientRepository amazonS3ClientRepository;
+
+	private static final String AMAZON_S3_AVATAR_ROOT = "https://nerfums-avatar.s3.amazonaws.com/";
+	private static final String DEFAULT_AVATAR = "default-avatar.jpg";
 	private static final Integer STARTING_MONEY = 10000;
 
 	@Autowired
@@ -69,25 +69,19 @@ public class UserService implements UserDetailsService {
 					   .collect(Collectors.toList());
 	}
 
-	public User createNewUser(User user) throws IOException {
+	public User createNewUser(User user) {
 
-
-		user.setUserAvatar("default-avatar.jpg");
+		user.setUserAvatarURL(AMAZON_S3_AVATAR_ROOT + DEFAULT_AVATAR);
 		user.setAvailableCash(STARTING_MONEY);
 		user.setCommittedCash(0);
 		UserDO preCreatedUserDO = userServiceMapper.mapUserToUserDO(user);
 
 		UserDO postCreatedUserDO = userRepository.save(preCreatedUserDO);
-
-		S3Object s3Object = this.amazonS3ClientRepository.downloadFileFromS3Bucket(postCreatedUserDO.getUserAvatar());
-		byte[] avatarBytes = IOUtils.toByteArray(s3Object.getObjectContent());
-		String encodedAvatar = Base64.encodeAsString(avatarBytes);
-
-		postCreatedUserDO.setUserAvatar(encodedAvatar);
 		return userServiceMapper.mapUserDOToUser(postCreatedUserDO);
 	}
 
-	public User updateUser(User updatedUser) {
+	public User updateUserMoney(User updatedUser) {
+
 		UserDO newUser = userServiceMapper.mapUserToUserDO(updatedUser);
 		UserDO oldUser = userRepository.getOne(updatedUser.getUserId());
 
@@ -97,5 +91,38 @@ public class UserService implements UserDetailsService {
 
 		UserDO postUpdateUser = userRepository.save(oldUser);
 		return userServiceMapper.mapUserDOToUser(postUpdateUser);
+	}
+
+	public User updateUserAvatar(String userToken, MultipartFile file) {
+
+		User user = getUserByToken(userToken);
+		String avatarPath = "avatar_" + user.getUserId() + ".png";
+		amazonS3ClientRepository.uploadFileToS3Bucket(avatarPath, file);
+
+		UserDO updatedUser = userServiceMapper.mapUserToUserDO(user);
+		updatedUser.setUserAvatarURL(AMAZON_S3_AVATAR_ROOT + avatarPath);
+		userRepository.save(updatedUser);
+
+		return userServiceMapper.mapUserDOToUser(updatedUser);
+	}
+
+	public User updateUserDisplayName(String userToken, String newDisplayName) {
+
+		User user = getUserByToken(userToken);
+		UserDO updatedUser = userServiceMapper.mapUserToUserDO(user);
+		updatedUser.setDisplayName(newDisplayName);
+		userRepository.save(updatedUser);
+
+		return userServiceMapper.mapUserDOToUser(updatedUser);
+	}
+
+	public User updateUserPassword(String userToken, String newPassword) {
+
+		User user = getUserByToken(userToken);
+		UserDO updatedUser = userServiceMapper.mapUserToUserDO(user);
+		//updatedUser.setPasswordHash(passwordEncoder.encode(newPassword));
+		userRepository.save(updatedUser);
+
+		return userServiceMapper.mapUserDOToUser(updatedUser);
 	}
 }

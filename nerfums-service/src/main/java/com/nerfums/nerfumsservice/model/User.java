@@ -13,7 +13,7 @@ public class User implements UserDetails {
 	private String displayName;
 	private Integer availableCash;
 	private Integer committedCash;
-	private String userAvatar;
+	private String userAvatarURL;
 
 	public User() {
 		super();
@@ -52,7 +52,9 @@ public class User implements UserDetails {
 		return committedCash;
 	}
 
-	public String getUserAvatar() { return userAvatar; }
+	public String getUserAvatarURL() {
+		return userAvatarURL;
+	}
 
 
 	public void setUserId(Long userId) {
@@ -79,7 +81,9 @@ public class User implements UserDetails {
 		this.committedCash = committedCash;
 	}
 
-	public void setUserAvatar(String userAvatar) {this.userAvatar = userAvatar; }
+	public void setUserAvatarURL(String userAvatarURL) {
+		this.userAvatarURL = userAvatarURL;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

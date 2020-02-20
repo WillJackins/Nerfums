@@ -14,9 +14,9 @@ export class ContractItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.contract.contractTarget.userAvatar)
-    console.log(this.contract.contractOwner.userAvatar)
-    this.targetAvatar = 'data:image/png;base64,'+ this.contract.contractTarget.userAvatar;
+    console.log(this.contract.contractTarget.userAvatarURL);
+    console.log(this.contract.contractOwner.userAvatarURL);
+    this.targetAvatar = 'data:image/png;base64,' + this.contract.contractTarget.userAvatarURL;
   }
 
 }

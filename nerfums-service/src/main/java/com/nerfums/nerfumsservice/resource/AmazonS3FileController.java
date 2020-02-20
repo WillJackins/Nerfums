@@ -1,20 +1,7 @@
 package com.nerfums.nerfumsservice.resource;
 
-import com.amazonaws.Response;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.util.Base64;
-import com.amazonaws.util.IOUtils;
-import com.nerfums.nerfumsservice.repository.AmazonS3ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/avatars")

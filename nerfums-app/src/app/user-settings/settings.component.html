@@ -5,10 +5,10 @@
   <mat-card-content>
     <div class="settings-section">
       <mat-card-title>Change Avatar:</mat-card-title>
-      <div mat-card-avatar [style.background-image]="'url(' + avatar + ')'" class="target-avatar"></div>
+      <div mat-card-avatar [style.background-image]="'url(' + currentAvatar + ')'" class="target-avatar"></div>
       <input type="file" (change)="onFileChanged($event)" class="settings-content">
       <mat-card-actions align="end">
-        <button mat-flat-button class="confirm-picture-button" color="primary" (click)="confirmPictureClick()">Confirm</button>
+        <button mat-flat-button class="confirm-picture-button" color="primary" (click)="changeAvatar()">Confirm</button>
       </mat-card-actions>
     </div>
 
@@ -44,12 +44,13 @@
 
       <mat-form-field class="settings-field">
         <mat-label>Confirm Password</mat-label>
-        <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput #passwordInput placeholder="Confirm Password"
-               [formControl]="confirmPasswordControl" (change)="setConfirmPassword(passwordInput.value)">
+        <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput #confirmInput placeholder="Confirm Password"
+               [formControl]="confirmPasswordControl" (change)="setConfirmPassword(confirmInput.value)">
         <button mat-icon-button matSuffix (click)="onHideConfirmPasswordClick()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error *ngIf="confirmPasswordControl.hasError('required')">Please enter a valid password!</mat-error>
+        <mat-error *ngIf="confirmPasswordControl.hasError('match')">Password must match!</mat-error>
         <mat-hint>Confirm New Password</mat-hint>
       </mat-form-field>
       <mat-card-actions align="end">
