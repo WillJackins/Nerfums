@@ -1,10 +1,12 @@
 package com.nerfums.nerfumsservice.delegate;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nerfums.nerfumsservice.delegate.mappers.UserDelegateMapper;
 import com.nerfums.nerfumsservice.model.User;
@@ -37,10 +39,24 @@ public class UserDelegate {
 					   .collect(Collectors.toList());
 	}
 
-    public UserRO createNewUser(UserRO userRO)
-    {
-        User preCreatedUser = userDelegateMapper.mapUserROToUser(userRO);
-        User postCreatedUser = userService.createNewUser(preCreatedUser);
-        return userDelegateMapper.mapUserToUserRO(postCreatedUser);
-    }
+	public UserRO createNewUser(UserRO userRO) throws IOException {
+		User preCreatedUser = userDelegateMapper.mapUserROToUser(userRO);
+		User postCreatedUser = userService.createNewUser(preCreatedUser);
+		return userDelegateMapper.mapUserToUserRO(postCreatedUser);
+	}
+
+	public UserRO updateUserAvatar(String userToken, MultipartFile file) {
+		User updatedUser = userService.updateUserAvatar(userToken, file);
+		return userDelegateMapper.mapUserToUserRO(updatedUser);
+	}
+
+	public UserRO updateUserDisplayName(String userToken, String newDisplayName) {
+		User updatedUser = userService.updateUserDisplayName(userToken, newDisplayName);
+		return userDelegateMapper.mapUserToUserRO(updatedUser);
+	}
+
+	public UserRO updateUserPassword(String userToken, String newPassword) {
+		User updatedUser = userService.updateUserPassword(userToken, newPassword);
+		return userDelegateMapper.mapUserToUserRO(updatedUser);
+	}
 }

@@ -1,0 +1,36 @@
+.settings-card {
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.settings-section {
+  margin: 2% 5%;
+}
+
+.settings-content {
+  display: inline-block;
+  margin-right: 5%;
+}
+
+.settings-image-box {
+  margin: 5% 20%;
+}
+
+.target-avatar {
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+
+  display: inline-block;
+  margin-right: 5%;
+}
+
+.settings-field {
+  display: inline-block;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 30%;
+  margin-right: 5%;
+}
+

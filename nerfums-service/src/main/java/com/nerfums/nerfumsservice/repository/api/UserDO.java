@@ -19,23 +19,26 @@ public class UserDO {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @Column(name = "display_name")
-    private String displayName;
+	@Column(name = "display_name")
+	private String displayName;
 
-    @Column(name = "available_cash")
-    private Integer availableCash;
+	@Column(name = "available_cash")
+	private Integer availableCash;
 
-    @Column(name = "committed_cash")
-    private Integer committedCash;
+	@Column(name = "committed_cash")
+	private Integer committedCash;
 
-    @OneToMany(mappedBy = "contractOwner")
-    private List<ContractDO> usersContracts;
+	@Column(name = "user_avatar_url")
+	private String userAvatarURL;
 
-    @OneToMany(mappedBy = "contractTarget")
-    private List<ContractDO> userAsTargetContracts;
+	@OneToMany(mappedBy = "contractOwner")
+	private List<ContractDO> usersContracts;
 
-    @OneToMany(mappedBy = "contractCompletedBy")
-    private List<ContractDO> userCompletedContracts;
+	@OneToMany(mappedBy = "contractTarget")
+	private List<ContractDO> userAsTargetContracts;
+
+	@OneToMany(mappedBy = "contractCompletedBy")
+	private List<ContractDO> userCompletedContracts;
 
     //endregion
 
@@ -63,6 +66,10 @@ public class UserDO {
     public Integer getCommittedCash() {
         return committedCash;
     }
+
+	public String getUserAvatarURL() {
+		return userAvatarURL;
+	}
 
     public List<ContractDO> getUsersContracts() {
         return usersContracts;
@@ -102,6 +109,10 @@ public class UserDO {
     public void setCommittedCash(Integer committedCash) {
         this.committedCash = committedCash;
     }
+
+	public void setUserAvatarURL(String userAvatar) {
+		this.userAvatarURL = userAvatar;
+	}
 
     public void setUsersContracts(List<ContractDO> usersContracts) {
         this.usersContracts = usersContracts;

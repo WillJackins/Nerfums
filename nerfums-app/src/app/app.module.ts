@@ -30,6 +30,7 @@ import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
 import {AuthModule} from './auth/auth.module';
 import {UserLoginMenuComponent} from './user-login-menu/user-login-menu.component';
 import {JwtInterceptor} from "./JwtInterceptor";
+import {SettingsComponent} from './user-settings/settings.component';
 import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component";
 
 @NgModule({
@@ -44,7 +45,8 @@ import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component"
     ContractDashboardComponent,
     ContractCompleteComponent,
     AboutPageComponent,
-    UserLoginMenuComponent
+    UserLoginMenuComponent,
+    SettingsComponent
   ],
   entryComponents: [
     ConfirmDialogComponent,

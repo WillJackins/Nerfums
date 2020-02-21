@@ -57,6 +57,7 @@ export class NerfumsService {
   }
 
   private updateCurrentSession(updatedSession: Session) {
+    console.log(updatedSession.userRO.userAvatarURL);
     localStorage.setItem('currentSession', JSON.stringify(updatedSession));
     this.currentSessionSubject.next(updatedSession);
   }
@@ -81,7 +82,7 @@ export class NerfumsService {
     return this.http.post<Session>(this.urlRoot + '/authentication/register', register)
       .pipe(
         map(session => this.refreshCurrentSession(session)),
-        catchError(this.handleError)
+        catchError(error => this.handleError(error))
       );
   }
 
@@ -89,7 +90,7 @@ export class NerfumsService {
     return this.http.post<Session>(this.urlRoot + '/authentication/login', {username, password})
       .pipe(
         map(session => this.refreshCurrentSession(session)),
-        catchError(this.handleError)
+        catchError(error => this.handleError(error))
       );
   }
 
@@ -97,7 +98,7 @@ export class NerfumsService {
     return this.http.get<Session>(this.urlRoot + '/authentication/refresh')
       .pipe(
         map(session => this.refreshCurrentSession(session)),
-        catchError(this.handleError)
+        catchError(error => this.handleError(error))
       );
   }
 
@@ -110,10 +111,31 @@ export class NerfumsService {
   //=====================================================================================
   // API Calls
   //=====================================================================================
+  // ---- User Calls
+  //=====================================================================================
 
-  getPostedContracts(): Observable<Array<Contract>> {
-    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts/posted')
-      .pipe(catchError(error => this.handleError(error)));
+  patchUserAvatar(newAvatar: FormData) {
+    return this.http.patch<User>(this.urlRoot + '/users/client/avatar', newAvatar)
+      .pipe(
+        map(user => this.updateCurrentUserValue(user)),
+        catchError(error => this.handleError(error))
+      );
+  }
+
+  patchUsername(newDisplayName: string) {
+    return this.http.patch<User>(this.urlRoot + '/users/client/displayName', newDisplayName)
+      .pipe(
+        map(user => this.updateCurrentUserValue(user)),
+        catchError(error => this.handleError(error))
+      );
+  }
+
+  patchUserPassword(newPassword: string) {
+    return this.http.patch<User>(this.urlRoot + '/users/client/password', newPassword)
+      .pipe(
+        map(user => this.updateCurrentUserValue(user)),
+        catchError(error => this.handleError(error))
+      );
   }
 
   getOwnerContracts(activeContracts: boolean): Observable<Array<Contract>> {
@@ -121,7 +143,9 @@ export class NerfumsService {
     params = params.append('active', String(activeContracts));
 
     return this.http.get<Array<Contract>>(this.urlRoot + '/contracts/owner', {params})
-      .pipe(catchError(error => this.handleError(error)));
+      .pipe(
+        catchError(error => this.handleError(error))
+      );
   }
 
   postContract(contract: Contract): Observable<Contract> {
@@ -132,7 +156,8 @@ export class NerfumsService {
     };
 
     return this.http.post<Contract>(this.urlRoot + '/contracts', JSON.stringify(contract), httpOptions)
-      .pipe(map(postedContract => {
+      .pipe(
+        map(postedContract => {
           this.updateCurrentUserValue(postedContract.contractOwner);
           return postedContract;
         }),
@@ -142,7 +167,8 @@ export class NerfumsService {
 
   completeContract(contract: Contract): Observable<Contract> {
     return this.http.patch<Contract>(this.urlRoot + '/contracts', contract)
-      .pipe(map(completedContract => {
+      .pipe(
+        map(completedContract => {
           this.updateCurrentUserValue(completedContract.contractOwner);
           return completedContract;
         }),
@@ -152,7 +178,8 @@ export class NerfumsService {
 
   deleteContractById(contractId: number): Observable<Contract> {
     return this.http.delete<Contract>(this.urlRoot + '/contracts/' + contractId)
-      .pipe(map(deletedContract => {
+      .pipe(
+        map(deletedContract => {
           this.updateCurrentUserValue(deletedContract.contractOwner);
           return deletedContract;
         }),
@@ -160,19 +187,46 @@ export class NerfumsService {
       );
   }
 
+  //=====================================================================================
+  // API Calls
+  //=====================================================================================
+  // ---- Other Calls
+  //=====================================================================================
+
+  getPostedContracts(): Observable<Array<Contract>> {
+    return this.http.get<Array<Contract>>(this.urlRoot + '/contracts/posted')
+      .pipe(
+        catchError(error => this.handleError(error))
+      );
+  }
+
   getAllUsers(): Observable<Array<User>> {
     return this.http.get<Array<User>>(this.urlRoot + '/users')
-      .pipe(catchError(error => this.handleError(error)));
+      .pipe(
+        catchError(error => this.handleError(error))
+      );
   }
 
   getAllModifiers(): Observable<Array<Modifier>> {
     return this.http.get<Array<Modifier>>(this.urlRoot + '/modifiers')
-      .pipe(catchError(error => this.handleError(error)));
+      .pipe(
+        catchError(error => this.handleError(error))
+      );
   }
 
   //=====================================================================================
   // Helpers
   //=====================================================================================
+
+  private refreshCurrentSession(session: Session) {
+    if (session && session.token) {
+      this.updateCurrentSession(session);
+
+      this.refreshLoginTimer();
+    }
+
+    return session;
+  }
 
   private async refreshLoginTimer() {
     await this.sleep(1000 * 60 * 15);
@@ -191,21 +245,15 @@ export class NerfumsService {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
   }
 
-  private refreshCurrentSession(session: Session) {
-    if (session && session.token) {
-      this.updateCurrentSession(session);
-
-      this.refreshLoginTimer();
-    }
-
-    return session;
+  settingsPage() {
+    this.router.navigate(['/settingsPage'])
   }
 
   handleError(error: HttpErrorResponse) {
     if (this.getCurrentSessionValue && error.status == 403) {
       this.logout();
     }
-
+    console.log(error.status);
     return throwError(error);
   }
 }
