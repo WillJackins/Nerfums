@@ -1,5 +1,5 @@
 .login-menu {
-  padding: 0px;
+  padding: 0;
   background-color: red;
 }
 
@@ -23,6 +23,7 @@
   margin-bottom: auto;
   padding: 10px 10px;
   display: inline-block;
+
 }
 
 .user-menu-info {
