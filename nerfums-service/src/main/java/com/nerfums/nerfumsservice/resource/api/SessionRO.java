@@ -4,6 +4,10 @@ public class SessionRO {
 	private String token;
 	private UserRO userRO;
 
+	public SessionRO() {
+
+	}
+
 	public SessionRO(String token, UserRO userRO) {
 		this.token = token;
 		this.userRO = userRO;

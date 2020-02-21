@@ -1,15 +1,16 @@
 package com.nerfums.nerfumsservice.resource;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nerfums.nerfumsservice.delegate.UserDelegate;
+import com.nerfums.nerfumsservice.resource.api.LoginRO;
+import com.nerfums.nerfumsservice.resource.api.RegisterRO;
+import com.nerfums.nerfumsservice.resource.api.SessionRO;
 import com.nerfums.nerfumsservice.resource.api.UserRO;
 
 @RestController
@@ -28,6 +29,30 @@ public class UserController {
 		token = token.substring(7);
 		UserRO userRO = userDelegate.getUserByToken(token);
 		return ResponseEntity.ok(userRO);
+	}
+
+	@PostMapping("/client/register")
+	public ResponseEntity<SessionRO> userRegister(@RequestBody RegisterRO registerUser) {
+		SessionRO session = userDelegate.registerUser(registerUser);
+		return ResponseEntity.ok(session);
+	}
+
+	@PostMapping("/client/login")
+	public ResponseEntity<SessionRO> userLogin(@RequestBody LoginRO login) {
+		SessionRO session = userDelegate.loginUser(login);
+		return ResponseEntity.ok(session);
+	}
+
+	@GetMapping("/client/refresh")
+	public ResponseEntity<SessionRO> userLoginRefresh(@RequestHeader("Authorization") String token) {
+		token = token.substring(7);
+		SessionRO newSession = userDelegate.refreshUser(token);
+		return ResponseEntity.ok(newSession);
+	}
+
+	@GetMapping("/client/logout")
+	public ResponseEntity<String> userLogout() {
+		return ResponseEntity.ok("Logged Out.");
 	}
 
 	@PatchMapping("/client/avatar")
@@ -62,11 +87,5 @@ public class UserController {
 		List<UserRO> users = userDelegate.getAllUsers();
 		return ResponseEntity.ok(users);
 	}
-
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<UserRO> createNewUser(@RequestBody UserRO userRO) throws IOException {
-		UserRO createdUser = userDelegate.createNewUser(userRO);
-        return ResponseEntity.ok(createdUser);
-    }
 }
+

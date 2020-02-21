@@ -1,6 +1,5 @@
 package com.nerfums.nerfumsservice.delegate;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,7 +8,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nerfums.nerfumsservice.delegate.mappers.UserDelegateMapper;
+import com.nerfums.nerfumsservice.model.Session;
 import com.nerfums.nerfumsservice.model.User;
+import com.nerfums.nerfumsservice.resource.api.LoginRO;
+import com.nerfums.nerfumsservice.resource.api.RegisterRO;
+import com.nerfums.nerfumsservice.resource.api.SessionRO;
 import com.nerfums.nerfumsservice.resource.api.UserRO;
 import com.nerfums.nerfumsservice.service.UserService;
 
@@ -25,25 +28,25 @@ public class UserDelegate {
 		this.userService = userService;
 	}
 
-	public UserRO getUserByToken(String token) {
-		return userDelegateMapper.mapUserToUserRO(userService.getUserByToken(token));
+
+	public SessionRO registerUser(RegisterRO registerUser) {
+		User user = userDelegateMapper.mapRegisterROToUser(registerUser);
+		Session session = userService.registerNewUser(user);
+		return userDelegateMapper.mapSessionToSessionRO(session);
 	}
 
-	public UserRO getUserById(Long userId) {
-		return userDelegateMapper.mapUserToUserRO(userService.getUserById(userId));
+	public SessionRO loginUser(LoginRO loginUser) {
+		String username = loginUser.getUsername();
+		String password = loginUser.getPassword();
+		Session session = userService.loginUser(username, password);
+		return userDelegateMapper.mapSessionToSessionRO(session);
 	}
 
-	public List<UserRO> getAllUsers() {
-		return userService.getAllUsers().stream()
-					   .map(userDelegateMapper::mapUserToUserRO)
-					   .collect(Collectors.toList());
+	public SessionRO refreshUser(String token) {
+		Session session = userService.refreshUser(token);
+		return userDelegateMapper.mapSessionToSessionRO(session);
 	}
 
-	public UserRO createNewUser(UserRO userRO) throws IOException {
-		User preCreatedUser = userDelegateMapper.mapUserROToUser(userRO);
-		User postCreatedUser = userService.createNewUser(preCreatedUser);
-		return userDelegateMapper.mapUserToUserRO(postCreatedUser);
-	}
 
 	public UserRO updateUserAvatar(String userToken, MultipartFile file) {
 		User updatedUser = userService.updateUserAvatar(userToken, file);
@@ -58,5 +61,19 @@ public class UserDelegate {
 	public UserRO updateUserPassword(String userToken, String newPassword) {
 		User updatedUser = userService.updateUserPassword(userToken, newPassword);
 		return userDelegateMapper.mapUserToUserRO(updatedUser);
+	}
+
+	public UserRO getUserByToken(String token) {
+		return userDelegateMapper.mapUserToUserRO(userService.getUserByToken(token));
+	}
+
+	public UserRO getUserById(Long userId) {
+		return userDelegateMapper.mapUserToUserRO(userService.getUserById(userId));
+	}
+
+	public List<UserRO> getAllUsers() {
+		return userService.getAllUsers().stream()
+					   .map(userDelegateMapper::mapUserToUserRO)
+					   .collect(Collectors.toList());
 	}
 }

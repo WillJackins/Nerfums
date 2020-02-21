@@ -3,6 +3,7 @@ package com.nerfums.nerfumsservice.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.nerfums.nerfumsservice.delegate.authentication.AuthenticationFilter;
 import com.nerfums.nerfumsservice.service.UserService;
 
 @Configuration
@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserService userService;
 
 	@Autowired
-	public SecurityConfig(AuthenticationFilter authenticationFilter, UserService userService) {
+	public SecurityConfig(@Lazy AuthenticationFilter authenticationFilter, UserService userService) {
 		super();
 		this.authenticationFilter = authenticationFilter;
 		this.userService = userService;
@@ -48,7 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
-				.authorizeRequests().antMatchers("/authentication/**").permitAll()
+				.authorizeRequests()
+				.antMatchers("/users/client/register", "/users/client/login").permitAll()
 				.anyRequest().authenticated()
 				.and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

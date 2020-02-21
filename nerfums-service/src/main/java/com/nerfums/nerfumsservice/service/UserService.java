@@ -4,14 +4,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nerfums.nerfumsservice.delegate.authentication.AuthenticationUtil;
 import com.nerfums.nerfumsservice.exception.NerfumsErrorCode;
+import com.nerfums.nerfumsservice.model.Session;
 import com.nerfums.nerfumsservice.model.User;
 import com.nerfums.nerfumsservice.repository.AmazonS3ClientRepository;
 import com.nerfums.nerfumsservice.repository.UserRepository;
@@ -24,7 +28,7 @@ import common.exception.BusinessServiceException;
 public class UserService implements UserDetailsService {
 	private final UserServiceMapper userServiceMapper;
 	private final UserRepository userRepository;
-	private final AuthenticationUtil authenticationUtil;
+	private final TokenService tokenService;
 	private final AmazonS3ClientRepository amazonS3ClientRepository;
 
 	private static final String AMAZON_S3_AVATAR_ROOT = "https://nerfums-avatar.s3.amazonaws.com/";
@@ -32,16 +36,21 @@ public class UserService implements UserDetailsService {
 	private static final Integer STARTING_MONEY = 10000;
 
 	@Autowired
-	public UserService(UserServiceMapper userServiceMapper, UserRepository userRepository, AuthenticationUtil authenticationUtil, AmazonS3ClientRepository amazonS3ClientRepository) {
+	private AuthenticationManager authenticationManager;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	public UserService(UserServiceMapper userServiceMapper, UserRepository userRepository, TokenService tokenService, AmazonS3ClientRepository amazonS3ClientRepository) {
 		super();
 		this.userServiceMapper = userServiceMapper;
 		this.userRepository = userRepository;
-		this.authenticationUtil = authenticationUtil;
+		this.tokenService = tokenService;
 		this.amazonS3ClientRepository = amazonS3ClientRepository;
 	}
 
 	public User getUserByToken(String token) {
-		String username = authenticationUtil.extractUsername(token);
+		String username = tokenService.getUsernameFromToken(token);
 		return (User) loadUserByUsername(username);
 	}
 
@@ -69,15 +78,41 @@ public class UserService implements UserDetailsService {
 					   .collect(Collectors.toList());
 	}
 
-	public User createNewUser(User user) {
+	public Session registerNewUser(User user) {
 
 		user.setUserAvatarURL(AMAZON_S3_AVATAR_ROOT + DEFAULT_AVATAR);
 		user.setAvailableCash(STARTING_MONEY);
 		user.setCommittedCash(0);
+
 		UserDO preCreatedUserDO = userServiceMapper.mapUserToUserDO(user);
+		String passwordHash = passwordEncoder.encode(user.getPassword());
+		preCreatedUserDO.setPasswordHash(passwordHash);
 
 		UserDO postCreatedUserDO = userRepository.save(preCreatedUserDO);
-		return userServiceMapper.mapUserDOToUser(postCreatedUserDO);
+
+		User postCreateUser = userServiceMapper.mapUserDOToUser(postCreatedUserDO);
+		String token = tokenService.generateToken(postCreateUser);
+		return new Session(token, postCreateUser);
+	}
+
+	public Session loginUser(String username, String password) {
+
+		Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+		authenticationManager.authenticate(authentication);
+
+		User user = (User) loadUserByUsername(username);
+		String token = tokenService.generateToken(user);
+
+		return new Session(token, user);
+	}
+
+	public Session refreshUser(String token) {
+
+		String username = tokenService.getUsernameFromToken(token);
+		User user = (User) loadUserByUsername(username);
+		String newToken = tokenService.generateToken(user);
+
+		return new Session(newToken, user);
 	}
 
 	public User updateUserMoney(User updatedUser) {
@@ -109,6 +144,7 @@ public class UserService implements UserDetailsService {
 	public User updateUserDisplayName(String userToken, String newDisplayName) {
 
 		User user = getUserByToken(userToken);
+
 		UserDO updatedUser = userServiceMapper.mapUserToUserDO(user);
 		updatedUser.setDisplayName(newDisplayName);
 		userRepository.save(updatedUser);
@@ -119,8 +155,10 @@ public class UserService implements UserDetailsService {
 	public User updateUserPassword(String userToken, String newPassword) {
 
 		User user = getUserByToken(userToken);
+
 		UserDO updatedUser = userServiceMapper.mapUserToUserDO(user);
-		//updatedUser.setPasswordHash(passwordEncoder.encode(newPassword));
+		String newPasswordHash = passwordEncoder.encode(newPassword);
+		updatedUser.setPasswordHash(newPasswordHash);
 		userRepository.save(updatedUser);
 
 		return userServiceMapper.mapUserDOToUser(updatedUser);
