@@ -1,6 +1,6 @@
 <mat-card class="contract-card">
   <mat-card-header>
-    <div mat-card-avatar class = target-avatar [style.background-image]="'url(' + targetAvatar+ ')'"></div>
+    <div mat-card-avatar class="avatar" [style.background-image]="'url(' + contract.contractTarget.userAvatarURL + ')'"></div>
     <mat-card-title>{{contract.contractTarget.displayName}}</mat-card-title>
     <mat-card-subtitle>{{contract.contractReward}}</mat-card-subtitle>
   </mat-card-header>
@@ -18,8 +18,8 @@
 
       <h3>Contract From:</h3>
       <div class="owner">
-        <div mat-card-avatar class = owner-avatar></div>
-        <mat-card-title class="owner-name">Contract Owner Name Here</mat-card-title>
+        <div mat-card-avatar class="avatar" [style.background-image]="'url(' + contract.contractOwner.userAvatarURL + ')'"></div>
+        <mat-card-title class="owner-name">{{contract.contractOwner.displayName}}</mat-card-title>
       </div>
 
       <div *ngIf="contract.requirements.length > 0">

@@ -9,13 +9,24 @@
   display: inline-block;
 }
 
+.user-menu-avatar {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 15px;
+
+  background-size: cover;
+  display: inline-block;
+}
+
 .user-menu-divider {
+  margin-top: auto;
+  margin-bottom: auto;
   padding: 10px 10px;
   display: inline-block;
 }
 
 .user-menu-info {
-  padding: 10% 0;
+  padding: 5% 0;
   display: inline-block;
 }
 
