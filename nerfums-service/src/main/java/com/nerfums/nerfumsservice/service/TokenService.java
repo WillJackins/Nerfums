@@ -1,4 +1,4 @@
-package com.nerfums.nerfumsservice.delegate.authentication;
+package com.nerfums.nerfumsservice.service;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -14,11 +14,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
-public class AuthenticationUtil {
+public class TokenService {
 	private final String SECRET_KEY = "test_secret";
 
 
-	public String extractUsername(String token) {
+	public String getUsernameFromToken(String token) {
 		return extractClaim(token, Claims::getSubject);
 	}
 
@@ -43,7 +43,7 @@ public class AuthenticationUtil {
 	}
 
 	public boolean validateToken(String token, User user) {
-		final String username = extractUsername(token);
+		final String username = getUsernameFromToken(token);
 		return (username.equals(user.getUsername()) && !isTokenExpired(token));
 	}
 

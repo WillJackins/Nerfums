@@ -1,4 +1,4 @@
-package com.nerfums.nerfumsservice.delegate.authentication;
+package com.nerfums.nerfumsservice.config;
 
 import java.io.IOException;
 
@@ -15,16 +15,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.nerfums.nerfumsservice.model.User;
+import com.nerfums.nerfumsservice.service.TokenService;
 import com.nerfums.nerfumsservice.service.UserService;
 
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
-	//TODO Figure out what layer to put this all in
 	private UserService userService;
-	private AuthenticationUtil tokenService;
+	private TokenService tokenService;
 
 	@Autowired
-	public AuthenticationFilter(UserService userService, AuthenticationUtil tokenService) {
+	public AuthenticationFilter(UserService userService, TokenService tokenService) {
 		super();
 		this.userService = userService;
 		this.tokenService = tokenService;
@@ -39,7 +39,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 			token = authorizationHeader.substring(7);
-			username = tokenService.extractUsername(token);
+			username = tokenService.getUsernameFromToken(token);
 		}
 
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

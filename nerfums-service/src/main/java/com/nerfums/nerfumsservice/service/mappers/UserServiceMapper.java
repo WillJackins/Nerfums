@@ -53,6 +53,6 @@ public class UserServiceMapper
     private void addMappingUserToUserDO(ModelMapper modelMapper)
     {
 		modelMapper.typeMap(User.class, UserDO.class)
-				.addMapping(User::getPassword, UserDO::setPasswordHash);
+				.addMappings(map -> map.skip(UserDO::setPasswordHash));
 	}
 }

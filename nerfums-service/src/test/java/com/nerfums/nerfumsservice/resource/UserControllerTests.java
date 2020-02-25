@@ -1,12 +1,13 @@
 package com.nerfums.nerfumsservice.resource;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nerfums.nerfumsservice.dataFactory.UserDataFactory;
-import com.nerfums.nerfumsservice.delegate.UserDelegate;
-import com.nerfums.nerfumsservice.exception.NerfumsErrorCode;
-import com.nerfums.nerfumsservice.resource.api.UserRO;
-import common.exception.BusinessServiceException;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.io.IOException;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,14 +19,14 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.io.IOException;
-import java.util.Arrays;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nerfums.nerfumsservice.dataFactory.UserDataFactory;
+import com.nerfums.nerfumsservice.delegate.UserDelegate;
+import com.nerfums.nerfumsservice.exception.NerfumsErrorCode;
+import com.nerfums.nerfumsservice.resource.api.UserRO;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import common.exception.BusinessServiceException;
 
 @WebMvcTest(UserController.class)
 public class UserControllerTests
@@ -88,15 +89,14 @@ public class UserControllerTests
 	}
 
 	@Test
-	void postUserTest() throws Exception
-	{
+	void postUserTest() throws Exception {
 		// Given
 		UserRO userRO = UserDataFactory.generateRandomUserRO();
-		when(mockDelegate.createNewUser(any(UserRO.class))).thenReturn(userRO);
+		//when(mockDelegate.registerUser(any(UserRO.class))).thenReturn(userRO);
 
 		RequestBuilder request = MockMvcRequestBuilders.post("/users")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(convertObjectToJsonBytes(userRO));
+										 .contentType(MediaType.APPLICATION_JSON)
+										 .content(convertObjectToJsonBytes(userRO));
 
 		// When
 		ResultActions result = mockMvc.perform(request);

@@ -79,7 +79,7 @@ export class NerfumsService {
   //=====================================================================================
 
   register(register: Register) {
-    return this.http.post<Session>(this.urlRoot + '/authentication/register', register)
+    return this.http.post<Session>(this.urlRoot + '/users/client/register', register)
       .pipe(
         map(session => this.refreshCurrentSession(session)),
         catchError(error => this.handleError(error))
@@ -87,7 +87,7 @@ export class NerfumsService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<Session>(this.urlRoot + '/authentication/login', {username, password})
+    return this.http.post<Session>(this.urlRoot + '/users/client/login', {username, password})
       .pipe(
         map(session => this.refreshCurrentSession(session)),
         catchError(error => this.handleError(error))
@@ -95,17 +95,23 @@ export class NerfumsService {
   }
 
   refreshLogin() {
-    return this.http.get<Session>(this.urlRoot + '/authentication/refresh')
+    return this.http.get<Session>(this.urlRoot + '/users/client/refresh')
       .pipe(
         map(session => this.refreshCurrentSession(session)),
         catchError(error => this.handleError(error))
       );
   }
 
-  logout(): void {
+  logout() {
     localStorage.removeItem('currentSession');
     this.currentSessionSubject.next(null);
     this.router.navigate(['/about']).then();
+
+    return this.http.get<Session>(this.urlRoot + '/users/client/logout')
+      .pipe(
+        map(session => this.refreshCurrentSession(session)),
+        catchError(error => this.handleError(error))
+      );
   }
 
   //=====================================================================================
