@@ -21,8 +21,9 @@
             <mat-label>Password</mat-label>
             <input [type]="hidePassword ? 'password' : 'text'" matInput #passwordInput placeholder="Password" [formControl]="passwordControl"
                 (change)="setPassword(passwordInput.value)">
-            <button mat-icon-button matSuffix (click)="onHidePasswordClick()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <button mat-icon-button matSuffix (click)="onHidePasswordClick()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide"
+                    tabindex="-1">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <mat-error *ngIf="passwordControl.hasError('required')">Please enter a valid password!</mat-error>
             <mat-hint>Enter Password</mat-hint>
@@ -30,9 +31,10 @@
         <mat-form-field class="confirm-password-field">
             <mat-label>Confirm Password</mat-label>
             <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput #confirmPasswordInput placeholder="Confirm Password" [formControl]="confirmPasswordControl" (change)="setConfirmPassword(confirmPasswordInput.value)">
-            <button mat-icon-button matSuffix (click)="onHideConfirmPasswordClick()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
+          <button mat-icon-button matSuffix (click)="onHideConfirmPasswordClick()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide"
+                  tabindex="-1">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
             <mat-error *ngIf="confirmPasswordControl.hasError('required')">Please enter a valid password!</mat-error>
             <mat-error *ngIf="!validPassword">Passwords do not match!</mat-error>
             <mat-hint>Confirm Password</mat-hint>

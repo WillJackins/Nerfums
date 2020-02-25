@@ -13,7 +13,7 @@
 
 
 <mat-menu class="login-menu" #loginMenu="matMenu">
-  <div (click)="$event.stopPropagation()">
+  <div (click)="$event.stopPropagation()" (keydown.tab)="$event.stopPropagation()">
     <app-user-login *ngIf="!isRegistering"></app-user-login>
     <app-register-user *ngIf="isRegistering"></app-register-user>
   </div>
