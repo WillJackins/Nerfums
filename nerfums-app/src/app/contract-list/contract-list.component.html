@@ -1,4 +1,4 @@
-<mat-card class = contract-list-card>
+<mat-card class=base-page>
   <mat-card-header>
     <mat-card-title>Contract List</mat-card-title>
   </mat-card-header>
@@ -10,11 +10,10 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <mat-paginator color="primary" #paginator [length]="this.allActiveContracts.length"
+    <mat-paginator color="primary" [length]="this.allActiveContracts.length"
                    [pageSize]="this.defaultPageSize"
                    [pageIndex]="this.defaultPageIndex"
                    [pageSizeOptions]="[2, 5, 10, 25, 100]"
-
                    (page)="paginatorEvent($event)">
     </mat-paginator>
   </mat-card-actions>
