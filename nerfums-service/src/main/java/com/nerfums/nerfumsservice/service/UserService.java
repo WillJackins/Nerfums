@@ -1,6 +1,7 @@
 package com.nerfums.nerfumsservice.service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class UserService implements UserDetailsService {
 	private final TokenService tokenService;
 	private final AmazonS3ClientRepository amazonS3ClientRepository;
 
+	private static final Random RANDOM = new Random();
 	private static final String AMAZON_S3_AVATAR_ROOT = "https://nerfums-avatar.s3.amazonaws.com/";
 	private static final String DEFAULT_AVATAR = "default-avatar.jpg";
 	private static final Integer STARTING_MONEY = 10000;
@@ -80,6 +82,7 @@ public class UserService implements UserDetailsService {
 
 	public Session registerNewUser(User user) {
 
+		user.setUserAvatar(DEFAULT_AVATAR);
 		user.setUserAvatarURL(AMAZON_S3_AVATAR_ROOT + DEFAULT_AVATAR);
 		user.setAvailableCash(STARTING_MONEY);
 		user.setCommittedCash(0);
@@ -131,11 +134,22 @@ public class UserService implements UserDetailsService {
 	public User updateUserAvatar(String userToken, MultipartFile file) {
 
 		User user = getUserByToken(userToken);
-		String avatarPath = "avatar_" + user.getUserId() + ".png";
-		amazonS3ClientRepository.uploadFileToS3Bucket(avatarPath, file);
+
+		String currentAvatar = user.getUserAvatar();
+		if (!currentAvatar.equals(DEFAULT_AVATAR)) {
+			System.out.println("DELETE: " + currentAvatar);
+			amazonS3ClientRepository.deleteFileFromS3Bucket(currentAvatar);
+		}
+
+		int avatarUniqueness = RANDOM.nextInt();
+		String avatar = "avatar_" + user.getUserId() + "_" + avatarUniqueness + ".png";
+		String avatarPath = AMAZON_S3_AVATAR_ROOT + avatar;
+		System.out.println("PATH: " + avatar);
+		amazonS3ClientRepository.uploadFileToS3Bucket(avatar, file);
 
 		UserDO updatedUser = userServiceMapper.mapUserToUserDO(user);
-		updatedUser.setUserAvatarURL(AMAZON_S3_AVATAR_ROOT + avatarPath);
+		updatedUser.setUserAvatar(avatar);
+		updatedUser.setUserAvatarURL(avatarPath);
 		userRepository.save(updatedUser);
 
 		return userServiceMapper.mapUserDOToUser(updatedUser);

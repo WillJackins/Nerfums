@@ -17,7 +17,7 @@ public class UserDO {
     private String username;
 
     @Column(name = "password_hash")
-    private String passwordHash;
+	private String passwordHash;
 
 	@Column(name = "display_name")
 	private String displayName;
@@ -27,6 +27,9 @@ public class UserDO {
 
 	@Column(name = "committed_cash")
 	private Integer committedCash;
+
+	@Column(name = "user_avatar")
+	private String userAvatar;
 
 	@Column(name = "user_avatar_url")
 	private String userAvatarURL;
@@ -56,26 +59,30 @@ public class UserDO {
     }
 
     public String getDisplayName() {
-        return displayName;
-    }
+		return displayName;
+	}
 
-    public Integer getAvailableCash() {
-        return availableCash;
-    }
+	public Integer getAvailableCash() {
+		return availableCash;
+	}
 
-    public Integer getCommittedCash() {
-        return committedCash;
-    }
+	public Integer getCommittedCash() {
+		return committedCash;
+	}
+
+	public String getUserAvatar() {
+		return userAvatar;
+	}
 
 	public String getUserAvatarURL() {
 		return userAvatarURL;
 	}
 
-    public List<ContractDO> getUsersContracts() {
-        return usersContracts;
-    }
+	public List<ContractDO> getUsersContracts() {
+		return usersContracts;
+	}
 
-    public List<ContractDO> getUserAsTargetContracts() {
+	public List<ContractDO> getUserAsTargetContracts() {
         return userAsTargetContracts;
     }
 
@@ -99,26 +106,30 @@ public class UserDO {
     }
 
     public void setDisplayName(String fullName) {
-        this.displayName = fullName;
-    }
+		this.displayName = fullName;
+	}
 
-    public void setAvailableCash(Integer availableCash) {
-        this.availableCash = availableCash;
-    }
+	public void setAvailableCash(Integer availableCash) {
+		this.availableCash = availableCash;
+	}
 
-    public void setCommittedCash(Integer committedCash) {
-        this.committedCash = committedCash;
-    }
+	public void setCommittedCash(Integer committedCash) {
+		this.committedCash = committedCash;
+	}
+
+	public void setUserAvatar(String userAvatar) {
+		this.userAvatar = userAvatar;
+	}
 
 	public void setUserAvatarURL(String userAvatar) {
 		this.userAvatarURL = userAvatar;
 	}
 
-    public void setUsersContracts(List<ContractDO> usersContracts) {
-        this.usersContracts = usersContracts;
-    }
+	public void setUsersContracts(List<ContractDO> usersContracts) {
+		this.usersContracts = usersContracts;
+	}
 
-    public void setUserAsTargetContracts(List<ContractDO> userAsTargetContracts) {
+	public void setUserAsTargetContracts(List<ContractDO> userAsTargetContracts) {
         this.userAsTargetContracts = userAsTargetContracts;
     }
 

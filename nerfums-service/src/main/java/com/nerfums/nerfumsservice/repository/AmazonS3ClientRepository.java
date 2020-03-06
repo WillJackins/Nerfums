@@ -71,7 +71,7 @@ public class AmazonS3ClientRepository {
         try {
             amazonS3.deleteObject(new DeleteObjectRequest(awsS3AudioBucket, fileName));
         } catch (AmazonServiceException ex) {
-            logger.error("error [{}] occurred while uploading [{}] ", ex.getMessage(), fileName);
+            logger.error("error [{}] occurred while deleting [{}] ", ex.getMessage(), fileName);
         }
     }
 }
