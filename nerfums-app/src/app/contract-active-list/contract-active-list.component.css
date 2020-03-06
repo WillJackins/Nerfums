@@ -15,15 +15,27 @@ table {
 }
 
 .table-number-col {
-  width: 10%;
+  width: 5%;
 }
 
-.table-info-col {
-  width: 15%
+.table-number-item {
+  padding-right: 4%;
+}
+
+.table-target-col {
+  width: 25%;
+}
+
+.table-reward-col {
+  width: 10%
 }
 
 .table-description-col {
-  width: 35%
+  width: 40%
+}
+
+.table-description-item {
+  padding: 2%;
 }
 
 .table-button-col {
