@@ -27,7 +27,6 @@ export class ContractCreateComponent implements OnInit {
   ngOnInit() {
     this.nerfumsService.getAllUsers().subscribe(data => {
       this.users = data;
-      console.log("USERS: " + this.users.length);
     });
 
     this.nerfumsService.getAllModifiers().subscribe(data => {
@@ -56,8 +55,8 @@ export class ContractCreateComponent implements OnInit {
     this.contract.contractTarget = target;
   }
 
-  setReward(reward: number) {
-    this.contract.contractReward = reward;
+  setReward(reward: string) {
+    this.contract.contractReward = Number(reward);
   }
 
   setRequirements(requirements: Array<Modifier>) {
@@ -83,14 +82,14 @@ export class ContractCreateComponent implements OnInit {
 
       this.nerfumsService.postContract(this.contract).subscribe(data =>
         console.log(data));
-      this.closeDialog();
+      this.closeDialog(true);
     } else {
       console.log('Invalid Contract');
     }
   }
 
-  closeDialog() {
+  closeDialog(contractCreated: boolean) {
     this.initContract();
-    this.dialogRef.close();
+    this.dialogRef.close(contractCreated);
   }
 }

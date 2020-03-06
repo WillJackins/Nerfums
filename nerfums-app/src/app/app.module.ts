@@ -19,7 +19,6 @@ import {ContractManagerComponent} from './contract-manager/contract-manager.comp
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {ContractActiveListComponent} from './contract-active-list/contract-active-list.component';
-import {ContractDashboardComponent} from './contract-dashboard/contract-dashboard.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {ContractCompleteComponent} from './contract-complete/contract-complete.component';
@@ -42,7 +41,6 @@ import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component"
     ContractCreateComponent,
     ContractManagerComponent,
     ContractActiveListComponent,
-    ContractDashboardComponent,
     ContractCompleteComponent,
     AboutPageComponent,
     UserLoginMenuComponent,
